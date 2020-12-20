@@ -110,7 +110,7 @@ export default {
     }
   },
   mounted () {
-    this.$axios.get(`${api}/updates/sourcesync-admin`, { headers: { Authorization: `Bearer ${this.user.jwt}` } })
+    this.$axios.get(`${api}/updates/by-app/sourcesync-admin`, { headers: { Authorization: `Bearer ${this.user.jwt}` } })
       .then(response => {
         this.updates = response.data
         this.debug('DATA', response.data)
