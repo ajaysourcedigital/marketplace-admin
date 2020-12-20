@@ -39,6 +39,17 @@
     "last 1 version, not dead, ie >= 11"
   ],
   "sourcesync": {
-    "slug": "sourcesync-admin"
+    "name": "SourceSync.io Administration",
+    "slug": "sourcesync-admin",
+    "type": "application",
+    "category": "data",
+    "keywords": "administration, admin, sourcesync, default, content, metacontent",
+    "version": "0.0.1",
+    "privacy": "url",
+    "terms": "url",
+    "description": "",
+    "details": "",
+    "support": "support@sourcedigital.net",
+    "repo": "https://github.com/Source-Digital/marketplace-admin"
   }
 }
