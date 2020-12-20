@@ -1,0 +1,69 @@
+import axios from 'axios'
+const api = 'http://localhost:1337' // 'https://api-dev.sourcesync.io'
+
+export default ({ Vue, store }) => {
+  const extName = 'ext:auth'
+  const debug = Vue.prototype.$debug.extend(extName)
+  const auth = {
+    login (identifier, password) {
+      return axios.post(`${api}/auth/local`, { identifier, password })
+        .then(response => {
+          let jwt = response.data.jwt
+          if (window.localStorage) window.localStorage.setItem('jwt', jwt)
+          return { jwt, ...response.data.user }
+        })
+        .catch(error => {
+          return Promise.reject(error)
+        })
+    },
+    loginUsingJWT (jwt) {
+        let fromStorage = false
+      // See if there is a default JWT...
+      if (!jwt) {
+        jwt = window.localStorage.getItem('jwt')
+        fromStorage = true
+      }
+      // If there is still no JWT, we can't login with a JWT...
+      if (!jwt && jwt !== '') return Promise.reject('missing-jwt')
+      try {
+        let user = JSON.parse(atob(jwt.split('.')[1]))
+        if (!user.id) return Promise.reject('missing-jwt-id-field')
+      } catch (e) {
+        // If we get here, the JWT is invalid...
+        if (fromStorage) window.localStorage.removeItem('jwt')
+        return Promise.reject('invalid-jwt')
+      }
+      // This performs the auth via valid jwt...
+      return axios.get(`${api}/user/info`, { headers: { Authorization: `Bearer ${jwt}` } })
+        .then(response => {
+          // Bake the jwt into the response...
+          return { ...response.data, jwt }
+        })
+        .catch(error => {
+          if (fromStorage) window.localStorage.removeItem('jwt')
+          return Promise.reject(error)
+        })
+    },
+    logout () {
+      if (window.localStorage) window.localStorage.removeItem('jwt')
+      store.commit('replaceUser', {})
+      window.location.reload()
+    },
+    hydrate (slug) {
+      let options = {}
+      if (store.state.user.jwt) {
+        options = {
+          headers: { Authorization: `Bearer ${store.state.user.jwt}` }
+        }  
+      }
+      return axios.get(`${api}/apps/settings/${slug}`, options)
+      .then(response => response.data)
+      .catch(error => {
+        return Promise.reject(error)
+      })
+    }
+  }
+
+  Vue.prototype.$auth = auth
+}
+  
