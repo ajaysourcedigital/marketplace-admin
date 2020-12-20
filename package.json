@@ -1,6 +1,6 @@
 {
   "name": "@sourcesync/marketplace-admin",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "The default sourcesync.io platform administration app. Feel free to expand it or build your own!",
   "productName": "Sourcesync.io Administration Application",
   "author": "Nick Steele <njsteele@gmail.com>",
@@ -44,7 +44,7 @@
     "type": "application",
     "category": "data",
     "keywords": "administration, admin, sourcesync, default, content, metacontent",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "privacy": "url",
     "terms": "url",
     "description": "",

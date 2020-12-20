@@ -40,9 +40,16 @@ export default {
             align: 'left',
           },
           {
+            name: 'version',
+            label: 'Version',
+            field: 'version',
+            sortable: true,
+            align: 'left',
+          },
+          {
             name: 'created',
             label: 'Released',
-            field: 'created_at',
+            field: 'published_at',
             sortable: true,
             align: 'left',
           }
