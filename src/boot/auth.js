@@ -1,12 +1,11 @@
 import axios from 'axios'
-const api = 'http://localhost:1337' // 'https://api-dev.sourcesync.io'
 
 export default ({ Vue, store }) => {
   const extName = 'ext:auth'
   const debug = Vue.prototype.$debug.extend(extName)
   const auth = {
     login (identifier, password) {
-      return axios.post(`${api}/auth/local`, { identifier, password })
+      return axios.post(`${store.state.system.api.base}/auth/local`, { identifier, password })
         .then(response => {
           let jwt = response.data.jwt
           if (window.localStorage) window.localStorage.setItem('jwt', jwt)
@@ -34,7 +33,7 @@ export default ({ Vue, store }) => {
         return Promise.reject('invalid-jwt')
       }
       // This performs the auth via valid jwt...
-      return axios.get(`${api}/user/info`, { headers: { Authorization: `Bearer ${jwt}` } })
+      return axios.get(`${store.state.system.api.base}/user/info`, { headers: { Authorization: `Bearer ${jwt}` } })
         .then(response => {
           // Bake the jwt into the response...
           return { ...response.data, jwt }
@@ -56,7 +55,7 @@ export default ({ Vue, store }) => {
           headers: { Authorization: `Bearer ${store.state.user.jwt}` }
         }  
       }
-      return axios.get(`${api}/apps/settings/${slug}`, options)
+      return axios.get(`${store.state.system.api.base}/apps/settings/${slug}`, options)
       .then(response => response.data)
       .catch(error => {
         return Promise.reject(error)

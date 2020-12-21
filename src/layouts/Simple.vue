@@ -92,7 +92,6 @@
 
 <script>
 import {fasGlobeAmericas, fasFlask} from '@quasar/extras/fontawesome-v5'
-const api = 'http://localhost:1337' // 'https://api-dev.sourcesync.io'
 
 export default {
   name: 'LayoutSimple',
@@ -110,7 +109,7 @@ export default {
     }
   },
   mounted () {
-    this.$axios.get(`${api}/updates/by-app/sourcesync-admin`, { headers: { Authorization: `Bearer ${this.user.jwt}` } })
+    this.$axios.get(`${this.$store.state.system.api.base}/updates/by-app/sourcesync-admin`, { headers: { Authorization: `Bearer ${this.user.jwt}` } })
       .then(response => {
         this.updates = response.data
         this.debug('DATA', response.data)
