@@ -12,33 +12,33 @@ Feel free to make a PR to this repository or fork it and build your own! Once
 you're happy with your own version, you can submit it to our marketplace and
 monitize your work and bring your new features to the world! :)
 
-## Requirements:
+### Requirements:
 * Node.js (LTS version)
 * Yarn (Yarn is strongly recommended over npm)
 
-## Install the dependencies:
+### Install the dependencies:
 ```bash
 yarn
 ```
 
-### Start the app in development mode (hot-code reloading, error reporting, etc.):
+#### Start the app in development mode (hot-code reloading, error reporting, etc.):
 ```bash
 yarn run dev
 ```
 
-### Lint the files
+#### Lint the files
 ```bash
 yarn run lint
 ```
 
-### Build the app for production
+#### Build the app for production
 ```bash
 yarn run build
 ```
 
-## Limitations
+### Limitations
 
-### API
+#### API
 Our API is limited to 10 requests per minute per user (unless you login). Set your API token if you have a higher-limit account. If you exceed your limit you will be rate limited for 1 minute.
 
 > NOTE: Do NOT share your API token unless you are ok with the public consuming your API credits. You will most likely want to set their API tokens *private* by wrapping calls to our services behind your own services.
@@ -117,7 +117,7 @@ GET https://api.sourceysnc.io/updates/by-app/your-app-id-here
 You'll get additional info including the update record IDs.
 
 
-## Modifying an update you've already made
+### Modifying an update you've already made
 Once you release a version, it's locked forever to ensure proper support and a healthy platform. You can however modify the description of an update you've already create like this:
 
 ```
@@ -135,7 +135,7 @@ Body: {
 }
 ``` 
 
-## Rolling back app versions
+### Rolling back app versions
 
 Our platform keeps a copy of every version of your app you've ever released! If a client has trouble with your latest release, they can always revert to any previous version you've had.
 
