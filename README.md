@@ -1,6 +1,6 @@
 # SourceSync.io Administration Application
 
-The default sourcesync.io platform administration application. Sourcesync.io is
+The default [sourcesync.io](https://sourcesync.io/#/) platform administration application. [Sourcesync.io](https://sourcesync.io/#/) is
 an open platform that lets you monitize your existing content in amazing ways.
 
 Like anything on the platform, you can also customize the administration app
@@ -12,16 +12,16 @@ Feel free to make a PR to this repository or fork it and build your own! Once
 you're happy with your own version, you can submit it to our marketplace and
 monitize your work and bring your new features to the world! :)
 
-## Requirements
+## Requirements:
 * Node.js (LTS version)
 * Yarn (Yarn is strongly recommended over npm)
 
-## Install the dependencies
+## Install the dependencies:
 ```bash
 yarn
 ```
 
-### Start the app in development mode (hot-code reloading, error reporting, etc.)
+### Start the app in development mode (hot-code reloading, error reporting, etc.):
 ```bash
 yarn run dev
 ```
@@ -43,17 +43,20 @@ Our API is limited to 10 requests per minute per user (unless you login). Set yo
 
 > NOTE: Do NOT share your API token unless you are ok with the public consuming your API credits. You will most likely want to set their API tokens *private* by wrapping calls to our services behind your own services.
 
+
 # Creating an app
 Setting up an application on sorucesync.io is simple. 
 
-1. Create a public repository.
-2. Place a package.json file in the root of your repository and fill in the "sourcesync" fields (described below).
-3. Submit your new application [here](https://sourcesync.io/submit) by just pasting  choosing a name and providing a link to your repository.
+1. Create a public repository in your account.
+2. Place a `package.json` file in the root of your repository and fill in the "sourcesync" fields (described below).
+3. Submit your new application [here](https://sourcesync.io/#/submit) by just pasting,  choosing a unique name and providing a link to your public repository.
+4. You will get an approval/denial notification once the app is approved from our end. 
+5. Once your app gets approved, your app will be available at https://apps.sourcesync.io/your-app-id-here. Make sure `your-app-id-here` doesn't exist already.
 
 
-## Package.json settings
+### Package.json settings:
 
-The following fields are required in your package.json file.
+The following fields are required in your `package.json` file.
 
 > Our servers will use these fields to automatically update your app when you create new releases!
 
@@ -76,15 +79,16 @@ The following fields are required in your package.json file.
 
 # Releasing new versions
 
-Creating new releases for your application is a breeze!  Once your application is approved, you'll automatically get your first release.
+You can upgrade your app and release a new versions. You can also revert back to previous versions/release. Creating new releases for your application is a breeze!  Once your application is approved, you'll automatically get your first release.
 
 > Your app will be available here: https://apps.sourcesync.io/your-app-id-here
 
-Our platform includes a simple and slick updates API that you can hook into to take care of your Ci/CD process. Users of your app can even automatically get notified about and read the latest updates about your app without any coding!
+Our platform includes a simple and slick updates API that you can hook into to take care of your Ci/CD process. Users of your app can even automatically get notified about and read the latest updates about your app without any coding! Make sure in `packages.json[sourcesync.support]`, you add a correct email.
+> It may take upto 10 minutes for your application to become live. 
 
-## Creating an update
+### Creating an update
 
-Just POST to our [updates api](http://localhost:1337/documentation#/Updates/post_updates) like so
+Just POST to our [updates api](https://api.sourcesync.io/documentation#/Updates/post_updates) like so
 ```
 POST https://api.sourceysnc.io/updates
 headers: {
@@ -104,7 +108,7 @@ Body: {
 
 You can create the update to notify our servers that they need to build a new version of your app, however, you can set a "published_at" date to let your users know about the app later.
 
-## Getting a list of your app's updates
+### Getting a list of your app's updates
 To get a list of your apps updates:
 
 ```
