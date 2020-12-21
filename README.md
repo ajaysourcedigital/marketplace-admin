@@ -42,6 +42,7 @@ yarn run build
 Our API is limited to 10 requests per minute per user (unless you login). Set your API token if you have a higher-limit account. If you exceed your limit you will be rate limited for 1 minute.
 
 > NOTE: Do NOT share your API token unless you are ok with the public consuming your API credits. You will most likely want to set their API tokens *private* by wrapping calls to our services behind your own services.
+> NOTE: We are onlu supporting build files places under `/dist/spa` folder.
 
 
 # Creating an app
