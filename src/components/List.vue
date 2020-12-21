@@ -33,6 +33,7 @@
         :data="settings.data"
         :columns="settings.columns"
         hide-bottom
+        @row-click="(evt, row, index) => $emit('row-click', evt, row, index)"
       >
         <template v-slot:body-cell-Products="props">
           <q-td :props="props">
