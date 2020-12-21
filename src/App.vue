@@ -1,6 +1,6 @@
 <template>
   <div id="q-app">
-    <router-view/>
+    <router-view />
   </div>
 </template>
 
@@ -35,7 +35,7 @@ export default {
           .then(result => {
             // If the user has some settings related to this app, apply them...
             if (this.$store.state.user.role) {
-              let userAppSettings = JSON.parse(JSON.stringify(
+              const userAppSettings = JSON.parse(JSON.stringify(
                 this.$store.state.user.settings.apps.settings[settings.sourcesync.slug]
               ))
               this.debug(`user settings for this app (${settings.sourcesync.slug})`, userAppSettings)
@@ -45,7 +45,7 @@ export default {
             this.$store.commit('replaceApp', result)
             this.debug('Application state loaded', result)
             this.$store.commit('loaded', true)
-            this.$router.push({name: 'home'})
+            this.$router.push({ name: 'home' })
           })
       })
   }

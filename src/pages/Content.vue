@@ -10,7 +10,7 @@ import Stats from 'components/Stats.vue'
 import List from 'components/List.vue'
 
 export default {
-  name: "page-metacontent",
+  name: 'PageMetacontent',
   components: {
     Stats,
     List
@@ -25,7 +25,7 @@ export default {
         this.debug('CRAP', response)
       })
   },
-  data() {
+  data () {
     return {
       settings: this.$store.state.app.settings,
       user: this.$store.state.user,
@@ -39,21 +39,21 @@ export default {
             label: 'Name',
             field: 'name',
             sortable: true,
-            align: 'left',
+            align: 'left'
           },
           {
             name: 'created',
             label: 'Created',
             field: 'created_at',
             sortable: true,
-            align: 'left',
+            align: 'left'
           },
           {
             name: 'updated',
             label: 'Updated',
             field: 'updated_at',
             sortable: true,
-            align: 'left',
+            align: 'left'
           }
         ],
         data: []
