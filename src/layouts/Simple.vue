@@ -170,6 +170,43 @@
               />
             </q-item>
             <q-item
+              v-else-if='link.type === "button-dropdown"'
+              class='GNL__drawer-button-dropdown'
+            >
+              <q-btn-dropdown
+                rounded
+                padding='10px'
+                :color='link.color'
+                class="text-grey-8"
+              >
+                <template v-slot:label>
+                  <div class="row items-center no-wrap">
+                    <q-icon
+                      v-if='!miniState'
+                      left
+                      :name="link.icon"
+                    />
+                    <div class="text-center">
+                      {{miniState?'':link.text}}
+                    </div>
+                  </div>
+                </template>
+                <q-list>
+                  <q-item
+                    v-for='(item, i) in link.list'
+                    :key='i'
+                    clickable
+                    v-close-popup
+                    @click='processAction({ action: link.action, payload: item.value})'
+                  >
+                    <q-item-section>
+                      <q-item-label>{{item.text}}</q-item-label>
+                    </q-item-section>
+                  </q-item>
+                </q-list>
+              </q-btn-dropdown>
+            </q-item>
+            <q-item
               v-else
               class="GNL__drawer-item"
               v-ripple
@@ -270,5 +307,8 @@ export default {
   font-size: 0.875rem;
   font-weight: 500;
   line-height: 1.25rem;
+}
+.GNL__drawer-button-dropdown .q-btn-dropdown--simple .q-btn-dropdown__arrow {
+  margin-left: 0px !important;
 }
 </style>
