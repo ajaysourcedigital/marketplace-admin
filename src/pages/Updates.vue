@@ -6,7 +6,6 @@
 
 <script>
 import List from 'components/List.vue'
-const api = 'http://localhost:1337' // 'https://api-dev.sourcesync.io'
 
 export default {
   name: "page-metacontent",
@@ -14,7 +13,7 @@ export default {
     List
   },
   mounted () {
-    this.$axios.get(`${api}/updates/by-app/sourcesync-admin`, { headers: { Authorization: `Bearer ${this.user.jwt}` } })
+    this.$axios.get(`${this.$store.state.system.api.base}/updates/by-app/sourcesync-admin`, { headers: { Authorization: `Bearer ${this.user.jwt}` } })
       .then(response => {
         this.content.data = response.data
         this.debug('DATA', response.data)

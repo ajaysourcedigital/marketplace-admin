@@ -8,7 +8,6 @@
 <script>
 import Stats from 'components/Stats.vue'
 import List from 'components/List.vue'
-const api = 'http://localhost:1337' // 'https://api-dev.sourcesync.io'
 
 export default {
   name: "page-metacontent",
@@ -17,7 +16,7 @@ export default {
     List
   },
   mounted () {
-    this.$axios.get(`${api}/distributions`, { headers: { Authorization: `Bearer ${this.user.jwt}` } })
+    this.$axios.get(`${this.$store.state.system.api.base}/distributions`, { headers: { Authorization: `Bearer ${this.user.jwt}` } })
       .then(response => {
         this.records.data = response.data
         this.debug('DATA', response.data)
