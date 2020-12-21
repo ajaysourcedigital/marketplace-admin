@@ -1,7 +1,11 @@
 <template>
   <q-page class="q-pa-sm">
     <stats :settings="user.settings.admin.metacontent.stats" />
-    <list :settings="metacontent" />
+    <list
+      :data="metacontent.data"
+      :schema="schema"
+      :fullData='metacontent'
+    />
   </q-page>
 </template>
 
@@ -57,6 +61,17 @@ export default {
           }
         ],
         data: []
+      },
+      // Remove later if needed
+      schema: {
+        $schema: 'http://json-schema.org/draft-07/schema#',
+        type: 'object',
+        required: ['name'],
+        properties: {
+          name: {
+            type: 'string'
+          }
+        }
       }
     }
   }
