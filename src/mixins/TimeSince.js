@@ -1,97 +1,97 @@
 var TimeSince = {
   methods: {
-    getTimeSince: function(date) {
-      return this.doTimeSince(date, false);
+    getTimeSince: function (date) {
+      return this.doTimeSince(date, false)
     },
-    getTimeShort: function(date) {
-      return this.doTimeSince(date, true);
+    getTimeShort: function (date) {
+      return this.doTimeSince(date, true)
     },
-    getTimeLong: function(date) {
-      return this.doTimeSince(date, false);
+    getTimeLong: function (date) {
+      return this.doTimeSince(date, false)
     },
     // This function was modified from
     // https://stackoverflow.com/questions/3177836/how-to-format-time-since-xxx-e-g-4-minutes-ago-similar-to-stack-exchange-site
-    doTimeSince: function(date, short) {
-      var seconds = Math.floor((new Date() - date) / 1000);
-      var label = "";
-    
-      var interval = seconds / 31536000;
+    doTimeSince: function (date, short) {
+      var seconds = Math.floor((new Date() - date) / 1000)
+      var label = ''
+
+      var interval = seconds / 31536000
       if (interval > 1) {
-        if (short) { 
-          label = " yr";
+        if (short) {
+          label = ' yr'
         } else {
-          label = " year";
+          label = ' year'
         }
-        let nbr = Math.floor(interval);
+        const nbr = Math.floor(interval)
         if (nbr > 1) {
-          label += "s";
-        }        
-        return nbr + label + " ago";
+          label += 's'
+        }
+        return nbr + label + ' ago'
       }
 
-      interval = seconds / 2592000;
+      interval = seconds / 2592000
       if (interval > 1) {
-        if (short) { 
-          label = " mo";
+        if (short) {
+          label = ' mo'
         } else {
-          label = " month";
+          label = ' month'
         }
-        let nbr = Math.floor(interval);
+        const nbr = Math.floor(interval)
         if (nbr > 1) {
-          label += "s";
-        }        
-        return nbr + label + " ago";
+          label += 's'
+        }
+        return nbr + label + ' ago'
       }
-      
-      interval = seconds / 86400;
+
+      interval = seconds / 86400
       if (interval > 1) {
         // no standard shorthand for days
-        label = " day";
-        let nbr = Math.floor(interval);
+        label = ' day'
+        const nbr = Math.floor(interval)
         if (nbr > 1) {
-          label += "s";
-        }        
-        return nbr + label + " ago";
-      }
-      
-      interval = seconds / 3600;
-      if (interval > 1) {
-         if (short) { 
-          label = " hr";
-        } else {
-          label = " hour";
+          label += 's'
         }
-        let nbr = Math.floor(interval);
-        if (nbr > 1) {
-          label += "s";
-        }        
-        return nbr + label + " ago";
+        return nbr + label + ' ago'
       }
 
-      interval = seconds / 60;
+      interval = seconds / 3600
       if (interval > 1) {
-        if (short) { 
-          label = " min";
+        if (short) {
+          label = ' hr'
         } else {
-          label = " minute";
+          label = ' hour'
         }
-        let nbr = Math.floor(interval);
+        const nbr = Math.floor(interval)
         if (nbr > 1) {
-          label += "s";
-        }        
-        return nbr + label + " ago";
+          label += 's'
+        }
+        return nbr + label + ' ago'
       }
 
-      if (short) { 
-        label = " sec";
+      interval = seconds / 60
+      if (interval > 1) {
+        if (short) {
+          label = ' min'
+        } else {
+          label = ' minute'
+        }
+        const nbr = Math.floor(interval)
+        if (nbr > 1) {
+          label += 's'
+        }
+        return nbr + label + ' ago'
+      }
+
+      if (short) {
+        label = ' sec'
       } else {
-        label = " second";
+        label = ' second'
       }
-      let nbr = Math.floor(interval);
+      const nbr = Math.floor(interval)
       if (nbr > 1) {
-        label += "s";
-      }        
-      return nbr + label + " ago";
+        label += 's'
+      }
+      return nbr + label + ' ago'
     }
   }
 }

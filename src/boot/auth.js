@@ -1,13 +1,12 @@
 import axios from 'axios'
 
 export default ({ Vue, store }) => {
-  const extName = 'ext:auth'
-  const debug = Vue.prototype.$debug.extend(extName)
+  // const debug = Vue.prototype.$debug.extend('ext:auth')
   const auth = {
     login (identifier, password) {
       return axios.post(`${store.state.system.api.base}/auth/local`, { identifier, password })
         .then(response => {
-          let jwt = response.data.jwt
+          const jwt = response.data.jwt
           if (window.localStorage) window.localStorage.setItem('jwt', jwt)
           return { jwt, ...response.data.user }
         })
@@ -16,7 +15,7 @@ export default ({ Vue, store }) => {
         })
     },
     loginUsingJWT (jwt) {
-        let fromStorage = false
+      let fromStorage = false
       // See if there is a default JWT...
       if (!jwt) {
         jwt = window.localStorage.getItem('jwt')
@@ -25,7 +24,7 @@ export default ({ Vue, store }) => {
       // If there is still no JWT, we can't login with a JWT...
       if (!jwt && jwt !== '') return Promise.reject('missing-jwt')
       try {
-        let user = JSON.parse(atob(jwt.split('.')[1]))
+        const user = JSON.parse(atob(jwt.split('.')[1]))
         if (!user.id) return Promise.reject('missing-jwt-id-field')
       } catch (e) {
         // If we get here, the JWT is invalid...
@@ -53,16 +52,15 @@ export default ({ Vue, store }) => {
       if (store.state.user.jwt) {
         options = {
           headers: { Authorization: `Bearer ${store.state.user.jwt}` }
-        }  
+        }
       }
       return axios.get(`${store.state.system.api.base}/apps/settings/${slug}`, options)
-      .then(response => response.data)
-      .catch(error => {
-        return Promise.reject(error)
-      })
+        .then(response => response.data)
+        .catch(error => {
+          return Promise.reject(error)
+        })
     }
   }
 
   Vue.prototype.$auth = auth
 }
-  

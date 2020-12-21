@@ -12,13 +12,13 @@ import Breakdown from 'components/Breakdown.vue'
 import List from 'src/components/List.vue'
 
 export default {
-  name: "page-home",
+  name: 'PageHome',
   components: {
     Stats,
     Breakdown,
     List
   },
-  data() {
+  data () {
     return {
       settings: this.$store.state.app.settings,
       user: this.$store.state.user,
@@ -32,7 +32,7 @@ export default {
             label: 'Campaigns',
             field: 'Products',
             sortable: true,
-            align: 'left',
+            align: 'left'
           },
           {
             name: 'Name',
@@ -76,7 +76,7 @@ export default {
             product_name: 'Truth in Broadcasting',
             total: '303,344',
             code: 'KDH8WK',
-            prod_img: 'https://avatars3.githubusercontent.com/u/34883558?s=400&u=09455019882ac53dc69b23df570629fd84d37dd1&v=4',
+            prod_img: 'https://avatars3.githubusercontent.com/u/34883558?s=400&u=09455019882ac53dc69b23df570629fd84d37dd1&v=4'
           },
           {
             name: 'Mayank Patel',
@@ -88,7 +88,7 @@ export default {
             product_name: 'End Corruption in NJ District 45',
             total: '23,100',
             code: 'AA43OX',
-            prod_img: 'https://avatars3.githubusercontent.com/u/34883558?s=400&u=09455019882ac53dc69b23df570629fd84d37dd1&v=4',
+            prod_img: 'https://avatars3.githubusercontent.com/u/34883558?s=400&u=09455019882ac53dc69b23df570629fd84d37dd1&v=4'
           },
           {
             name: 'Mayur Patel',
@@ -100,7 +100,7 @@ export default {
             total: '340',
             date: '19 Sept 2020',
             code: 'J2K9QQ',
-            prod_img: 'https://avatars3.githubusercontent.com/u/34883558?s=400&u=09455019882ac53dc69b23df570629fd84d37dd1&v=4',
+            prod_img: 'https://avatars3.githubusercontent.com/u/34883558?s=400&u=09455019882ac53dc69b23df570629fd84d37dd1&v=4'
           },
           {
             name: 'Jeff Galbraith',
@@ -112,7 +112,7 @@ export default {
             total: '224',
             date: '19 Sept 2020',
             code: 'JKL345',
-            prod_img: 'https://avatars3.githubusercontent.com/u/34883558?s=400&u=09455019882ac53dc69b23df570629fd84d37dd1&v=4',
+            prod_img: 'https://avatars3.githubusercontent.com/u/34883558?s=400&u=09455019882ac53dc69b23df570629fd84d37dd1&v=4'
           }
         ]
       }
