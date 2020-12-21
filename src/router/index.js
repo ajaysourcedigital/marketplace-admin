@@ -17,6 +17,7 @@ export default function ({ store }) {
     // If the app isn't loaded, show them a loading screen...
     if (!store.state.system.loaded) {
       if (to.name !== 'loading') {
+        localStorage.setItem('pathToLoadAfterLogin', to.name)
         next({ name: 'loading' })
       } else {
         next()
