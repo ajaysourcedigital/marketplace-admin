@@ -8,6 +8,8 @@
 
 export default {
   name: 'PageEditMetacontent',
-  props: ['id']
+  props: {
+    id: [String, Number]
+  }
 }
 </script>
