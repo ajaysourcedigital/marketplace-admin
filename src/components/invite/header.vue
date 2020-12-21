@@ -1,9 +1,9 @@
 <template>
-    <div class="col q-col-gutter-sm q-py-sm">
-        <div class="row text-h4 text-dark q-py-sm" >
-            Invite Users
-        </div>
+  <div class="col q-col-gutter-sm q-py-sm">
+    <div class="row text-h4 text-dark q-py-sm">
+      Invite Users
     </div>
+  </div>
 </template>
 
 <script>
@@ -15,7 +15,7 @@
 
 */
 export default {
-  name: "InviteHeader",
+  name: 'InviteHeader',
   props: []
 }
 </script>
