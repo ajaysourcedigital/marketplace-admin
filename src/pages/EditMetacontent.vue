@@ -1,13 +1,13 @@
 <template>
   <q-page class="q-pa-sm">
-    Editing {{id}}
+    Editing {{ id }}
   </q-page>
 </template>
 
 <script>
 
 export default {
-  name: "page-edit-metacontent",
+  name: 'PageEditMetacontent',
   props: ['id']
 }
 </script>
