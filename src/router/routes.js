@@ -17,7 +17,7 @@ const routes = [
       { name: 'live', path: '/live', component: () => import('pages/Live.vue') },
       { name: 'messages', path: '/messages', component: () => import('pages/Messages.vue') },
       { name: 'updates', path: '/updates', component: () => import('pages/Updates.vue') },
-      { name: 'edit-campaign', path: '/edit-content/:id', component: () => import('pages/EditContent.vue') },
+      { name: 'edit-campaign', path: '/edit-content/:id', component: () => import('pages/EditContent.vue'), props: true },
       { name: 'edit-content', path: '/edit-content/:id', component: () => import('pages/EditContent.vue'), props: true },
       { name: 'edit-metacontent', path: '/edit-metacontent/:id', component: () => import('pages/EditMetacontent.vue'), props: true }
     ]

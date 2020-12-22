@@ -8,6 +8,8 @@
 
 export default {
   name: 'PageEditCampaign',
-  props: ['id']
+  props: {
+    id: [String, Number]
+  }
 }
 </script>

@@ -24,6 +24,24 @@
 <body>
   <!-- DO NOT touch the following DIV -->
   <div id="q-app"></div>
+  <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-analytics.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-database.js"></script>
+  <script>
+    var firebaseConfig = {
+      apiKey: "AIzaSyAL-igr-dsYVRkodNKwsPYia0MPQ_J1E3k",
+      authDomain: "sage-mind-254718.firebaseapp.com",
+      projectId: "sage-mind-254718",
+      storageBucket: "sage-mind-254718.appspot.com",
+      messagingSenderId: "1027084790346",
+      databaseURL: 'https://sage-mind-254718-default-rtdb.firebaseio.com/',
+      appId: "1:1027084790346:web:21076c170eabc6637814b3"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig)
+    firebase.analytics()
+    firebase.database()
+  </script>
 </body>
 
 </html>

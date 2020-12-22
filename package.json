@@ -20,7 +20,9 @@
     "experience-engine": "^0.1.9",
     "quasar": "^1.0.0",
     "stacktrace-js": "^2.0.2",
+    "survey-vue": "^1.8.21",
     "vue-echarts-v3": "^2.0.1",
+    "vue-form-json-schema": "^2.9.2",
     "vue-i18n": "^8.0.0",
     "vuedraggable": "^2.23.2"
   },

@@ -2,7 +2,9 @@
   <q-page class="q-pa-sm">
     <stats :settings="user.settings.admin.metacontent.stats" />
     <list
-      :settings="records"
+      :data="records.data"
+      :schema="schema"
+      :full-data="records"
       @row-click="rowClick"
     />
   </q-page>
@@ -13,7 +15,7 @@ import Stats from 'components/Stats.vue'
 import List from 'components/List.vue'
 
 export default {
-  name: 'PageMetacontent',
+  name: 'PageContent',
   components: {
     Stats,
     List
@@ -29,8 +31,8 @@ export default {
       })
   },
   methods: {
-    rowClick (ev, row = {}) {
-      const { id } = row
+    rowClick (ev = {}) {
+      const { id } = ev
       if (!id) throw new Error('`id` is required.')
       this.$router.push({ name: 'edit-content', params: { id } })
     }
@@ -69,6 +71,17 @@ export default {
           }
         ],
         data: []
+      },
+      // Remove later if needed
+      schema: {
+        $schema: 'http://json-schema.org/draft-07/schema#',
+        type: 'object',
+        required: ['name'],
+        properties: {
+          name: {
+            type: 'string'
+          }
+        }
       }
     }
   }
