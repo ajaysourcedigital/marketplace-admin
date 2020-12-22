@@ -4,7 +4,7 @@
     <list
       :data="metacontent.data"
       :schema="schema"
-      :fullData='metacontent'
+      :full-data="metacontent"
     />
   </q-page>
 </template>
