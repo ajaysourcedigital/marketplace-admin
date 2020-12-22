@@ -129,7 +129,7 @@
                       :value="typeof content.settings === 'string' ? content.settings : JSON.stringify(content.settings, null, 2)"
                       @input="onSettingsChange"
                       height="400px"
-                      :rules="[val => isValidJSON(val) || 'Invalid JSON.']"
+                      :rules="[val => isValidJSON(val) || 'Invalid JSON']"
                     />
                   </div>
                 </div>
