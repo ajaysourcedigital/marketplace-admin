@@ -29,12 +29,12 @@
           <div
             v-for='(contents, index) in list'
             :key='index'
-            class='col-lg-6 col-xl-6 col-md-6 col-sm-12 col-xs-12 q-pa-sm text-capitalize'
+            class='col-lg-6 col-xl-6 col-md-6 col-sm-12 col-xs-12 q-pa-sm'
           >
             <q-input
               v-if='contents === "name"'
               filled
-              :label='contents'
+              :label='capitalize(contents)'
               v-model="content[contents]"
               :rules="[val => !!val || 'Field is required']"
             />
@@ -42,7 +42,7 @@
               class='q-pb-md'
               v-else
               filled
-              :label='contents'
+              :label='capitalize(contents)'
               v-model="content[contents]"
             />
           </div>
@@ -99,6 +99,10 @@ export default {
     }
   },
   methods: {
+    // capitalizing first letter... just for looks
+    capitalize (str) {
+      return str.replace(/^\w/, c => c.toUpperCase())
+    },
     // handles sumbit and rerouting
     onSubmit () {
       this.$q.notify({
