@@ -10,10 +10,8 @@
 
     <!-- Register form -->
     <QAuthorizationRegisterForm
-      :register-form-first-name="registerFormFirstName"
-      :register-form-last-name="registerFormLastName"
-      :register-form-email="registerFormEmail"
-      :register-form-password="registerFormPassword"
+      v-on="$_registrationEvents"
+      v-bind="$_registrationProps"
       @onSubmitRegister="onSubmitRegister"
     />
     <div class="text-caption text-grey-5 q-authorization__recaptcha-warning">
@@ -24,15 +22,15 @@
 
 <script>
 import QAuthorizationRegisterForm from './QAuthorizationRegisterForm'
+import RegistrationMixin from '../mixins/registration'
+import props from '../mixins/props'
 export default {
   name: 'QAuthorizationRegisterPage',
+  mixins: [RegistrationMixin],
   props: {
     registerPageDescription: Object,
     privacyText: String,
-    registerFormFirstName: String,
-    registerFormLastName: String,
-    registerFormEmail: String,
-    registerFormPassword: String
+    ...props.registration
   },
   components: { QAuthorizationRegisterForm },
   data () {
