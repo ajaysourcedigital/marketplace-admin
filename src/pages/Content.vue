@@ -56,14 +56,16 @@ export default {
             label: 'Created',
             field: 'created_at',
             sortable: true,
-            align: 'left'
+            align: 'left',
+            format: str => this.$d(new Date(str), 'long')
           },
           {
             name: 'updated',
             label: 'Updated',
             field: 'updated_at',
             sortable: true,
-            align: 'left'
+            align: 'left',
+            format: str => this.$d(new Date(str), 'long')
           }
         ],
         data: []
