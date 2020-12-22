@@ -29,7 +29,8 @@
           <div
             v-for='(contents, index) in list'
             :key='index'
-            class='col-lg-6 col-xl-6 col-md-6 col-sm-12 col-xs-12 q-pa-sm'
+            :class='contents === "name" || contents === "type" ? "col-12" : "col-lg-6 col-xl-6 col-md-6 col-sm-12 col-xs-12"'
+            class="q-pa-sm"
           >
             <q-input
               v-if='contents === "name"'
@@ -37,6 +38,13 @@
               :label='capitalize(contents)'
               v-model="content[contents]"
               :rules="[val => !!val || 'Field is required']"
+            />
+            <q-select
+              v-else-if='contents === "type"'
+              filled
+              v-model="content[contents]"
+              :options="options"
+              :label='capitalize(contents)'
             />
             <q-input
               class='q-pb-md'
@@ -77,7 +85,8 @@ export default {
   data () {
     return {
       settings: this.$store.state.app.settings,
-      content: {}
+      content: {},
+      options: ['dynamic', 'overlay', 'legacy', 'audio', 'video', 'interactive', 'catalog']
     }
   },
   computed: {
