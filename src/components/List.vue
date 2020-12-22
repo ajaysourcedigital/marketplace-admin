@@ -34,6 +34,7 @@
         :columns="settings.columns"
         hide-bottom
         @row-click="(evt, row, index) => $emit('row-click', evt, row, index)"
+        :rows-per-page-options="[0]"
       >
         <template v-slot:body-cell-Products="props">
           <q-td :props="props">
