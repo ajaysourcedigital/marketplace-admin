@@ -14,7 +14,6 @@
 <script>
 import Stats from 'components/Stats.vue'
 import List from 'components/List.vue'
-
 export default {
   name: 'PageMetacontent',
   components: {
