@@ -53,6 +53,7 @@
         virtual-scroll
         :rows-per-page-options="[0]"
         table-colspan="6"
+        wrap-cells
       >
         <!-- Default | List view -->
         <template
@@ -112,12 +113,21 @@
               </div>
               <div v-else>
                 <!-- If object has more than 3 items -->
-                <!-- <q-tr v-show="props.expand" :props="props">
-              <q-td colspan="100%">
-                <div class="text-left">This is expand slot for row above: {{ props.row.name }}.</div>
-              </q-td>
-            </q-tr> -->
+                <q-btn
+                  icon='add'
+                  round
+                  color='primary'
+                  @click='expandRow(props, col)'
+                />
               </div>
+            </q-td>
+          </q-tr>
+          <q-tr
+            v-show="props.expand"
+            :props="props"
+          >
+            <q-td colspan="100%">
+              <div>{{row}}</div>
             </q-td>
           </q-tr>
         </template>
@@ -146,10 +156,13 @@
                   v-for="col in props.cols"
                   :key="col.name"
                 >
-                  <q-item-section>
+                  <q-item-section v-if='typeItem(col.value)'>
                     <q-item-label>{{ col.label }}</q-item-label>
                   </q-item-section>
-                  <q-item-section side>
+                  <q-item-section
+                    v-if='typeItem(col.value)'
+                    side
+                  >
                     <q-item-label
                       caption
                       lines='1'
@@ -169,6 +182,19 @@
                       </q-popup-edit>
                     </q-item-label>
                   </q-item-section>
+                  <div
+                    v-else
+                    class='full-width'
+                  >
+                    <!-- If object has more than 3 items -->
+                    <q-expansion-item
+                      :label='col.label'
+                      class='full-width q-pa-none'
+                      expand-separator
+                    >
+                      {{col.value}}
+                    </q-expansion-item>
+                  </div>
                 </q-item>
               </q-list>
             </q-card>
@@ -195,7 +221,8 @@ export default {
   components: { editInPlace },
   data () {
     return {
-      card: false
+      card: false,
+      row: null
     }
   },
   methods: {
@@ -204,6 +231,10 @@ export default {
       else if (typeof e !== 'object') return true
       else if (e === null || e === '') return true
       else return false
+    },
+    expandRow (props, col) {
+      props.expand = !props.expand
+      this.row = col.value
     }
   },
   computed: {
@@ -226,7 +257,7 @@ export default {
 
 <style lang="stylus" scoped>
 .stickyTable {
-  .q-table__top, .q-table__bottom, thead tr:first-child th { /* bg color is important for th; just specify one */
+  .q-table__top, .q-table__bottom, thead tr:first-child th {
     background-color: #fff;
   }
 
@@ -235,14 +266,16 @@ export default {
     z-index: 1;
   }
 
-  /* this will be the loading indicator */
   thead tr:last-child th {
-    /* height of all previous header rows */
     top: 48px;
   }
 
   thead tr:first-child th {
     top: 0;
   }
+}
+
+/deep/.q-expansion-item .q-item {
+  padding: 0px;
 }
 </style>
