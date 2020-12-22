@@ -98,7 +98,7 @@ export default {
           list = ['name', 'slug', 'creator', 'clientId', 'media', 'type']
           break
         case 'metacontent':
-          list = ['name', 'uuid', 'views', 'interactions', 'conversations', 'distributions', 'clientId']
+          list = ['name', 'uuid', 'clientId']
           break
         case 'campaign':
           list = ['name', 'slug', 'creator', 'clientId', 'media', 'type']
