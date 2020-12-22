@@ -1,10 +1,10 @@
 <template>
   <q-card
     class="q-mt-sm"
-    v-if='fullData'
+    v-if="fullData"
   >
     <q-card-section class="text-h6 q-pb-none row no-wrap items-baseline">
-      <q-item class='col-8'>
+      <q-item class="col-8">
         <q-item-section
           avatar
           class=""
@@ -29,25 +29,25 @@
           </q-item-label>
         </q-item-section>
       </q-item>
-      <div class='col-4 row justify-end'>
+      <div class="col-4 row justify-end">
         <div>
           <q-btn
             round
             flat
-            :icon='card ? "list" : "view_module"'
-            @click='card = !card'
+            :icon="card ? 'list' : 'view_module'"
+            @click="card = !card"
           />
         </div>
       </div>
     </q-card-section>
     <q-card-section class="q-pa-none q-ma-none">
       <q-table
-        card-container-style='height:400px;overflow:scroll;'
+        card-container-style="height:400px;overflow:scroll;"
         table-style="height: 400px;"
-        card-style='max-height:400px;'
-        class='stickyTable'
+        card-style="max-height:400px;"
+        class="stickyTable"
         :data="validation"
-        :grid='card'
+        :grid="card"
         row-key="name"
         hide-bottom
         virtual-scroll
@@ -59,7 +59,7 @@
         <!-- Default | List view -->
         <template
           v-slot:header="props"
-          v-if='!card'
+          v-if="!card"
         >
           <q-tr :props="props">
             <q-th />
@@ -75,7 +75,7 @@
         <template v-slot:body="props">
           <q-tr
             :props="props"
-            class='cursor-pointer'
+            class="cursor-pointer"
             auto-width
           >
             <q-td>
@@ -84,8 +84,8 @@
                 size="xl"
               >
                 <q-img
-                  :ratio='1'
-                  :src='props.row.image ? props.row.image : "https://via.placeholder.com/150?text=N/A"'
+                  :ratio="1"
+                  :src="props.row.image ? props.row.image : 'https://via.placeholder.com/150?text=N/A'"
                 />
               </q-avatar>
             </q-td>
@@ -93,32 +93,32 @@
               v-for="col in props.cols"
               :key="col.name"
               :props="props"
-              style='max-width:200px;'
+              style="max-width:200px;"
             >
               <div
-                class='ellipsis'
-                v-if='typeItem(col.value)'
+                class="ellipsis"
+                v-if="typeItem(col.value)"
               >
                 {{ col.value || 'N/A' }}
                 <q-popup-edit
-                  v-if='edit'
+                  v-if="edit"
                   auto-save
                   v-model="props.row[col.name]"
-                  @save='$emit("saved", props.row[col.name], props.row, col.label)'
+                  @save="$emit('saved', props.row[col.name], props.row, col.label)"
                 >
                   <editInPlace
-                    :props='props'
-                    :col='col'
+                    :props="props"
+                    :col="col"
                   />
                 </q-popup-edit>
               </div>
               <div v-else>
                 <!-- If object has more than 3 items -->
                 <q-btn
-                  icon='add'
+                  icon="add"
                   round
-                  color='primary'
-                  @click='expandRow(props, col)'
+                  color="primary"
+                  @click="expandRow(props, col)"
                 />
               </div>
             </q-td>
@@ -128,72 +128,72 @@
             :props="props"
           >
             <q-td colspan="100%">
-              <div>{{row}}</div>
+              <div>{{ row }}</div>
             </q-td>
           </q-tr>
         </template>
         <!-- Card view -->
         <template
           v-slot:item="props"
-          v-if='card'
+          v-if="card"
         >
-          <div class='q-pa-xs col-xs-12 col-sm-6 col-md-4 col-lg-3'>
+          <div class="q-pa-xs col-xs-12 col-sm-6 col-md-4 col-lg-3">
             <q-card>
               <div
-                class='q-pa-md'
-                v-if='props.row.image'
+                class="q-pa-md"
+                v-if="props.row.image"
               >
                 <q-img
-                  :ratio='16/9'
-                  :src='props.row.image'
+                  :ratio="16/9"
+                  :src="props.row.image"
                 />
               </div>
               <q-list
                 dense
-                class='scroll'
-                style='max-height:300px;'
+                class="scroll"
+                style="max-height:300px;"
               >
                 <q-item
                   v-for="col in props.cols"
                   :key="col.name"
                 >
-                  <q-item-section v-if='typeItem(col.value)'>
+                  <q-item-section v-if="typeItem(col.value)">
                     <q-item-label>{{ col.label }}</q-item-label>
                   </q-item-section>
                   <q-item-section
-                    v-if='typeItem(col.value)'
+                    v-if="typeItem(col.value)"
                     side
                   >
                     <q-item-label
                       caption
-                      lines='1'
-                      style='max-width:150px;'
+                      lines="1"
+                      style="max-width:150px;"
                     >
                       {{ col.value || 'N/A' }}
                       <q-popup-edit
-                        v-if='edit'
+                        v-if="edit"
                         auto-save
                         v-model="props.row[col.name]"
-                        @save='$emit("saved", props.row[col.name], props.row, col.label)'
+                        @save="$emit('saved', props.row[col.name], props.row, col.label)"
                       >
                         <editInPlace
-                          :props='props'
-                          :col='col'
+                          :props="props"
+                          :col="col"
                         />
                       </q-popup-edit>
                     </q-item-label>
                   </q-item-section>
                   <div
                     v-else
-                    class='full-width'
+                    class="full-width"
                   >
                     <!-- If object has more than 3 items -->
                     <q-expansion-item
-                      :label='col.label'
-                      class='full-width q-pa-none'
+                      :label="col.label"
+                      class="full-width q-pa-none"
                       expand-separator
                     >
-                      {{col.value}}
+                      {{ col.value }}
                     </q-expansion-item>
                   </div>
                 </q-item>
