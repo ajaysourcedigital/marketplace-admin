@@ -86,13 +86,13 @@ export default {
       let list = []
       switch (this.name) {
         case 'content':
-          list = ['name', 'slug', 'creator', 'clientId', 'cover', 'type']
+          list = ['name', 'slug', 'creator', 'clientId', 'media', 'type']
           break
         case 'metacontent':
           list = ['name', 'uuid', 'views', 'interactions', 'conversations', 'distributions', 'clientId']
           break
         case 'campaign':
-          list = ['name', 'slug', 'creator', 'clientId', 'cover', 'type']
+          list = ['name', 'slug', 'creator', 'clientId', 'media', 'type']
           break
       }
       return list
