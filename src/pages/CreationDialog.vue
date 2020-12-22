@@ -29,7 +29,7 @@
           <div
             v-for='(contents, index) in list'
             :key='index'
-            class='col-lg-6 col-xl-6 col-md-6 col-sm-12 col-xs-12 q-pa-sm'
+            class='col-lg-6 col-xl-6 col-md-6 col-sm-12 col-xs-12 q-pa-sm text-capitalize'
           >
             <q-input
               v-if='contents === "name"'
