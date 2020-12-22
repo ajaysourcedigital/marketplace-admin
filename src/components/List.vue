@@ -48,11 +48,9 @@
         class="stickyTable"
         :data="validation"
         :grid="card"
-        row-key="name"
         hide-bottom
         virtual-scroll
         :rows-per-page-options="[0]"
-        table-colspan="6"
         wrap-cells
         @row-click="(evt, row, index) => $emit('row-click', evt, row, index)"
       >
@@ -77,6 +75,7 @@
             :props="props"
             class="cursor-pointer"
             auto-width
+            @click="$emit('row-click', props.row)"
           >
             <q-td>
               <q-avatar
@@ -118,7 +117,7 @@
                   icon="add"
                   round
                   color="primary"
-                  @click="expandRow(props, col)"
+                  @click.stop="expandRow(props, col)"
                 />
               </div>
             </q-td>
@@ -138,7 +137,7 @@
           v-if="card"
         >
           <div class="q-pa-xs col-xs-12 col-sm-6 col-md-4 col-lg-3">
-            <q-card>
+            <q-card @click="$emit('row-click', props.row)">
               <div
                 class="q-pa-md"
                 v-if="props.row.image"
@@ -189,6 +188,7 @@
                   >
                     <!-- If object has more than 3 items -->
                     <q-expansion-item
+                      @click.stop="debug('Clicked on row')"
                       :label="col.label"
                       class="full-width q-pa-none"
                       expand-separator
