@@ -1,17 +1,17 @@
 <template>
   <div>
     <q-input
-      v-if="typeof props.row[col.name] === &quot;number&quot;"
+      v-if="typeof props.row[col.name] === 'number'"
       type="number"
       v-model.number="props.row[col.name]"
       dense
     />
-    <div v-else-if="typeof props.row[col.name] === &quot;object&quot;">
+    <div v-else-if="typeof props.row[col.name] === 'object'">
       <q-input
         v-for="(e, i) in props.row[col.name]"
         :key="i"
         v-model="props.row[col.name][i]"
-        :label="typeof i === &quot;string&quot; ? i : &quot;&quot;"
+        :label="typeof i === 'string' ? i : ''"
         dense
       />
     </div>

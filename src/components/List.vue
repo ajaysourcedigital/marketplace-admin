@@ -34,7 +34,7 @@
           <q-btn
             round
             flat
-            :icon="card ? &quot;list&quot; : &quot;view_module&quot;"
+            :icon="card ? 'list' : 'view_module'"
             @click="card = !card"
           />
         </div>
@@ -85,7 +85,7 @@
               >
                 <q-img
                   :ratio="1"
-                  :src="props.row.image ? props.row.image : &quot;https://via.placeholder.com/150?text=N/A&quot;"
+                  :src="props.row.image ? props.row.image : 'https://via.placeholder.com/150?text=N/A'"
                 />
               </q-avatar>
             </q-td>
@@ -104,7 +104,7 @@
                   v-if="edit"
                   auto-save
                   v-model="props.row[col.name]"
-                  @save="$emit(&quot;saved&quot;, props.row[col.name], props.row, col.label)"
+                  @save="$emit('saved', props.row[col.name], props.row, col.label)"
                 >
                   <editInPlace
                     :props="props"
@@ -174,7 +174,7 @@
                         v-if="edit"
                         auto-save
                         v-model="props.row[col.name]"
-                        @save="$emit(&quot;saved&quot;, props.row[col.name], props.row, col.label)"
+                        @save="$emit('saved', props.row[col.name], props.row, col.label)"
                       >
                         <editInPlace
                           :props="props"
