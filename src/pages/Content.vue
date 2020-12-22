@@ -4,7 +4,7 @@
     <list
       :data="records.data"
       :schema="schema"
-      :fullData='records'
+      :full-data="records"
       @row-click="rowClick"
     />
   </q-page>
