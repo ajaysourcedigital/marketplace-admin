@@ -2,7 +2,9 @@
   <q-page class="q-pa-sm">
     <stats :settings="user.settings.admin.metacontent.stats" />
     <list
-      :settings="records"
+      :data="records.data"
+      :schema="schema"
+      :full-data="records"
       @row-click="rowClick"
     />
   </q-page>
@@ -67,6 +69,17 @@ export default {
           }
         ],
         data: []
+      },
+      // Remove later if needed
+      schema: {
+        $schema: 'http://json-schema.org/draft-07/schema#',
+        type: 'object',
+        required: ['name'],
+        properties: {
+          name: {
+            type: 'string'
+          }
+        }
       }
     }
   }

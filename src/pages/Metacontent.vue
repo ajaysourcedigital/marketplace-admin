@@ -4,6 +4,9 @@
     <list
       :settings="records"
       @row-click="rowClick"
+      :data="records.data"
+      :schema="schema"
+      :full-data="records"
     />
   </q-page>
 </template>
@@ -30,6 +33,7 @@ export default {
   },
   methods: {
     rowClick (ev, row = {}) {
+      this.debug('Row')
       const { id } = row
       if (!id) throw new Error('`id` is required.')
       this.$router.push({ name: 'edit-metacontent', params: { id } })
@@ -67,6 +71,17 @@ export default {
           }
         ],
         data: []
+      },
+      // Remove later if needed
+      schema: {
+        $schema: 'http://json-schema.org/draft-07/schema#',
+        type: 'object',
+        required: ['name'],
+        properties: {
+          name: {
+            type: 'string'
+          }
+        }
       }
     }
   }
