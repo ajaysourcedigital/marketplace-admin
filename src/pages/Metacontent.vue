@@ -32,9 +32,9 @@ export default {
       })
   },
   methods: {
-    rowClick (ev, row = {}) {
-      this.debug('Row')
-      const { id } = row
+    rowClick (ev = {}) {
+      this.debug('Row', ev)
+      const { id } = ev
       if (!id) throw new Error('`id` is required.')
       this.$router.push({ name: 'edit-metacontent', params: { id } })
     }

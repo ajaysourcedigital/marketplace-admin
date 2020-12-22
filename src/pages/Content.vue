@@ -31,8 +31,8 @@ export default {
       })
   },
   methods: {
-    rowClick (ev, row = {}) {
-      const { id } = row
+    rowClick (ev = {}) {
+      const { id } = ev
       if (!id) throw new Error('`id` is required.')
       this.$router.push({ name: 'edit-content', params: { id } })
     }
