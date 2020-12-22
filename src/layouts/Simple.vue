@@ -170,37 +170,37 @@
               />
             </q-item>
             <q-item
-              v-else-if='link.type === "button-dropdown"'
-              class='GNL__drawer-button-dropdown'
+              v-else-if="link.type === 'button-dropdown'"
+              class="GNL__drawer-button-dropdown"
             >
               <q-btn-dropdown
                 rounded
-                padding='10px'
-                :color='link.color'
+                padding="10px"
+                :color="link.color"
                 class="text-grey-8"
               >
                 <template v-slot:label>
                   <div class="row items-center no-wrap">
                     <q-icon
-                      v-if='!miniState'
+                      v-if="!miniState"
                       left
                       :name="link.icon"
                     />
                     <div class="text-center">
-                      {{miniState?'':link.text}}
+                      {{ miniState?'':link.text }}
                     </div>
                   </div>
                 </template>
                 <q-list>
                   <q-item
-                    v-for='(item, i) in link.list'
-                    :key='i'
+                    v-for="(item, i) in link.list"
+                    :key="i"
                     clickable
                     v-close-popup
-                    @click='processAction({ action: link.action, payload: item.value})'
+                    @click="processAction({ action: link.action, payload: item.value})"
                   >
                     <q-item-section>
-                      <q-item-label>{{item.text}}</q-item-label>
+                      <q-item-label>{{ item.text }}</q-item-label>
                     </q-item-section>
                   </q-item>
                 </q-list>

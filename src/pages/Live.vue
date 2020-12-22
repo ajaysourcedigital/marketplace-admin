@@ -46,14 +46,14 @@
           >
             <draggable
               class="list-group"
-              :list="planned_task"
+              :list="rtData.available"
               group="tasks"
               v-bind="dragOptions"
               @start="drag = true"
               @end="drag = false"
             >
               <q-card
-                v-for="(item, index) in planned_task"
+                v-for="(item, index) in rtData.available"
                 :key="index"
                 class="rounded-borders q-my-sm"
                 @mouseover="$set(task_selected_index,'planned',index)"
@@ -69,7 +69,7 @@
                         name="close"
                         class="absolute-top-right q-mr-md q-mt-xs text-red"
                         v-if="index==task_selected_index.planned"
-                        @click="deleteTask('panned', task_selected_index.planned)"
+                        @click="deleteTask('available', task_selected_index.planned)"
                       />
                     </span>
                   </div>
@@ -194,14 +194,14 @@
           >
             <draggable
               class="list-group"
-              :list="wip_task"
+              :list="rtData.scheduled"
               group="tasks"
               v-bind="dragOptions"
               @start="drag = true"
               @end="drag = false"
             >
               <q-card
-                v-for="(item, index) in wip_task"
+                v-for="(item, index) in rtData.scheduled"
                 :key="index"
                 class="rounded-borders q-my-sm"
                 @mouseover="task_selected_index.wip = index"
@@ -217,7 +217,7 @@
                         name="close"
                         class="absolute-top-right q-mr-md q-mt-xs text-red"
                         v-if="index==task_selected_index.wip"
-                        @click="deleteTask('wip', task_selected_index.wip)"
+                        @click="deleteTask('scheduled', task_selected_index.wip)"
                       />
                     </span>
                   </div>
@@ -323,10 +323,13 @@
               </q-icon>
             </q-item-section>
           </q-item>
+          {{ rtData }}
+          <!--
           <iframe
             style="width: 100%; height: 785px"
             src="https://experience.sourcesync.io/cheval"
           />
+          -->
         </q-card>
       </div>
     </div>
@@ -340,9 +343,54 @@ import draggable from 'vuedraggable'
 
 Vue.component('draggable', draggable)
 export default {
-  name: 'TaskBoard',
+  name: 'PageLive',
+  mounted () {
+    console.log(this.realtime)
+    this.rtDB.set({
+      available: [
+        {
+          title: 'Buy milk',
+          label: '15 mins',
+          tags: [{ name: 'Error', color: 'negative' }, { name: 'Warning', color: 'warning' }],
+          description: '2 Gallons of milk at the Deli store'
+        },
+        {
+          title: 'Dispose Garbage',
+          label: '10 mins',
+          tags: [{ name: 'Info', color: 'info' }, { name: 'Success', color: 'positive' }],
+          description: 'Sort out recyclable and waste as needed'
+        },
+        {
+          title: 'Clean House',
+          label: '30 mins',
+          tags: [{ name: 'Error', color: 'negative' }, { name: 'Success', color: 'positive' }],
+          description: 'Soap wash and polish floor. Polish windows and doors. Scrap all broken glasses'
+        },
+        {
+          title: 'Go Trekking',
+          label: '30 mins',
+          tags: [{ name: 'Info', color: 'info' }, { name: 'Success', color: 'positive' }, {
+            name: 'Info',
+            color: 'info'
+          }, { name: 'Success', color: 'positive' }, { name: 'Info', color: 'info' }, {
+            name: 'Success',
+            color: 'positive'
+          }],
+          description: 'Completed 10km on cycle'
+        }
+      ],
+      scheduled: [
+      ]
+    })
+    this.rtDB.on('value', (snapshot) => {
+      this.rtData = snapshot.val()
+      console.log(this.rtData)
+    })
+  },
   data () {
     return {
+      rtData: {},
+      rtDB: window.firebase.database().ref('apps/sourcesync-admin/test'), // this.$fb.database().ref('apps/sourcesync-admin'),
       task_selected_index: {
         blocked: null,
         completed: null,
@@ -375,85 +423,7 @@ export default {
         backgroundColor: '#027be3',
         width: '9px',
         opacity: 0.2
-      },
-      planned_task: [
-        {
-          title: 'Buy milk',
-          label: '15 mins',
-          tags: [{ name: 'Error', color: 'negative' }, { name: 'Warning', color: 'warning' }],
-          description: '2 Gallons of milk at the Deli store'
-        },
-        {
-          title: 'Dispose Garbage',
-          label: '10 mins',
-          tags: [{ name: 'Info', color: 'info' }, { name: 'Success', color: 'positive' }],
-          description: 'Sort out recyclable and waste as needed'
-        },
-        {
-          title: 'Write Blog',
-          label: '10 mins',
-          tags: [{ name: 'Warning', color: 'warning' }],
-          description: 'Can AI make memes?'
-        },
-        {
-          title: 'Pay Rent',
-          label: '5 mins',
-          tags: [{ name: 'Error', color: 'negative' }, { name: 'Warning', color: 'warning' }, {
-            name: 'Info',
-            color: 'info'
-          }],
-          description: 'Transfer to bank account'
-        }
-      ],
-      wip_task: [
-        {
-          title: 'Clean House',
-          label: '30 mins',
-          tags: [{ name: 'Error', color: 'negative' }, { name: 'Success', color: 'positive' }],
-          description: 'Soap wash and polish floor. Polish windows and doors. Scrap all broken glasses'
-        },
-        {
-          title: 'Go Trekking',
-          label: '30 mins',
-          tags: [{ name: 'Info', color: 'info' }, { name: 'Success', color: 'positive' }, {
-            name: 'Info',
-            color: 'info'
-          }, { name: 'Success', color: 'positive' }, { name: 'Info', color: 'info' }, {
-            name: 'Success',
-            color: 'positive'
-          }],
-          description: 'Completed 10km on cycle'
-        }
-      ],
-      blocked_task: [
-        {
-          title: 'Morning Jog',
-          label: '30 mins',
-          tags: [{ name: 'Error', color: 'negative' }],
-          description: 'Track using fitbit'
-        }
-      ],
-      completed_task: [
-        {
-          title: 'Practice Meditation',
-          label: '15 mins',
-          tags: [],
-          description: 'Use Headspace app'
-        },
-        {
-          title: 'Maintain Daily Journal',
-          label: '15 mins',
-          tags: [],
-          description: 'Use Spreadsheet for now'
-        },
-        {
-          title: 'Go Trekking',
-          label: '15 mins',
-          tags: [{ name: 'Info', color: 'info' }, { name: 'Success', color: 'positive' }],
-          description: 'Completed 10km on cycle'
-        }
-      ]
-
+      }
     }
   },
   computed: {
@@ -469,22 +439,26 @@ export default {
       return this.size.height - 90 + 'px'
     }
   },
+  watch: {
+    rtData: {
+      handler (v) {
+        if (!this.rtData.available) this.rtData.available = []
+        if (!this.rtData.scheduled) this.rtData.scheduled = []
+        this.rtDB.set(this.rtData)
+      },
+      deep: true
+    }
+  },
   methods: {
     onResize (size) {
       this.size = size
     },
     deleteTask (name, index) {
-      if (name === 'panned') {
-        this.planned_task.splice(index, 1)
+      if (name === 'available') {
+        this.rtData.available.splice(index, 1)
       }
-      if (name === 'wip') {
-        this.wip_task.splice(index, 1)
-      }
-      if (name === 'completed') {
-        this.completed_task.splice(index, 1)
-      }
-      if (name === 'blocked') {
-        this.blocked_task.splice(index, 1)
+      if (name === 'scheduled') {
+        this.rtData.scheduled.splice(index, 1)
       }
     }
   }

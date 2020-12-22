@@ -5,6 +5,7 @@
       :data="records.data"
       :schema="schema"
       :fullData='records'
+      @row-click="rowClick"
     />
   </q-page>
 </template>
@@ -20,7 +21,7 @@ export default {
     List
   },
   mounted () {
-    this.$axios.get(`${this.$store.state.system.api.base}/distributions`, { headers: { Authorization: `Bearer ${this.user.jwt}` } })
+    this.$api.get('/distributions')
       .then(response => {
         this.records.data = response.data
         this.debug('DATA', response.data)
@@ -28,6 +29,13 @@ export default {
       .catch(response => {
         this.debug('CRAP', response)
       })
+  },
+  methods: {
+    rowClick (ev, row = {}) {
+      const { id } = row
+      if (!id) throw new Error('`id` is required.')
+      this.$router.push({ name: 'edit-content', params: { id } })
+    }
   },
   data () {
     return {

@@ -54,6 +54,7 @@
         :rows-per-page-options="[0]"
         table-colspan="6"
         wrap-cells
+        @row-click="(evt, row, index) => $emit('row-click', evt, row, index)"
       >
         <!-- Default | List view -->
         <template

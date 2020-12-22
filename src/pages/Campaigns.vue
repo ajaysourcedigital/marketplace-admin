@@ -43,7 +43,7 @@ function getCurrentDay (day) {
 }
 
 export default {
-  name: 'Calendar',
+  name: 'PageCampaign',
   data () {
     return {
       selectedDate: '',
