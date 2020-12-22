@@ -2,9 +2,11 @@
   <q-page class="q-pa-sm">
     <stats :settings="user.settings.admin.metacontent.stats" />
     <list
-      :data="metacontent.data"
+      :settings="records"
+      @row-click="rowClick"
+      :data="records.data"
       :schema="schema"
-      :full-data="metacontent"
+      :full-data="records"
     />
   </q-page>
 </template>
@@ -12,7 +14,6 @@
 <script>
 import Stats from 'components/Stats.vue'
 import List from 'components/List.vue'
-
 export default {
   name: 'PageMetacontent',
   components: {
@@ -20,20 +21,28 @@ export default {
     List
   },
   mounted () {
-    this.$axios.get(`${this.$store.state.system.api.base}/activations`, { headers: { Authorization: `Bearer ${this.user.jwt}` } })
+    this.$api.get('/activations')
       .then(response => {
-        this.metacontent.data = response.data
+        this.records.data = response.data
         this.debug('DATA', response.data)
       })
       .catch(response => {
         this.debug('CRAP', response)
       })
   },
+  methods: {
+    rowClick (ev, row = {}) {
+      this.debug('Row')
+      const { id } = row
+      if (!id) throw new Error('`id` is required.')
+      this.$router.push({ name: 'edit-metacontent', params: { id } })
+    }
+  },
   data () {
     return {
       settings: this.$store.state.app.settings,
       user: this.$store.state.user,
-      metacontent: {
+      records: {
         icon: 'fas fa-chart-line',
         header: 'Metacontent',
         subheader: 'These items can appear within your content in various ways',
