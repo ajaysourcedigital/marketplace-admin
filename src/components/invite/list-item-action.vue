@@ -5,8 +5,8 @@
         @click="$router.go(-1)"
         elevated
         rounded
-        color="grey-5"
-        label="Cancel"
+        color="primary"
+        :label="$t('invite.listItemAction.cancelAction')"
       />
     </div>
     <div class="">
@@ -14,8 +14,8 @@
         @click="handleAdd()"
         elevated
         rounded
-        color="blue-6"
-        label="Invite Users"
+        color="info"
+        :label="$t('invite.listItemAction.inviteUsers')"
       />
     </div>
   </div>
