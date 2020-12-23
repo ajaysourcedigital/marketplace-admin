@@ -80,7 +80,7 @@ export default {
   },
   methods: {
     onSubmitRegister (data) {
-      console.log('Submitted Register Data', data)
+      this.debug('Submitted Register Data', data)
       this.registerFormFirstName = data.registerFormFirstName
       this.registerFormLastName = data.registerFormLastName
       this.registerFormEmail = data.registerFormEmail
