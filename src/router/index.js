@@ -16,6 +16,7 @@ export default function ({ store }) {
   })
 
   Router.beforeEach((to, from, next) => {
+    console.log('store user', store.state.user)
     debug(`Checking route: ${from.name} -> ${to.name}`)
     // If the app isn't loaded, show them a loading screen...
     if (!store.state.system.loaded) {
