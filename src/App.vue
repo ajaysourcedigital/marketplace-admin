@@ -1,12 +1,20 @@
 <template>
   <div id="q-app">
     <router-view />
+    <creation-dialog
+      :name="createName"
+      v-if='createDialog'
+      v-model="createDialog"
+      @close="createDialog = null"
+    />
   </div>
 </template>
 
 <script>
 import settings from '../package.json'
+import CreationDialog from './pages/CreationDialog.vue'
 export default {
+  components: { CreationDialog },
   name: 'App',
   events: {
     // Handles all logout attempts...
@@ -17,6 +25,18 @@ export default {
     'app.route' (name) {
       console.log(`Routing to "${name}"`)
       if (this.$route.name !== name) this.$router.push({ name })
+    },
+    // Handles new content creation...
+    'app.new' (name) {
+      this.createDialog = true
+      this.createName = name
+      this.debug('Name', name)
+    }
+  },
+  data () {
+    return {
+      createDialog: false,
+      createName: null
     }
   },
   mounted () {

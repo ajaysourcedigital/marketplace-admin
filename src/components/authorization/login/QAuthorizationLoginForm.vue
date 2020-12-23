@@ -6,8 +6,8 @@
     <q-input
       filled
       type="email"
-      v-model="mutableEmailLogin"
-      @input="$emit('update:emailLogin', mutableEmailLogin)"
+      :value="emailLogin"
+      @input="$emit('update:email-login', $event)"
       label="Email"
       lazy-rules
       :rules="[
@@ -18,8 +18,8 @@
     <q-input
       filled
       type="password"
-      v-model="mutablePasswordLogin"
-      @input="$emit('update:passwordLogin', mutablePasswordLogin)"
+      :value="passwordLogin"
+      @input="$emit('update:password-login', $event)"
       label="Password"
       lazy-rules
       :rules="[
@@ -37,23 +37,18 @@
 </template>
 
 <script>
+
+import props from '../mixins/props'
 export default {
   name: 'QAuthorizationLoginForm',
   props: {
-    emailLogin: String,
-    passwordLogin: String
-  },
-  data () {
-    return {
-      mutableEmailLogin: this.emailLogin,
-      mutablePasswordLogin: this.passwordLogin
-    }
+    ...props.login
   },
   methods: {
     handleLogin () {
       this.$emit('handleLogin', {
-        emailLogin: this.mutableEmailLogin,
-        passwordLogin: this.mutablePasswordLogin
+        emailLogin: this.emailLogin,
+        passwordLogin: this.passwordLogin
       })
     }
   }
