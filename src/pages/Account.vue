@@ -16,12 +16,20 @@
                   </q-avatar>
                 </q-item-section>
                 <q-item-section>
+                  <input
+                    type="file"
+                    style="display: none"
+                    ref="fileInput"
+                    accept="image/*"
+                    @change="onFilePicked"
+                  >
                   <q-btn
                     label="Add Photo"
                     class="text-capitalize"
                     rounded
                     color="info"
                     style="max-width: 120px"
+                    @click="onPickFile"
                   ></q-btn>
                 </q-item-section>
               </q-item>
@@ -202,8 +210,7 @@ export default {
   data () {
     return {
       user_details: {},
-      password_dict: {},
-      form_state: {}
+      password_dict: {}
     }
   },
   methods: {
@@ -211,7 +218,7 @@ export default {
       this.handleSubmit()
     },
     handleSubmit () {
-      this.$api.put(`/user/${this.user_details}`, this.user_details)
+      this.$api.put(`/user/${this.user_details.id}`, this.user_details)
         .then(response => {
           console.log('response', response)
         })
@@ -219,17 +226,16 @@ export default {
           console.log('response', response)
         })
     },
-    formatName (firstName, lastName) {
-      if (!firstName) {
-        if (lastName) {
-          return lastName
-        } else {
-          return ''
-        }
-      }
-      if (!lastName) lastName = ''
-
-      return firstName + ' ' + lastName
+    onPickFile () {
+      this.$refs.fileInput.click()
+    },
+    onFilePicked (event) {
+      const file = event.target.files[0]
+      const formData = new FormData()
+      formData.append('file', file)
+      const request = new XMLHttpRequest()
+      request.open('POST', `${this.$store.state.system.api.base}/upload`)
+      request.send(formData)
     }
   },
   beforeMount () {
