@@ -21,5 +21,23 @@ export default {
     bar: {
       text: 'Find...'
     }
+  },
+  // Invite is actually being used in the invite components so don't delete!
+  // Keys are named the same as their respective components in src/invite
+  invite: {
+    header: 'Invite Users',
+    listItemAction: {
+      inviteUsers: 'Invite Users',
+      cancelAction: 'Cancel'
+    },
+    listItem: {
+      userToInvite: 'Username or email address',
+      role: 'Role'
+    },
+    splash: {
+      header: 'Congratulations!',
+      subHeader: 'Users invited successfully.',
+      homeBtn: 'Home'
+    }
   }
 }
