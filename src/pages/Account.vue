@@ -230,12 +230,20 @@ export default {
       this.$refs.fileInput.click()
     },
     onFilePicked (event) {
-      const file = event.target.files[0]
-      const formData = new FormData()
-      formData.append('file', file)
-      const request = new XMLHttpRequest()
-      request.open('POST', `${this.$store.state.system.api.base}/upload`)
-      request.send(formData)
+      // const file = event.target.files[0]
+      // const formData = new FormData()
+      // formData.append('file', file)
+      // const request = new XMLHttpRequest()
+      // request.open('POST', `${this.$store.state.system.api.base}/upload`)
+      // request.send(formData)
+
+      this.$api.put('/distributions/49', {
+        creator: 'debugger@bugtown.com'
+      }).then(response => {
+        console.log('put successful: ', response)
+      }).catch(error => {
+        console.error('put unsuccessful: ', error)
+      })
     }
   },
   beforeMount () {
