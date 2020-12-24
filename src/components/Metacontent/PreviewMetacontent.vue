@@ -47,8 +47,10 @@
             <render-smart-block
               :settings="item"
               :preview="true"
-              @delete="processDelete(index)"
-              @config="processConfig(index, $event)"
+              @action="processAction(index, ...arguments)"
+              @change="processChange(index, ...arguments)"
+              @config="processConfig(index, ...arguments)"
+              @delete="processDelete(index, ...arguments)"
             />
           </div>
           <!-- {{ metacontentBlocks }} -->
@@ -64,8 +66,10 @@
         >
           <render-smart-block
             :settings="item"
-            @delete="processDelete(index)"
-            @config="processConfig(index, $event)"
+            @action="processAction(index, ...arguments)"
+            @change="processChange(index, ...arguments)"
+            @config="processConfig(index, ...arguments)"
+            @delete="processDelete(index, ...arguments)"
           />
         </div>
         <!-- {{ metacontentBlocks }} -->
@@ -93,15 +97,15 @@ export default {
     processSaveMetacontent () {
       this.debug('Saving Metacontent...')
     },
-    processChange (data) {
-      this.$emit('action', data)
+    processAction (index, data) {
+      this.$emit('change', index, data)
+    },
+    processChange (index, data) {
+      this.$emit('action', index, data)
     },
     processConfig (index, data) {
-      this.debug(`Got new config for ${index}`, data)
-      this.metacontentBlocks[index].settings = JSON.parse(data)
-    },
-    processAction (data) {
-      this.$emit('change', data)
+      this.debug('config', index, data, this.metacontentBlocks[index].settings)
+      this.metacontentBlocks[index].settings.settings = data
     },
     processDelete (index) {
       this.debug('Delete', index)

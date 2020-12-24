@@ -46,9 +46,10 @@
         >
           <component
             :is="`smart-block-${settings.settings.name}`"
-            @change="processChange"
             @action="processAction"
-            :settings="settings.settings"
+            @change="processChange"
+            @config="processConfig"
+            :settings="settings.settings.settings"
           />
         </q-tab-panel>
         <q-tab-panel
@@ -57,15 +58,18 @@
         >
           <component
             :is="`smart-block-${settings.settings.name}`"
-            @change="processChange"
             @action="processAction"
+            @change="processChange"
             @config="processConfig"
             :settings="settings.settings.settings"
             :configure="true"
           />
         </q-tab-panel>
         <q-tab-panel name="tabData">
-          {{ settings }}
+          <vue-json-pretty
+            :data="settings.settings.settings"
+            :deep="3"
+          />
         </q-tab-panel>
       </q-tab-panels>
     </div>
@@ -73,8 +77,8 @@
       <!-- Rendering for production just renders the block and proxies the events -->
       <component
         :is="`smart-block-${settings.settings.name}`"
-        @change="processChange"
         @action="processAction"
+        @change="processChange"
         @config="processConfig"
         :settings="settings.settings.settings"
       />
@@ -83,6 +87,7 @@
 </template>
 <script>
 import Draggable from 'vuedraggable'
+import VueJsonPretty from 'vue-json-pretty'
 
 // TODO: Move these externally and compile them from the apps service...
 import SmartBlockSurvey from 'components/SmartBlocks/Survey'
@@ -95,7 +100,7 @@ import SmartBlockMarkdown from 'components/SmartBlocks/Markdown'
 import SmartBlockIframe from 'components/SmartBlocks/Iframe'
 
 export default {
-  name: 'MetacontentPreview',
+  name: 'RenderSmartBlock',
   props: {
     settings: Object,
     preview: Boolean
@@ -107,6 +112,7 @@ export default {
   },
   components: {
     Draggable,
+    VueJsonPretty,
     SmartBlockSurvey,
     SmartBlockButton,
     SmartBlockThing,
@@ -121,12 +127,15 @@ export default {
       this.$emit('delete')
     },
     processChange (data) {
+      this.debug('change', data)
       this.$emit('change', data)
     },
     processConfig (data) {
+      this.debug('config', data)
       this.$emit('config', data)
     },
     processAction (data) {
+      this.debug('action', data)
       this.$emit('action', data)
     }
   }
