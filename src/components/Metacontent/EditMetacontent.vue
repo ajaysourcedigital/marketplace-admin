@@ -8,16 +8,16 @@
         shrink
       >
         <q-tab
-          name="Sandbox"
-          label="Sandbox"
+          name="SmartBlocks"
+          label="Smart Blocks"
         />
         <q-tab
-          name="Production"
-          label="Production"
+          name="Settings"
+          label="Settings"
         />
         <q-tab
-          name="Data"
-          label="Data"
+          name="Events"
+          label="Events"
         />
       </q-tabs>
     </q-toolbar>
@@ -29,65 +29,36 @@
       transition-next="fade"
     >
       <q-tab-panel
-        name="Sandbox"
+        name="SmartBlocks"
         style="margin:0px;padding:0px"
       >
-        <draggable
-          class="list-group"
-          :list="metacontentBlocks"
-          group="options"
-          v-bind="dragOptions"
-          @start="drag = true"
-          @end="drag = false"
-        >
-          <div
-            v-for="(item, index) in metacontentBlocks"
-            :key="index"
-          >
-            <render-smart-block
-              :settings="item"
-              :preview="true"
-              @delete="processDelete(index)"
-              @config="processConfig(index, $event)"
-            />
-          </div>
-          <!-- {{ metacontentBlocks }} -->
-        </draggable>
+        Don't see functionality you need?
+        <list-smart-blocks />
       </q-tab-panel>
       <q-tab-panel
-        name="Production"
+        name="Settings"
         style="margin:0px;padding:0px"
       >
-        <div
-          v-for="(item, index) in metacontentBlocks"
-          :key="index"
-        >
-          <render-smart-block
-            :settings="item"
-            @delete="processDelete(index)"
-            @config="processConfig(index, $event)"
-          />
-        </div>
-        <!-- {{ metacontentBlocks }} -->
+        Settings go here
       </q-tab-panel>
-      <q-tab-panel name="Data">
+      <q-tab-panel name="Events">
+        This is a list of events that were triggered while engaging with the
+        metacontent. Use this to make sure everything is working as planned.
         {{ settings }}
       </q-tab-panel>
     </q-tab-panels>
   </div>
 </template>
 <script>
-import Draggable from 'vuedraggable'
-import RenderSmartBlock from 'components/Metacontent/RenderSmartBlock'
+import ListSmartBlocks from 'components/Metacontent/ListSmartBlocks'
 
 export default {
-  name: 'PreviewMetacontent',
+  name: 'EditMetacontent',
   props: {
     settings: Object
   },
   components: {
-    Draggable,
-    RenderSmartBlock
+    ListSmartBlocks
   },
   methods: {
     processSaveMetacontent () {
@@ -110,7 +81,7 @@ export default {
   },
   data () {
     return {
-      currentTab: 'Sandbox',
+      currentTab: 'SmartBlocks',
       content: null,
       dragOptions: {
         animation: 200,

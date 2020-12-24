@@ -1,68 +1,84 @@
 <template>
-  <div style="border: 1px solid #ccc;padding:0px;margin:0px">
-    <q-toolbar :class="`bg-${settings.settings.color} text-white`">
-      {{ settings.settings.title }}
-      <q-space />
-      <q-tabs
-        v-model="currentTab"
-        shrink
-      >
-        <q-tab
-          name="tabPreview"
-          label="Preview"
-        />
-        <q-tab
-          name="tabSettings"
-          label="Settings"
-        />
-        <q-tab
-          name="tabData"
-          label="Data"
-        />
-        <q-btn
-          @click="deleteMe"
-          icon="close"
-          flat
-          dense
-          small
-        />
-      </q-tabs>
-    </q-toolbar>
-    <q-tab-panels
-      v-model="currentTab"
-      animated
-      swipeable
-      transition-prev="slide-right"
-      transition-next="slide-left"
+  <div>
+    <div
+      v-if="preview"
+      style="border: 1px solid #ccc;padding:0px;margin:0px"
     >
-      <q-tab-panel
-        name="tabPreview"
-        style="margin:0px;padding:0px"
+      <!-- Rendering for preview does a lot of stuff -->
+      <q-toolbar :class="`bg-${settings.settings.color} text-white`">
+        {{ settings.settings.title }}
+        <q-space />
+        <q-tabs
+          v-model="currentTab"
+          shrink
+        >
+          <q-tab
+            name="tabPreview"
+            label="Preview"
+          />
+          <q-tab
+            name="tabSettings"
+            label="Settings"
+          />
+          <q-tab
+            name="tabData"
+            label="Data"
+          />
+          <q-btn
+            @click="deleteMe"
+            icon="close"
+            flat
+            dense
+            small
+          />
+        </q-tabs>
+      </q-toolbar>
+      <q-tab-panels
+        v-model="currentTab"
+        animated
+        swipeable
+        transition-prev="slide-right"
+        transition-next="slide-left"
       >
-        <component
-          :is="`smart-block-${settings.settings.name}`"
-          @change="processChange"
-          @action="processAction"
-          :settings="settings.settings"
-        />
-      </q-tab-panel>
-      <q-tab-panel
-        name="tabSettings"
-        style="margin:0px;padding:0px"
-      >
-        <component
-          :is="`smart-block-${settings.settings.name}`"
-          @change="processChange"
-          @action="processAction"
-          @config="processConfig"
-          :settings="settings.settings.settings"
-          :configure="true"
-        />
-      </q-tab-panel>
-      <q-tab-panel name="tabData">
-        {{ settings }}
-      </q-tab-panel>
-    </q-tab-panels>
+        <q-tab-panel
+          name="tabPreview"
+          style="margin:0px;padding:0px"
+        >
+          <component
+            :is="`smart-block-${settings.settings.name}`"
+            @change="processChange"
+            @action="processAction"
+            :settings="settings.settings"
+          />
+        </q-tab-panel>
+        <q-tab-panel
+          name="tabSettings"
+          style="margin:0px;padding:0px"
+        >
+          <component
+            :is="`smart-block-${settings.settings.name}`"
+            @change="processChange"
+            @action="processAction"
+            @config="processConfig"
+            :settings="settings.settings.settings"
+            :configure="true"
+          />
+        </q-tab-panel>
+        <q-tab-panel name="tabData">
+          {{ settings }}
+        </q-tab-panel>
+      </q-tab-panels>
+    </div>
+    <div v-else>
+      <!-- Rendering for production just renders the block and proxies the events -->
+      <component
+        :is="`smart-block-${settings.settings.name}`"
+        @change="processChange"
+        @action="processAction"
+        @config="processConfig"
+        :settings="settings.settings.settings"
+      />
+    </div>
   </div>
 </template>
 <script>
@@ -81,7 +97,8 @@ import SmartBlockIframe from 'components/SmartBlocks/Iframe'
 export default {
   name: 'MetacontentPreview',
   props: {
-    settings: Object
+    settings: Object,
+    preview: Boolean
   },
   data () {
     return {
@@ -104,13 +121,13 @@ export default {
       this.$emit('delete')
     },
     processChange (data) {
-      this.$emit('action', data)
+      this.$emit('change', data)
     },
     processConfig (data) {
       this.$emit('config', data)
     },
     processAction (data) {
-      this.$emit('change', data)
+      this.$emit('action', data)
     }
   }
 }

@@ -27,7 +27,7 @@ import Draggable from 'vuedraggable'
 import PreviewSmartBlock from 'components/Metacontent/PreviewSmartBlock'
 
 export default {
-  name: 'MetacontentPreview',
+  name: 'RenderMetacontent',
   props: {
     settings: Object
   },
