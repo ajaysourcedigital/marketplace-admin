@@ -67,7 +67,7 @@
         <q-tab-panel name="tabData">
           <vue-json-pretty
             :data="settings.settings"
-            :deep="3"
+            :deep="5"
           />
         </q-tab-panel>
       </q-tab-panels>
