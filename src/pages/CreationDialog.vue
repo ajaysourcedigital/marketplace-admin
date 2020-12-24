@@ -7,11 +7,13 @@
       <q-toolbar>
         <q-avatar square>
           <img
-            v-if='settings.logo'
+            v-if="settings.logo"
             :src="settings.logo.wide"
           >
         </q-avatar>
-        <q-toolbar-title class="text-capitalize"><span class="text-weight-bold">Create</span> {{name}}</q-toolbar-title>
+        <q-toolbar-title class="text-capitalize">
+          <span class="text-weight-bold">Create</span> {{ name }}
+        </q-toolbar-title>
         <q-btn
           flat
           round
@@ -20,41 +22,43 @@
           @click="$emit('close')"
         />
       </q-toolbar>
-      <q-card-section class='q-px-lg q-py-sm'><span class='text-capitalize'>{{name}}</span> creation... Once finished, you will be redirected to the editor.</q-card-section>
+      <q-card-section class="q-px-lg q-py-sm">
+        <span class="text-capitalize">{{ name }}</span> creation... Once finished, you will be redirected to the editor.
+      </q-card-section>
       <q-form
         @submit="onSubmit"
         @reset="onReset"
       >
-        <q-card-section class='row fit'>
+        <q-card-section class="row fit">
           <div
-            v-for='(contents, index) in list'
-            :key='index'
-            :class='contents === "name" || contents === "type" ? "col-12" : "col-lg-6 col-xl-6 col-md-6 col-sm-12 col-xs-12"'
+            v-for="(contents, index) in list"
+            :key="index"
+            :class="contents === 'name' || contents === 'type' ? 'col-12' : 'col-lg-6 col-xl-6 col-md-6 col-sm-12 col-xs-12'"
             class="q-pa-sm"
           >
             <q-input
-              v-if='contents === "name"'
+              v-if="contents === 'name'"
               filled
-              :label='capitalize(contents)'
+              :label="capitalize(contents)"
               v-model="content[contents]"
               :rules="[val => !!val || 'Field is required']"
             />
             <q-select
-              v-else-if='contents === "type"'
+              v-else-if="contents === 'type'"
               filled
               v-model="content[contents]"
               :options="options"
-              :label='capitalize(contents)'
+              :label="capitalize(contents)"
             />
             <q-input
-              class='q-pb-md'
+              class="q-pb-md"
               v-else
               filled
-              :label='capitalize(contents)'
+              :label="capitalize(contents)"
               v-model="content[contents]"
             />
           </div>
-          <div class='q-pa-sm col-12 row justify-end'>
+          <div class="q-pa-sm col-12 row justify-end">
             <q-btn
               label="Submit"
               type="submit"

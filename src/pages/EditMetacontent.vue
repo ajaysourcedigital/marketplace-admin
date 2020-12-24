@@ -17,17 +17,27 @@
         :style="`min-height: ${getHeight}`"
       >
         <template v-slot:before>
-          <!-- The picker -->
-          <list-smart-blocks />
+          <!-- The left side (Settings & Smart Block list) -->
+          <edit-metacontent
+            :log="eventLog"
+            :settings="content"
+          />
         </template>
 
         <template v-slot:after>
-          <!-- The preview -->
-          <preview-metacontent />
+          <!-- The right side (sandbox/production/data view) -->
+          <preview-metacontent
+            :settings="content"
+            @action="processAction"
+            @change="processChange"
+            @config="processConfig"
+          />
         </template>
       </q-splitter>
     </div>
+    <!-- The load screen -->
     <inner-loading :showing="content === null" />
+    <!-- Keeps the split-view sized correctly - TODO: Anyone know of a better solution? -->
     <q-resize-observer @resize="onResize" />
   </q-page>
 </template>
@@ -35,7 +45,7 @@
 <script>
 import Dropdown from 'components/Dropdown'
 import InnerLoading from 'components/InnerLoading'
-import ListSmartBlocks from 'components/Metacontent/ListSmartBlocks'
+import EditMetacontent from 'components/Metacontent/EditMetacontent'
 import PreviewMetacontent from 'components/Metacontent/PreviewMetacontent'
 
 export default {
@@ -43,7 +53,7 @@ export default {
   components: {
     Dropdown,
     InnerLoading,
-    ListSmartBlocks,
+    EditMetacontent,
     PreviewMetacontent
   },
   props: {
@@ -54,12 +64,12 @@ export default {
       content: null,
       splitterModel: 50,
       size: {},
+      eventLog: [],
       dropdownMetacontent: [
         { text: 'Save', action: 'app.editMetacontent.save', payload: '' },
         { text: 'Import', action: 'app.editMetacontent.import', payload: '' },
         { text: 'Export', action: 'app.editMetacontent.export', payload: '' }
       ]
-
     }
   },
   async created () {
@@ -71,13 +81,20 @@ export default {
     }
   },
   methods: {
-    processChange (data) {
-      this.debug('Changed', data)
-      this.$q.notify(`Recieved data: ${JSON.stringify(data)}`)
-    },
-    processAction (data) {
+    processAction (index, data) {
       this.debug('Action', data)
-      this.$q.notify(`Recieved action with payload: ${JSON.stringify(data)}`)
+      this.eventLog.push({ name: 'action', index, data })
+      this.$q.notify(`Action: ${JSON.stringify(data)}`)
+    },
+    processChange (index, data) {
+      this.debug('Change', data)
+      this.eventLog.push({ name: 'change', index, data })
+      this.$q.notify(`Change: ${JSON.stringify(data)}`)
+    },
+    processConfig (index, data) {
+      this.debug('Config', data)
+      this.eventLog.push({ name: 'config', index, data })
+      this.$q.notify(`Config: ${JSON.stringify(data)}`)
     },
     onResize (size) {
       console.log(size)

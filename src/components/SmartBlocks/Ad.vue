@@ -12,7 +12,7 @@
     <img
       v-else
       width="100%"
-      :src="settings.settings.image"
+      :src="settings.image"
       @click="emitAction"
     >
   </div>
@@ -29,7 +29,7 @@ export default {
       this.$emit('action', 'Clicked')
     },
     emitConfig (data) {
-      const emit = JSON.parse(JSON.stringify(this.settings.settings))
+      const emit = JSON.parse(JSON.stringify(this.settings))
       emit.image = data
       this.$emit('config', emit)
     }
