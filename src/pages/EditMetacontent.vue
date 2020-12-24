@@ -18,12 +18,17 @@
       >
         <template v-slot:before>
           <!-- The left side (Settings & Smart Block list) -->
-          <edit-metacontent />
+          <edit-metacontent :log="eventLog" />
         </template>
 
         <template v-slot:after>
           <!-- The right side (sandbox/production/data view) -->
-          <preview-metacontent />
+          <preview-metacontent
+            :settings="metacontentData"
+            @action="processAction"
+            @change="processChange"
+            @config="processConfig"
+          />
         </template>
       </q-splitter>
     </div>
@@ -56,6 +61,8 @@ export default {
       content: null,
       splitterModel: 50,
       size: {},
+      metacontentData: {},
+      eventLog: [],
       dropdownMetacontent: [
         { text: 'Save', action: 'app.editMetacontent.save', payload: '' },
         { text: 'Import', action: 'app.editMetacontent.import', payload: '' },
@@ -72,13 +79,20 @@ export default {
     }
   },
   methods: {
-    processChange (data) {
-      this.debug('Changed', data)
-      this.$q.notify(`Recieved data: ${JSON.stringify(data)}`)
-    },
-    processAction (data) {
+    processAction (index, data) {
       this.debug('Action', data)
-      this.$q.notify(`Recieved action with payload: ${JSON.stringify(data)}`)
+      this.eventLog.push({ name: 'action', index, data })
+      this.$q.notify(`Action: ${JSON.stringify(data)}`)
+    },
+    processChange (index, data) {
+      this.debug('Change', data)
+      this.eventLog.push({ name: 'change', index, data })
+      this.$q.notify(`Change: ${JSON.stringify(data)}`)
+    },
+    processConfig (index, data) {
+      this.debug('Config', data)
+      this.eventLog.push({ name: 'config', index, data })
+      this.$q.notify(`Config: ${JSON.stringify(data)}`)
     },
     onResize (size) {
       console.log(size)

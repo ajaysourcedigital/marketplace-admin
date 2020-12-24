@@ -5,8 +5,8 @@
       style="border: 1px solid #ccc;padding:0px;margin:0px"
     >
       <!-- Rendering for preview does a lot of stuff -->
-      <q-toolbar :class="`bg-${settings.settings.color} text-white`">
-        {{ settings.settings.title }}
+      <q-toolbar :class="`bg-${settings.color} text-white`">
+        {{ settings.title }}
         <q-space />
         <q-tabs
           v-model="currentTab"
@@ -36,7 +36,6 @@
       <q-tab-panels
         v-model="currentTab"
         animated
-        swipeable
         transition-prev="slide-right"
         transition-next="slide-left"
       >
@@ -45,11 +44,11 @@
           style="margin:0px;padding:0px"
         >
           <component
-            :is="`smart-block-${settings.settings.name}`"
+            :is="`smart-block-${settings.name}`"
             @action="processAction"
             @change="processChange"
             @config="processConfig"
-            :settings="settings.settings.settings"
+            :settings="settings.settings"
           />
         </q-tab-panel>
         <q-tab-panel
@@ -57,17 +56,17 @@
           style="margin:0px;padding:0px"
         >
           <component
-            :is="`smart-block-${settings.settings.name}`"
+            :is="`smart-block-${settings.name}`"
             @action="processAction"
             @change="processChange"
             @config="processConfig"
-            :settings="settings.settings.settings"
+            :settings="settings.settings"
             :configure="true"
           />
         </q-tab-panel>
         <q-tab-panel name="tabData">
           <vue-json-pretty
-            :data="settings.settings.settings"
+            :data="settings.settings"
             :deep="3"
           />
         </q-tab-panel>
@@ -76,11 +75,11 @@
     <div v-else>
       <!-- Rendering for production just renders the block and proxies the events -->
       <component
-        :is="`smart-block-${settings.settings.name}`"
+        :is="`smart-block-${settings.name}`"
         @action="processAction"
         @change="processChange"
         @config="processConfig"
-        :settings="settings.settings.settings"
+        :settings="settings.settings"
       />
     </div>
   </div>
@@ -91,7 +90,7 @@ import VueJsonPretty from 'vue-json-pretty'
 
 // TODO: Move these externally and compile them from the apps service...
 import SmartBlockSurvey from 'components/SmartBlocks/Survey'
-import SmartBlockButton from 'components/SmartBlocks/Button'
+import SmartBlockAction from 'components/SmartBlocks/Action'
 import SmartBlockAd from 'components/SmartBlocks/Ad'
 import SmartBlockApp from 'components/SmartBlocks/App'
 import SmartBlockThing from 'components/SmartBlocks/Thing'
@@ -114,7 +113,7 @@ export default {
     Draggable,
     VueJsonPretty,
     SmartBlockSurvey,
-    SmartBlockButton,
+    SmartBlockAction,
     SmartBlockThing,
     SmartBlockApp,
     SmartBlockAd,
