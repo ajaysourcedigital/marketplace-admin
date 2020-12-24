@@ -1,35 +1,48 @@
 <template>
   <q-page class="q-pa-sm">
     <stats :settings="user.settings.admin.metacontent.stats" />
-    <list :settings="metacontent" />
+    <list
+      :settings="records"
+      @row-click="rowClick"
+      :data="records.data"
+      :schema="schema"
+      :full-data="records"
+    />
   </q-page>
 </template>
 
 <script>
 import Stats from 'components/Stats.vue'
 import List from 'components/List.vue'
-
 export default {
-  name: "page-metacontent",
+  name: 'PageMetacontent',
   components: {
     Stats,
     List
   },
   mounted () {
-    this.$axios.get(`${this.$store.state.system.api.base}/activations`, { headers: { Authorization: `Bearer ${this.user.jwt}` } })
+    this.$api.get('/activations')
       .then(response => {
-        this.metacontent.data = response.data
+        this.records.data = response.data
         this.debug('DATA', response.data)
       })
       .catch(response => {
         this.debug('CRAP', response)
       })
   },
-  data() {
+  methods: {
+    rowClick (ev = {}) {
+      this.debug('Row', ev)
+      const { id } = ev
+      if (!id) throw new Error('`id` is required.')
+      this.$router.push({ name: 'edit-metacontent', params: { id } })
+    }
+  },
+  data () {
     return {
       settings: this.$store.state.app.settings,
       user: this.$store.state.user,
-      metacontent: {
+      records: {
         icon: 'fas fa-chart-line',
         header: 'Metacontent',
         subheader: 'These items can appear within your content in various ways',
@@ -39,24 +52,35 @@ export default {
             label: 'Name',
             field: 'name',
             sortable: true,
-            align: 'left',
+            align: 'left'
           },
           {
             name: 'created',
             label: 'Created',
             field: 'created_at',
             sortable: true,
-            align: 'left',
+            align: 'left'
           },
           {
             name: 'updated',
             label: 'Updated',
             field: 'updated_at',
             sortable: true,
-            align: 'left',
+            align: 'left'
           }
         ],
         data: []
+      },
+      // Remove later if needed
+      schema: {
+        $schema: 'http://json-schema.org/draft-07/schema#',
+        type: 'object',
+        required: ['name'],
+        properties: {
+          name: {
+            type: 'string'
+          }
+        }
       }
     }
   }

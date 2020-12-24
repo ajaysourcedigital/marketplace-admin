@@ -2,6 +2,17 @@
 // so you can safely delete all default props below
 
 export default {
+  short: {
+    year: 'numeric', month: 'short', day: 'numeric'
+  },
+  long: {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+    weekday: 'short',
+    hour: 'numeric',
+    minute: 'numeric'
+  },
   failed: 'Action failed',
   success: 'Action was successful',
   dashboard: {

@@ -1,9 +1,16 @@
 <template>
   <div>
-    <q-input filled v-model="msgText" placeholder="Enter a message here"
-        v-on:keyup.enter="sendMsg">
+    <q-input
+      filled
+      v-model="msgText"
+      placeholder="Enter a message here"
+      @keyup.enter="sendMsg"
+    >
       <template v-slot:append>
-        <span class="text-h6 cursor-pointer" v-on:click="sendMsg">Send</span>
+        <span
+          class="text-h6 cursor-pointer"
+          @click="sendMsg"
+        >Send</span>
       </template>
     </q-input>
   </div>
@@ -11,21 +18,21 @@
 
 <script>
 export default {
-  name: "MessagesInput",
-  data() {
+  name: 'MessagesInput',
+  data () {
     return {
-        msgText: ""
+      msgText: ''
     }
   },
   methods: {
-    sendMsg() {
-      let msg = this.msgText;
+    sendMsg () {
+      const msg = this.msgText
       if (msg != null && msg.trim().length > 0) {
-        this.$emit('sendMsg', msg);
-        this.msgText = "";
+        this.$emit('sendMsg', msg)
+        this.msgText = ''
       } else {
         // TODO: standard error messages
-        alert("Please enter a message to send");
+        alert('Please enter a message to send')
       }
     }
   }

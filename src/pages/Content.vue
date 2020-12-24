@@ -1,7 +1,12 @@
 <template>
   <q-page class="q-pa-sm">
     <stats :settings="user.settings.admin.metacontent.stats" />
-    <list :settings="records" />
+    <list
+      :data="records.data"
+      :schema="schema"
+      :full-data="records"
+      @row-click="rowClick"
+    />
   </q-page>
 </template>
 
@@ -10,13 +15,13 @@ import Stats from 'components/Stats.vue'
 import List from 'components/List.vue'
 
 export default {
-  name: "page-metacontent",
+  name: 'PageContent',
   components: {
     Stats,
     List
   },
   mounted () {
-    this.$axios.get(`${this.$store.state.system.api.base}/distributions`, { headers: { Authorization: `Bearer ${this.user.jwt}` } })
+    this.$api.get('/distributions')
       .then(response => {
         this.records.data = response.data
         this.debug('DATA', response.data)
@@ -25,7 +30,14 @@ export default {
         this.debug('CRAP', response)
       })
   },
-  data() {
+  methods: {
+    rowClick (ev = {}) {
+      const { id } = ev
+      if (!id) throw new Error('`id` is required.')
+      this.$router.push({ name: 'edit-content', params: { id } })
+    }
+  },
+  data () {
     return {
       settings: this.$store.state.app.settings,
       user: this.$store.state.user,
@@ -39,7 +51,7 @@ export default {
             label: 'Name',
             field: 'name',
             sortable: true,
-            align: 'left',
+            align: 'left'
           },
           {
             name: 'created',
@@ -47,6 +59,7 @@ export default {
             field: 'created_at',
             sortable: true,
             align: 'left',
+            format: str => this.$d(new Date(str), 'long')
           },
           {
             name: 'updated',
@@ -54,9 +67,21 @@ export default {
             field: 'updated_at',
             sortable: true,
             align: 'left',
+            format: str => this.$d(new Date(str), 'long')
           }
         ],
         data: []
+      },
+      // Remove later if needed
+      schema: {
+        $schema: 'http://json-schema.org/draft-07/schema#',
+        type: 'object',
+        required: ['name'],
+        properties: {
+          name: {
+            type: 'string'
+          }
+        }
       }
     }
   }

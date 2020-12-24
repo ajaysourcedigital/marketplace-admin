@@ -1,8 +1,11 @@
 <template>
-    <q-page class="q-pa-sm" :key="inviteFlag">
-            <invite-header />
-            <invite-list @inviteWatch="inviteWatch"/>          
-    </q-page>
+  <q-page
+    class="q-pa-sm"
+    :key="inviteFlag"
+  >
+    <invite-header />
+    <invite-list @inviteWatch="inviteWatch" />
+  </q-page>
 </template>
 
 <script>
@@ -18,32 +21,31 @@
 */
 import InviteHeader from 'components/invite/header.vue'
 import InviteList from 'components/invite/list.vue'
-import InviteSplash from 'components/invite/splash.vue'
+// import InviteSplash from 'components/invite/splash.vue'
 
 export default {
-  name: "Invite",
+  name: 'Invite',
   components: {
     InviteHeader,
-    InviteList,
-    InviteSplash
+    InviteList
+    // InviteSplash
   },
-  data() {
+  data () {
     return {
-      //Flag for invitations sent successfully. False - load invite input page, True - load congratulations splash page
+      // Flag for invitations sent successfully. False - load invite input page, True - load congratulations splash page
       inviteFlag: false,
       settings: this.$store.state.app.settings,
-      user: this.$store.state.user      
+      user: this.$store.state.user
     }
   },
   methods: {
-    //Receive boolean from child for sent invites. True - invites set successfully, False - something went wrong.
-    inviteWatch(x){
-      this.inviteFlag = x;
+    // Receive boolean from child for sent invites. True - invites set successfully, False - something went wrong.
+    inviteWatch (x) {
+      this.inviteFlag = x
     }
   }
 }
 </script>
 
 <style scoped>
-
 </style>

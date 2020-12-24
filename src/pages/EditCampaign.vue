@@ -1,13 +1,15 @@
 <template>
   <q-page class="q-pa-sm">
-    Editing {{id}}
+    Editing {{ id }}
   </q-page>
 </template>
 
 <script>
 
 export default {
-  name: "page-edit-campaign",
-  props: ['id']
+  name: 'PageEditCampaign',
+  props: {
+    id: [String, Number]
+  }
 }
 </script>

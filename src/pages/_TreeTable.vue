@@ -10,9 +10,9 @@
         </div>
       </q-card-section>
 
-      <q-separator></q-separator>
+      <q-separator />
       <q-card-section class="q-pa-none">
-        <simple-hierarchy></simple-hierarchy>
+        <simple-hierarchy />
       </q-card-section>
     </q-card>
 
@@ -25,23 +25,23 @@
           A simple Tree Collapsed/Expanded Table
         </div>
       </q-card-section>
-      <q-separator></q-separator>
+      <q-separator />
 
       <q-card-section class="q-pa-none">
-        <custom-hierarchy></custom-hierarchy>
+        <custom-hierarchy />
       </q-card-section>
     </q-card>
   </q-page>
 </template>
 
 <script>
-    import CustomHierarchy from "../components/CustomHierarchy";
-    import SimpleHierarchy from "../components/SimpleHierarchy";
+import CustomHierarchy from '../components/CustomHierarchy'
+import SimpleHierarchy from '../components/SimpleHierarchy'
 
-    export default {
-        name: "TreeTable",
-        components: {SimpleHierarchy, CustomHierarchy}
-    }
+export default {
+  name: 'TreeTable',
+  components: { SimpleHierarchy, CustomHierarchy }
+}
 </script>
 
 <style scoped>

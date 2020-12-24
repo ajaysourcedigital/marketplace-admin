@@ -1,12 +1,20 @@
 <template>
   <div id="q-app">
-    <router-view/>
+    <router-view />
+    <creation-dialog
+      :name="createName"
+      v-if='createDialog'
+      v-model="createDialog"
+      @close="createDialog = null"
+    />
   </div>
 </template>
 
 <script>
 import settings from '../package.json'
+import CreationDialog from './pages/CreationDialog.vue'
 export default {
+  components: { CreationDialog },
   name: 'App',
   events: {
     // Handles all logout attempts...
@@ -17,6 +25,18 @@ export default {
     'app.route' (name) {
       console.log(`Routing to "${name}"`)
       if (this.$route.name !== name) this.$router.push({ name })
+    },
+    // Handles new content creation...
+    'app.new' (name) {
+      this.createDialog = true
+      this.createName = name
+      this.debug('Name', name)
+    }
+  },
+  data () {
+    return {
+      createDialog: false,
+      createName: null
     }
   },
   mounted () {
@@ -35,7 +55,7 @@ export default {
           .then(result => {
             // If the user has some settings related to this app, apply them...
             if (this.$store.state.user.role) {
-              let userAppSettings = JSON.parse(JSON.stringify(
+              const userAppSettings = JSON.parse(JSON.stringify(
                 this.$store.state.user.settings.apps.settings[settings.sourcesync.slug]
               ))
               this.debug(`user settings for this app (${settings.sourcesync.slug})`, userAppSettings)
@@ -45,7 +65,7 @@ export default {
             this.$store.commit('replaceApp', result)
             this.debug('Application state loaded', result)
             this.$store.commit('loaded', true)
-            this.$router.push({name: 'home'})
+            this.$router.push({ name: 'home' })
           })
       })
   }

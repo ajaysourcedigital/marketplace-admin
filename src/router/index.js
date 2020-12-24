@@ -1,6 +1,9 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import routes from './routes'
+import appDebug from 'src/utils/debug'
+
+const debug = appDebug.extend('router')
 
 Vue.use(VueRouter)
 
@@ -13,7 +16,7 @@ export default function ({ store }) {
   })
 
   Router.beforeEach((to, from, next) => {
-    console.warn(`Router: Checking route: ${from.name} -> ${to.name}`)
+    debug(`Router: Checking route: ${from.name} -> ${to.name}`)
     // If the app isn't loaded, show them a loading screen...
     if (!store.state.system.loaded) {
       if (to.name !== 'loading') {
@@ -22,13 +25,13 @@ export default function ({ store }) {
       } else {
         next()
       }
-    // Does the page have a login requirement?
+      // Does the page have a login requirement?
     } else if (to.matched.some(record => record.meta.requiresLogin) && !store.state.user.role) {
-      console.warn('Router: Auth check...')
+      debug('Router: Auth check...')
       if (from.name !== 'login') next({ name: 'login' })
-    // No login requirement? Let them visit...
+      // No login requirement? Let them visit...
     } else {
-      console.warn('Router: Routing...')
+      debug('Router: Routing...')
       next()
     }
   })
