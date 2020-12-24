@@ -11,8 +11,7 @@
         v-model="config.content"
         filled
         autogrow
-        @input="emitChange"
-        @blur="emitConfig"
+        @blur="emit('change', config)"
       />
     </div>
     <div
@@ -28,30 +27,22 @@ export default {
     settings: Object,
     configure: Boolean
   },
-  data () {
-    return {
-      // Local copy of settings that can be modified
-      config: this.settings
-    }
-  },
   computed: {
     html () {
       // Process the markdown after we escape the html tags...
       return this.$ee.templates.md.default(this.$ee.templates.html.escape(this.settings.content))
     }
   },
+  data () {
+    return {
+      config: this.$ee.util.clone(this.settings)
+    }
+  },
   methods: {
-    emitAction () {
-      this.debug('action', this.config)
-      this.$emit('action', 'Clicked')
-    },
-    emitConfig () {
-      this.debug('config', this.config)
-      this.$emit('config', this.config)
-    },
-    emitChange (data) {
-      this.debug('change', this.config)
-      this.$emit('change', this.config)
+    emit (event, data) {
+      const cloned = this.$ee.util.clone(data)
+      this.debug(event, cloned)
+      this.$emit(event, cloned)
     }
   }
 }
