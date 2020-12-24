@@ -20,7 +20,7 @@
           rounded
           color="positive"
           icon="add"
-        ></q-btn>
+        />
 
         <q-btn
           v-else
@@ -28,7 +28,7 @@
           rounded
           color="positive"
           icon="add"
-        ></q-btn>
+        />
       </div>
 
       <invite-list-item-action
