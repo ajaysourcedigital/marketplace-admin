@@ -1,7 +1,7 @@
 <template>
     <div class="col q-col-gutter-sm q-py-sm">
         <div class="row text-h4 text-dark q-py-sm" >
-            Invite Users
+            {{ $t('invite.header') }}
         </div>
     </div>
 </template>

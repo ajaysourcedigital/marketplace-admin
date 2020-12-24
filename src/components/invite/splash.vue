@@ -1,16 +1,16 @@
 <template>
     <div class="text-center q-py-xl">
         <div class="text-h4">
-            Congratulations!
+            {{ $t('invite.splash.header') }}
         </div>
         <div class="">
-            Users invited successfully.
+            {{ $t('invite.splash.subHeader') }}
         </div>
         <div class="q-py-md">
             <q-btn 
                 style="width:200px;"
                 to="/"
-                label="Home"
+                :label="$t('invite.splash.homeBtn')"
             />
         </div>
     </div>
