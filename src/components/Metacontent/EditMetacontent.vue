@@ -1,19 +1,19 @@
 <template>
   <div class="q-pa-xs">
     <q-toolbar :class="`bg-primary text-white`">
-      {{ currentTab }}
+      Metacontent
       <q-space />
       <q-tabs
         v-model="currentTab"
         shrink
       >
         <q-tab
-          name="SmartBlocks"
-          label="Smart Blocks"
+          name="Data"
+          label="Data"
         />
         <q-tab
-          name="Settings"
-          label="Settings"
+          name="SmartBlocks"
+          label="Blocks"
         />
         <q-tab
           name="Events"
@@ -24,7 +24,6 @@
     <q-tab-panels
       v-model="currentTab"
       animated
-      swipeable
       transition-prev="fade"
       transition-next="fade"
     >
@@ -36,15 +35,41 @@
         <list-smart-blocks />
       </q-tab-panel>
       <q-tab-panel
-        name="Settings"
+        name="Data"
         style="margin:0px;padding:0px"
       >
-        Settings go here
+        Data goes here
       </q-tab-panel>
       <q-tab-panel name="Events">
         This is a list of events that were triggered while engaging with the
         metacontent. Use this to make sure everything is working as planned.
-        {{ settings }}
+        <q-list
+          bordered
+          padding
+        >
+          <q-item
+            v-for="(item, index) in log.slice().reverse()"
+            :key="index"
+          >
+            <q-item-section>
+              <q-item-label>
+                {{ item.name }}
+              </q-item-label>
+              <q-item-label caption>
+                {{ item }}
+              </q-item-label>
+            </q-item-section>
+
+            <q-item-section
+              side
+              top
+            >
+              <q-item-label caption>
+                {{ item.index }}
+              </q-item-label>
+            </q-item-section>
+          </q-item>
+        </q-list>
       </q-tab-panel>
     </q-tab-panels>
   </div>
@@ -55,7 +80,8 @@ import ListSmartBlocks from 'components/Metacontent/ListSmartBlocks'
 export default {
   name: 'EditMetacontent',
   props: {
-    settings: Object
+    settings: Object,
+    log: Array
   },
   components: {
     ListSmartBlocks
@@ -65,14 +91,15 @@ export default {
       this.debug('Saving Metacontent...')
     },
     processChange (data) {
-      this.$emit('action', data)
+      this.debug('change', data)
+      this.$emit('change', data)
     },
     processConfig (index, data) {
-      this.debug(`Got new config for ${index}`, data)
+      this.debug('config', data)
       this.metacontentBlocks[index].settings = JSON.parse(data)
     },
     processAction (data) {
-      this.$emit('change', data)
+      this.$emit('action', data)
     },
     processDelete (index) {
       this.debug('Delete', index)
@@ -81,7 +108,7 @@ export default {
   },
   data () {
     return {
-      currentTab: 'SmartBlocks',
+      currentTab: 'Data',
       content: null,
       dragOptions: {
         animation: 200,
