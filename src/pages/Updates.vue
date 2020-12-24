@@ -8,7 +8,7 @@
 import List from 'components/List.vue'
 
 export default {
-  name: "page-metacontent",
+  name: 'PageMetacontent',
   components: {
     List
   },
@@ -22,7 +22,7 @@ export default {
         this.debug('CRAP', response)
       })
   },
-  data() {
+  data () {
     return {
       settings: this.$store.state.app.settings,
       user: this.$store.state.user,
@@ -36,21 +36,21 @@ export default {
             label: 'Name',
             field: 'name',
             sortable: true,
-            align: 'left',
+            align: 'left'
           },
           {
             name: 'version',
             label: 'Version',
             field: 'version',
             sortable: true,
-            align: 'left',
+            align: 'left'
           },
           {
             name: 'created',
             label: 'Released',
             field: 'published_at',
             sortable: true,
-            align: 'left',
+            align: 'left'
           }
         ],
         data: []
