@@ -18,13 +18,16 @@
       >
         <template v-slot:before>
           <!-- The left side (Settings & Smart Block list) -->
-          <edit-metacontent :log="eventLog" />
+          <edit-metacontent
+            :log="eventLog"
+            :settings="content"
+          />
         </template>
 
         <template v-slot:after>
           <!-- The right side (sandbox/production/data view) -->
           <preview-metacontent
-            :settings="metacontentData"
+            :settings="content"
             @action="processAction"
             @change="processChange"
             @config="processConfig"
@@ -61,7 +64,6 @@ export default {
       content: null,
       splitterModel: 50,
       size: {},
-      metacontentData: {},
       eventLog: [],
       dropdownMetacontent: [
         { text: 'Save', action: 'app.editMetacontent.save', payload: '' },

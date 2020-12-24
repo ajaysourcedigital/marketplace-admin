@@ -38,44 +38,20 @@
         name="Data"
         style="margin:0px;padding:0px"
       >
-        Data goes here
+        <data-editor :settings="settings" />
       </q-tab-panel>
       <q-tab-panel name="Events">
         This is a list of events that were triggered while engaging with the
         metacontent. Use this to make sure everything is working as planned.
-        <q-list
-          bordered
-          padding
-        >
-          <q-item
-            v-for="(item, index) in log.slice().reverse()"
-            :key="index"
-          >
-            <q-item-section>
-              <q-item-label>
-                {{ item.name }}
-              </q-item-label>
-              <q-item-label caption>
-                {{ item }}
-              </q-item-label>
-            </q-item-section>
-
-            <q-item-section
-              side
-              top
-            >
-              <q-item-label caption>
-                {{ item.index }}
-              </q-item-label>
-            </q-item-section>
-          </q-item>
-        </q-list>
+        <event-log :log="log" />
       </q-tab-panel>
     </q-tab-panels>
   </div>
 </template>
 <script>
 import ListSmartBlocks from 'components/Metacontent/ListSmartBlocks'
+import EventLog from 'components/Metacontent/EventLog'
+import DataEditor from 'components/Metacontent/DataEditor'
 
 export default {
   name: 'EditMetacontent',
@@ -84,7 +60,9 @@ export default {
     log: Array
   },
   components: {
-    ListSmartBlocks
+    ListSmartBlocks,
+    EventLog,
+    DataEditor
   },
   methods: {
     processSaveMetacontent () {
@@ -96,27 +74,18 @@ export default {
     },
     processConfig (index, data) {
       this.debug('config', data)
-      this.metacontentBlocks[index].settings = JSON.parse(data)
     },
     processAction (data) {
       this.$emit('action', data)
     },
     processDelete (index) {
       this.debug('Delete', index)
-      this.metacontentBlocks.splice(index, 1)
     }
   },
   data () {
     return {
       currentTab: 'Data',
-      content: null,
-      dragOptions: {
-        animation: 200,
-        group: 'description',
-        disabled: false,
-        ghostClass: 'ghost'
-      },
-      metacontentBlocks: []
+      content: null
     }
   }
 }
