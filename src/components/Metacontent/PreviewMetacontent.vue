@@ -1,15 +1,15 @@
 <template>
   <div class="q-pa-xs">
     <q-toolbar :class="`bg-primary text-white`">
-      {{ currentTab }}
+      Template
       <q-space />
       <q-tabs
         v-model="currentTab"
         shrink
       >
         <q-tab
-          name="Sandbox"
-          label="Sandbox"
+          name="Template"
+          label="Template"
         />
         <q-tab
           name="Production"
@@ -24,12 +24,11 @@
     <q-tab-panels
       v-model="currentTab"
       animated
-      swipeable
       transition-prev="fade"
       transition-next="fade"
     >
       <q-tab-panel
-        name="Sandbox"
+        name="Template"
         style="margin:0px;padding:0px"
       >
         <draggable
@@ -72,16 +71,19 @@
             @delete="processDelete(index, ...arguments)"
           />
         </div>
-        <!-- {{ metacontentBlocks }} -->
       </q-tab-panel>
       <q-tab-panel name="Data">
-        {{ settings }}
+        <vue-json-pretty
+          :data="metacontentBlocks"
+          :deep="2"
+        />
       </q-tab-panel>
     </q-tab-panels>
   </div>
 </template>
 <script>
 import Draggable from 'vuedraggable'
+import VueJsonPretty from 'vue-json-pretty'
 import RenderSmartBlock from 'components/Metacontent/RenderSmartBlock'
 
 export default {
@@ -91,21 +93,22 @@ export default {
   },
   components: {
     Draggable,
+    VueJsonPretty,
     RenderSmartBlock
   },
   methods: {
-    processSaveMetacontent () {
-      this.debug('Saving Metacontent...')
-    },
     processAction (index, data) {
-      this.$emit('change', index, data)
+      this.debug('action', index, data)
+      this.$emit('action', index, data, this.metacontentBlocks)
     },
     processChange (index, data) {
-      this.$emit('action', index, data)
+      this.debug('change', index, data)
+      this.$emit('change', index, data, this.metacontentBlocks)
     },
     processConfig (index, data) {
+      this.$emit('config', index, data, this.metacontentBlocks)
       this.debug('config', index, data, this.metacontentBlocks[index].settings)
-      this.metacontentBlocks[index].settings.settings = data
+      this.metacontentBlocks[index].settings = data
     },
     processDelete (index) {
       this.debug('Delete', index)
@@ -114,7 +117,7 @@ export default {
   },
   data () {
     return {
-      currentTab: 'Sandbox',
+      currentTab: 'Template',
       content: null,
       dragOptions: {
         animation: 200,
