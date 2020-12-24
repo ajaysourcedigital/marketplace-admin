@@ -50,15 +50,13 @@
               <q-card-section>
                 <div class="row">
                   <div class="col-xs-12 edit-content-form__cover">
-                    <q-uploader
+                    <file-preview-input
+                      filled
                       label="Cover"
-                      class="fit"
-                      accept="image/*"
+                      stack-label
                       v-model="content.cover"
-                      flat
-                      hide-upload-btn
-                      bordered
-                      @rejected="onRejected"
+                      accept="image/*"
+                      clearable
                     />
                   </div>
                 </div>
@@ -93,29 +91,29 @@
                       </template>
                     </q-select>
                   </div>
-                  <div
-                    class="col-xs-12 col-sm-8"
-                    v-if="content.media"
-                  >
-                    <template v-if="content.media.type === 'id'">
+                  <template v-if="content.media">
+                    <div
+                      class="col-xs-12 col-sm-8"
+                      v-if="content.media.type === 'id'"
+                    >
                       <q-input
                         label="Media ID *"
                         required
                       />
-                    </template>
-                    <template v-else-if="content.media.type === 'file'">
-                      <q-uploader
-                        label="Media File *"
-                        class="fit"
-                        required
+                    </div>
+                    <div
+                      class="col-12"
+                      v-else-if="content.media.type === 'file'"
+                    >
+                      <file-preview-input
+                        v-model="content.mediaFile"
+                        filled
                         accept="video/*"
-                        flat
-                        hide-upload-btn
-                        bordered
-                        @rejected="onRejected"
+                        clearable
+                        height="300px"
                       />
-                    </template>
-                  </div>
+                    </div>
+                  </template>
                 </div>
               </q-card-section>
               <q-card-section>
@@ -126,8 +124,7 @@
                       label="Settings"
                       filled
                       class="q-pt-sm"
-                      :value="typeof content.settings === 'string' ? content.settings : JSON.stringify(content.settings, null, 2)"
-                      @input="onSettingsChange"
+                      v-model="contentSettingsStr"
                       height="400px"
                       :rules="[val => isValidJSON(val) || 'Invalid JSON']"
                     />
@@ -156,8 +153,11 @@
                     <q-item-label>
                       {{ $d(new Date(content.updated_at), 'long') }}
                     </q-item-label>
-                    <q-item-label caption>
-                      by User Name
+                    <q-item-label
+                      caption
+                      v-if="content.updated_by"
+                    >
+                      By {{ [content.updated_by.firstname, content.updated_by.lastname].join(' ') }}
                     </q-item-label>
                   </q-item-section>
                 </q-item>
@@ -174,8 +174,11 @@
                     <q-item-label>
                       {{ $d(new Date(content.created_at), 'long') }}
                     </q-item-label>
-                    <q-item-label caption>
-                      by User Name
+                    <q-item-label
+                      caption
+                      v-if="content.created_by"
+                    >
+                      By {{ [content.created_by.firstname, content.created_by.lastname].join(' ') }}
                     </q-item-label>
                   </q-item-section>
                 </q-item>
@@ -191,11 +194,13 @@
 
 <script>
 import InnerLoading from 'components/InnerLoading'
+import { FilePreviewInput } from 'components/file-preview-input'
 
 export default {
   name: 'PageEditContent',
   components: {
-    InnerLoading
+    InnerLoading,
+    FilePreviewInput
   },
   props: {
     id: [String, Number]
@@ -203,6 +208,8 @@ export default {
   data () {
     return {
       content: null,
+      contentSettingsStr: null,
+      mediaVideoBlobUrl: null,
       mediaOpts: [
         { id: 'youtube', type: 'id', label: 'Youtube', icon: 'fab fa-youtube' },
         { id: 'vimeo', type: 'id', label: 'Vimeo', icon: 'fab fa-vimeo' },
@@ -214,16 +221,14 @@ export default {
     try {
       const { data } = await this.$api(`/distributions/${this.id}`)
       this.content = data
+      if (this.content.settings && typeof this.content.settings === 'object') {
+        this.contentSettingsStr = JSON.stringify(this.content.settings, null, 2)
+      } else this.contentSettingsStr = ''
     } catch (e) {
       console.error('Error occurred while fetching data.', e)
     }
   },
   methods: {
-    // Quirky, temporary solution for json validation
-    onSettingsChange (val) {
-      if (this.isValidJSON(val)) this.content.settings = JSON.parse(val)
-      this.content.settings = val
-    },
     isValidJSON (val) {
       try {
         const obj = JSON.parse(val)
@@ -238,6 +243,7 @@ export default {
       })
     },
     onSubmit () {
+      this.content.settings = this.contentSettingsStr ? JSON.parse(this.contentSettingsStr) : null
       this.$q.notify({
         type: 'positive',
         message: 'Saved successfully'
