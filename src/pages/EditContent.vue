@@ -56,7 +56,6 @@
                       stack-label
                       v-model="content.cover"
                       accept="image/*"
-                      clearable
                     />
                   </div>
                 </div>
@@ -71,7 +70,10 @@
                       label="Media Type *"
                       required
                       :options="mediaOpts"
-                      v-model="content.media"
+                      emit-value
+                      map-options
+                      option-value="id"
+                      v-model="content.mediaType"
                     >
                       <template #option="{opt, itemEvents, itemProps}">
                         <q-item
@@ -91,25 +93,25 @@
                       </template>
                     </q-select>
                   </div>
-                  <template v-if="content.media">
+                  <template v-if="selectedMediaType">
                     <div
                       class="col-xs-12 col-sm-8"
-                      v-if="content.media.type === 'id'"
+                      v-if="selectedMediaType.type === 'id'"
                     >
                       <q-input
                         label="Media ID *"
                         required
+                        v-model="content.mediaId"
                       />
                     </div>
                     <div
                       class="col-12"
-                      v-else-if="content.media.type === 'file'"
+                      v-else-if="selectedMediaType.type === 'file'"
                     >
                       <file-preview-input
                         v-model="content.mediaFile"
                         filled
                         accept="video/*"
-                        clearable
                         height="300px"
                       />
                     </div>
@@ -220,16 +222,26 @@ export default {
   async created () {
     try {
       const { data } = await this.$api(`/distributions/${this.id}`)
-      this.content = data
-      if (this.content.settings && typeof this.content.settings === 'object') {
-        this.contentSettingsStr = JSON.stringify(this.content.settings, null, 2)
-      } else this.contentSettingsStr = ''
+      this.setData(data)
     } catch (e) {
       console.error('Error occurred while fetching data.', e)
     }
   },
+  computed: {
+    selectedMediaType () {
+      if (!this.content) return null
+      return this.mediaOpts.find(i => i.id === this.content.mediaType)
+    }
+  },
   methods: {
+    setData (data) {
+      this.content = data
+      if (this.content.settings && typeof this.content.settings === 'object') {
+        this.contentSettingsStr = JSON.stringify(this.content.settings, null, 2)
+      } else this.contentSettingsStr = ''
+    },
     isValidJSON (val) {
+      if (val === null || val === '') return true
       try {
         const obj = JSON.parse(val)
         return obj && typeof obj === 'object'
@@ -242,13 +254,42 @@ export default {
         message: 'This file is not supported.'
       })
     },
-    onSubmit () {
+    async onSubmit () {
       this.content.settings = this.contentSettingsStr ? JSON.parse(this.contentSettingsStr) : null
-      this.$q.notify({
-        type: 'positive',
-        message: 'Saved successfully'
-      })
+
+      const data = {}
+      const payload = Object.keys(this.content).reduce((_payload, key) => {
+        const value = this.content[key]
+        if (value instanceof File) {
+          _payload.append(`files.${key}`, value, value.name)
+        } else if (Array.isArray(value)) {
+          value.filter(i => i instanceof File).forEach(i => {
+            _payload.append(`files.${key}`, i, i.name)
+          })
+        } else {
+          data[key] = value
+        }
+        return _payload
+      }, new FormData())
+
+      payload.append('data', JSON.stringify(data))
+
       this.debug(this.content)
+      this.$api.put(`/distributions/${this.id}`, payload)
+        .then(res => {
+          this.debug(res)
+          this.setData(res.data)
+          this.$q.notify({
+            type: 'positive',
+            message: 'Saved successfully'
+          })
+        }).catch(err => {
+          console.error('Error occurred while saving.', err, err.response)
+          this.$q.notify({
+            type: 'negative',
+            message: 'Error occurred'
+          })
+        })
     }
   }
 }
