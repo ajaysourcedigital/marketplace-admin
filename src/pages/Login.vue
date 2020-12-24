@@ -86,24 +86,6 @@ export default {
       this.registerFormEmail = data.registerFormEmail
       this.registerFormPassword = data.registerFormPassword
     },
-<<<<<<< HEAD
-    methods: {
-      handleLogin () {
-        this.$auth.login(this.credentials.identifier, this.credentials.password)
-          .then(result => {
-            this.$store.commit('replaceUser', result)
-            this.debug('Login success', result)
-            this.$q.notify({ type: 'positive', message: 'Login successful'})
-            this.$router.push({name: localStorage.getItem('pathToLoadAfterLogin') || 'home'})
-          })
-          .catch(result => {
-            this.debug('Login error', JSON.parse(JSON.stringify(result)))
-            let err = result.response.status
-            let message = this.$te(`login.errors.${err}`) ? this.$t(`login.errors.${err}`) : this.$t(`login.errors.default`)
-            this.$q.notify({ type: 'negative', message })
-          })
-      }
-=======
     handleLogin (data) {
       this.$auth.login(this.credentials.identifier, this.credentials.password)
         .then(result => {
@@ -120,7 +102,6 @@ export default {
           const message = this.$te(`login.errors.${err}`) ? this.$t(`login.errors.${err}`) : this.$t('login.errors.default')
           this.$q.notify({ type: 'negative', message })
         })
->>>>>>> feature/account-update
     }
   }
 }
