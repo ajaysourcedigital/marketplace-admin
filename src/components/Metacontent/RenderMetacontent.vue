@@ -12,9 +12,8 @@
         v-for="(item, index) in metacontentBlocks"
         :key="index"
       >
-        <render-smart-block
+        <preview-smart-block
           :settings="item"
-          :preview="true"
           @delete="processDelete(index)"
           @config="processConfig(index, $event)"
         />
@@ -25,16 +24,16 @@
 </template>
 <script>
 import Draggable from 'vuedraggable'
-import RenderSmartBlock from 'components/Metacontent/RenderSmartBlock'
+import PreviewSmartBlock from 'components/Metacontent/PreviewSmartBlock'
 
 export default {
-  name: 'PreviewMetacontent',
+  name: 'MetacontentPreview',
   props: {
     settings: Object
   },
   components: {
     Draggable,
-    RenderSmartBlock
+    PreviewSmartBlock
   },
   methods: {
     processChange (data) {
