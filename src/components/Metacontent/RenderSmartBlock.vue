@@ -5,8 +5,8 @@
       style="border: 1px solid #ccc;padding:0px;margin:0px"
     >
       <!-- Rendering for preview does a lot of stuff -->
-      <q-toolbar :class="`bg-${settings.settings.color} text-white`">
-        {{ settings.settings.title }}
+      <q-toolbar :class="`bg-${settings.color} text-white`">
+        {{ settings.title }}
         <q-space />
         <q-tabs
           v-model="currentTab"
@@ -36,7 +36,6 @@
       <q-tab-panels
         v-model="currentTab"
         animated
-        swipeable
         transition-prev="slide-right"
         transition-next="slide-left"
       >
@@ -45,9 +44,10 @@
           style="margin:0px;padding:0px"
         >
           <component
-            :is="`smart-block-${settings.settings.name}`"
-            @change="processChange"
+            :is="`smart-block-${settings.name}`"
             @action="processAction"
+            @change="processChange"
+            @config="processConfig"
             :settings="settings.settings"
           />
         </q-tab-panel>
@@ -56,37 +56,41 @@
           style="margin:0px;padding:0px"
         >
           <component
-            :is="`smart-block-${settings.settings.name}`"
-            @change="processChange"
+            :is="`smart-block-${settings.name}`"
             @action="processAction"
+            @change="processChange"
             @config="processConfig"
-            :settings="settings.settings.settings"
+            :settings="settings.settings"
             :configure="true"
           />
         </q-tab-panel>
         <q-tab-panel name="tabData">
-          {{ settings }}
+          <vue-json-pretty
+            :data="settings.settings"
+            :deep="5"
+          />
         </q-tab-panel>
       </q-tab-panels>
     </div>
     <div v-else>
       <!-- Rendering for production just renders the block and proxies the events -->
       <component
-        :is="`smart-block-${settings.settings.name}`"
-        @change="processChange"
+        :is="`smart-block-${settings.name}`"
         @action="processAction"
+        @change="processChange"
         @config="processConfig"
-        :settings="settings.settings.settings"
+        :settings="settings.settings"
       />
     </div>
   </div>
 </template>
 <script>
 import Draggable from 'vuedraggable'
+import VueJsonPretty from 'vue-json-pretty'
 
 // TODO: Move these externally and compile them from the apps service...
 import SmartBlockSurvey from 'components/SmartBlocks/Survey'
-import SmartBlockButton from 'components/SmartBlocks/Button'
+import SmartBlockAction from 'components/SmartBlocks/Action'
 import SmartBlockAd from 'components/SmartBlocks/Ad'
 import SmartBlockApp from 'components/SmartBlocks/App'
 import SmartBlockThing from 'components/SmartBlocks/Thing'
@@ -95,7 +99,7 @@ import SmartBlockMarkdown from 'components/SmartBlocks/Markdown'
 import SmartBlockIframe from 'components/SmartBlocks/Iframe'
 
 export default {
-  name: 'MetacontentPreview',
+  name: 'RenderSmartBlock',
   props: {
     settings: Object,
     preview: Boolean
@@ -107,8 +111,9 @@ export default {
   },
   components: {
     Draggable,
+    VueJsonPretty,
     SmartBlockSurvey,
-    SmartBlockButton,
+    SmartBlockAction,
     SmartBlockThing,
     SmartBlockApp,
     SmartBlockAd,
@@ -121,12 +126,15 @@ export default {
       this.$emit('delete')
     },
     processChange (data) {
+      this.debug('change', data)
       this.$emit('change', data)
     },
     processConfig (data) {
+      this.debug('config', data)
       this.$emit('config', data)
     },
     processAction (data) {
+      this.debug('action', data)
       this.$emit('action', data)
     }
   }

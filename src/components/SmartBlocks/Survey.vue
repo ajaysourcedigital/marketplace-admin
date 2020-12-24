@@ -57,7 +57,7 @@ export default {
     this.emitChange = throttle(this.emitChange, 500)
   },
   data () {
-    var json = this.settings.settings
+    var json = this.settings
     var model = new SurveyVue.Model(json)
     model.onComplete.add(this.emitAction)
     return {
