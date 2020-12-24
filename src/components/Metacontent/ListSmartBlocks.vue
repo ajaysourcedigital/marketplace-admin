@@ -59,6 +59,8 @@ export default {
         clone.settings = clone.default
         delete clone.default
       }
+      // IMPORTANT! If blocks don't have a valid/unique UUID, you will have a bad time!
+      clone.id = this.$ee.util.uuid()
       return clone
     }
   },
