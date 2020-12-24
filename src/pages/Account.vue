@@ -230,21 +230,57 @@ export default {
       this.$refs.fileInput.click()
     },
     onFilePicked (event) {
-      // const file = event.target.files[0]
-      // const formData = new FormData()
+      const file = event.target.files[0]
+      const formData = new FormData()
       // formData.append('file', file)
       // const request = new XMLHttpRequest()
       // request.open('POST', `${this.$store.state.system.api.base}/upload`)
       // request.send(formData)
+      /* eslint-disable */
+      this.$api.get(`${this.$store.state.system.api.base}​​​​​​/upload/files`)
+        .then(response => {
+          console.log('get successful: ', response)
+        }).catch(error => {
+          console.error('get unsuccessful: ', error)
+        })
 
-      this.$api.put('/distributions/49', {
-        creator: 'debugger@bugtown.com'
-      }).then(response => {
-        console.log('put successful: ', response)
-      }).catch(error => {
-        console.error('put unsuccessful: ', error)
-      })
+      // constformData = newFormData()
+      formData.append('files', file)
+      formData.append('ref', 'user')
+      formData.append('refId', this.user_details.id)
+      formData.append('field', 'name')
+      // formData.append('ref', 'distributions')
+      // formData.append('refId', 49)
+      // formData.append('field', 'cover')
+
+      this.$api.post(`${this.$store.state.system.api.base}​​​​​​/upload`, formData)
+        .then(response => {
+          const userId = 'insert user id'
+          this.$api.put(`${this.$store.state.system.api.base}​​​​​​/user/${userId}`, { name: response.data.url })
+            .then(response => {
+              console.log('put successful: ', response)
+            }).catch(error => {
+              console.error('put unsuccessful: ', error)
+            })
+          console.log('response', response)
+          this.debug('DATA', response.data)
+        })
+        .catch(error => {
+          console.log('error', error)
+
+          this.debug('CRAP', error)
+        })
+
+      // this.$api.put('/distributions/49', {
+      //   creator: 'debugger@bugtown.com'
+      // }).then(response => {
+      //   console.log('put successful: ', response)
+      // }).catch(error => {
+      //   console.error('put unsuccessful: ', error)
+      // })
     }
+    /* eslint-enable */
+
   },
   beforeMount () {
     this.user_details = (({ username, id, name, email, address, city, zip }) => ({ username, id, name, email, address, city, zip }))(this.$store.state.user)
