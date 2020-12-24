@@ -56,21 +56,9 @@
                     @blur="handleBlur"
                     color="white"
                     dense
-                    v-model="user_details.name.split(' ')[0]"
-                    label="First Name"
+                    v-model="user_details.name"
+                    label="Name"
                     name="firstName"
-                  />
-                </q-item-section>
-              </q-item>
-              <q-item class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                <q-item-section>
-                  <q-input
-                    @blur="handleBlur"
-                    color="white"
-                    dense
-                    v-model="user_details.name.split(' ')[1]"
-                    label="Last Name"
-                    name="lastName"
                   />
                 </q-item-section>
               </q-item>
@@ -105,29 +93,43 @@
                     @blur="handleBlur"
                     color="white"
                     dense
+                    v-model="user_details.state"
+                    label="State"
+                    name="state"
+                  />
+                </q-item-section>
+              </q-item>
+              <q-item class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                <q-item-section>
+                  <q-input
+                    @blur="handleBlur"
+                    color="white"
+                    dense
                     v-model="user_details.zip"
                     label="Postal Code"
                     name="zip"
                   />
                 </q-item-section>
               </q-item>
-              <q-item class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+              <q-item class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                 <q-item-section>
                   <q-input
                     @blur="handleBlur"
                     color="white"
-                    type="textarea"
                     dense
-                    v-model="user_details.about"
-                    label="About"
-                    name="about"
+                    v-model="user_details.country"
+                    label="Country"
+                    name="country"
                   />
                 </q-item-section>
               </q-item>
             </q-list>
           </q-card-section>
           <q-card-actions align="right">
-            <q-btn class="text-capitalize bg-info text-black">Update User Info</q-btn>
+            <q-btn
+              class="text-capitalize bg-info text-black"
+              @click="handleSubmit"
+            >Update User Info</q-btn>
           </q-card-actions>
         </q-card>
       </div>
@@ -233,7 +235,7 @@ export default {
     }
   },
   beforeMount () {
-    this.user_details = (({ username, id, name, email, address, city, zip }) => ({ username, id, name, email, address, city, zip }))(this.$store.state.user)
+    this.user_details = (({ username, id, name, email, address, city, state, country, zip }) => ({ username, id, name, email, address, city, state, country, zip }))(this.$store.state.user)
   }
 }
 </script>
