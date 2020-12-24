@@ -18,7 +18,7 @@
         :label="$t('invite.listItemAction.inviteUsers')"
       />
     </div>
-  </div>  
+  </div>
 </template>
 
 <script>
@@ -33,11 +33,13 @@
 
 */
 export default {
-  name: "InviteListItemAction",
-  props: ['list'],
+  name: 'InviteListItemAction',
+  props: {
+    list: Array
+  },
   methods: {
-    //Invite Users button action
-    handleAdd() {
+    // Invite Users button action
+    handleAdd () {
       /*
 
           TODO :
@@ -48,10 +50,10 @@ export default {
 
       */
 
-      //Report to parent invites were successfully sent
-      this.$emit('inviteSuccess', true);
+      // Report to parent invites were successfully sent
+      this.$emit('inviteSuccess', true)
 
-      //If something went wrong in sending invitations, use this.$emit('inviteSuccess', false);
+      // If something went wrong in sending invitations, use this.$emit('inviteSuccess', false);
     }
   }
 }

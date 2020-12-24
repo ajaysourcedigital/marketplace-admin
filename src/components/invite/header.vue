@@ -1,9 +1,9 @@
 <template>
-    <div class="col q-col-gutter-sm q-py-sm">
-        <div class="row text-h4 text-dark q-py-sm" >
-            {{ $t('invite.header') }}
-        </div>
+  <div class="col q-col-gutter-sm q-py-sm">
+    <div class="row text-h4 text-dark q-py-sm">
+      {{ $t('invite.header') }}
     </div>
+  </div>
 </template>
 
 <script>
@@ -15,7 +15,7 @@
 
 */
 export default {
-  name: "InviteHeader",
+  name: 'InviteHeader',
   props: []
 }
 </script>
