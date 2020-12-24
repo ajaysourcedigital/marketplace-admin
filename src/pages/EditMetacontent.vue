@@ -17,17 +17,19 @@
         :style="`min-height: ${getHeight}`"
       >
         <template v-slot:before>
-          <!-- The picker -->
-          <list-smart-blocks />
+          <!-- The left side (Settings & Smart Block list) -->
+          <edit-metacontent />
         </template>
 
         <template v-slot:after>
-          <!-- The preview -->
+          <!-- The right side (sandbox/production/data view) -->
           <preview-metacontent />
         </template>
       </q-splitter>
     </div>
+    <!-- The load screen -->
     <inner-loading :showing="content === null" />
+    <!-- Keeps the split-view sized correctly - TODO: Anyone know of a better solution? -->
     <q-resize-observer @resize="onResize" />
   </q-page>
 </template>
@@ -35,7 +37,7 @@
 <script>
 import Dropdown from 'components/Dropdown'
 import InnerLoading from 'components/InnerLoading'
-import ListSmartBlocks from 'components/Metacontent/ListSmartBlocks'
+import EditMetacontent from 'components/Metacontent/EditMetacontent'
 import PreviewMetacontent from 'components/Metacontent/PreviewMetacontent'
 
 export default {
@@ -43,7 +45,7 @@ export default {
   components: {
     Dropdown,
     InnerLoading,
-    ListSmartBlocks,
+    EditMetacontent,
     PreviewMetacontent
   },
   props: {
@@ -59,7 +61,6 @@ export default {
         { text: 'Import', action: 'app.editMetacontent.import', payload: '' },
         { text: 'Export', action: 'app.editMetacontent.export', payload: '' }
       ]
-
     }
   },
   async created () {

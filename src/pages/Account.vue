@@ -4,15 +4,19 @@
       <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
         <q-card class="card-bg text-black">
           <q-card-section class="text-h6">
-            <div class="text-h6">Edit Profile</div>
-            <div class="text-subtitle2">Complete your profile</div>
+            <div class="text-h6">
+              Edit Profile
+            </div>
+            <div class="text-subtitle2">
+              Complete your profile
+            </div>
           </q-card-section>
           <q-card-section class="q-pa-sm">
             <q-list class="row">
               <q-item class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <q-item-section side>
                   <q-avatar size="100px">
-                    <img src="https://cdn.quasar.dev/img/boy-avatar.png" />
+                    <img src="https://cdn.quasar.dev/img/boy-avatar.png">
                   </q-avatar>
                 </q-item-section>
                 <q-item-section>
@@ -22,7 +26,7 @@
                     rounded
                     color="info"
                     style="max-width: 120px"
-                  ></q-btn>
+                  />
                 </q-item-section>
               </q-item>
 
@@ -127,7 +131,9 @@
             </q-list>
           </q-card-section>
           <q-card-actions align="right">
-            <q-btn class="text-capitalize bg-info text-black">Update User Info</q-btn>
+            <q-btn class="text-capitalize bg-info text-black">
+              Update User Info
+            </q-btn>
           </q-card-actions>
         </q-card>
       </div>
@@ -135,7 +141,9 @@
       <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
         <q-card class="card-bg text-black">
           <q-card-section class="text-h6 q-pa-sm">
-            <div class="text-h6">Change Password</div>
+            <div class="text-h6">
+              Change Password
+            </div>
           </q-card-section>
           <q-card-section class="q-pa-sm row">
             <q-item class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
@@ -188,7 +196,9 @@
             </q-item>
           </q-card-section>
           <q-card-actions align="right">
-            <q-btn class="text-capitalize bg-info text-black">Change Password</q-btn>
+            <q-btn class="text-capitalize bg-info text-black">
+              Change Password
+            </q-btn>
           </q-card-actions>
         </q-card>
       </div>

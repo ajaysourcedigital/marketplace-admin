@@ -3,7 +3,7 @@
     <router-view />
     <creation-dialog
       :name="createName"
-      v-if='createDialog'
+      v-if="createDialog"
       v-model="createDialog"
       @close="createDialog = null"
     />

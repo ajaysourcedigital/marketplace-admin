@@ -1,8 +1,5 @@
 <template>
   <div class="q-pa-xs">
-    <div>
-      Drag items on the left into the right. Dragging: {{ drag }}
-    </div>
     <div class="q-gutter-sm q-pa-md">
       <draggable
         class="list-group"
