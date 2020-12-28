@@ -18,7 +18,7 @@
           @click="addRow()"
           elevated
           rounded
-          color="red-4"
+          color="positive"
           icon="add"
         />
 
@@ -26,7 +26,7 @@
           v-else
           elevated
           rounded
-          color="red-2"
+          color="positive"
           icon="add"
         />
       </div>

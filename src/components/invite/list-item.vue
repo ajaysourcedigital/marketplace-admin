@@ -7,7 +7,7 @@
       bg-color="white"
       @input="changeEmail()"
       v-model="emailModel"
-      label="Username or email address"
+      :label="$t('invite.listItem.userToInvite')"
     >
       <template slot="prepend">
         <q-icon name="person" />
@@ -22,7 +22,7 @@
       @input="changeRole()"
       v-model="roleModel"
       :options="roleOptions"
-      label="Role"
+      :label="$t('invite.listItem.role')"
     />
 
     <div v-if="curLength > 1 ">
@@ -30,7 +30,7 @@
         @click="removeRow()"
         elevated
         round
-        color="grey-6"
+        color="negative"
         icon="clear"
       />
     </div>
@@ -38,7 +38,7 @@
       <q-btn
         elevated
         round
-        color="grey-3"
+        color="negative"
         icon="clear"
       />
     </div>
