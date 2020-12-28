@@ -16,13 +16,13 @@
       </div>
     </div>
     <div class="">
-      Users invited successfully.
+      {{ $t('invite.splash.subHeader') }}
     </div>
     <div class="q-py-md">
       <q-btn
         style="width:200px;"
         to="/"
-        label="Home"
+        :label="$t('invite.splash.homeBtn')"
       />
     </div>
   </div>
