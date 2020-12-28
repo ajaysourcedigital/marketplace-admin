@@ -196,7 +196,10 @@
             </q-item>
           </q-card-section>
           <q-card-actions align="right">
-            <q-btn class="text-capitalize bg-info text-black">
+            <q-btn
+              class="text-capitalize bg-info text-black"
+              @click="updatePassword"
+            >
               Change Password
             </q-btn>
           </q-card-actions>
@@ -221,7 +224,7 @@ export default {
       this.handleSubmit()
     },
     handleSubmit () {
-      this.$api.put(`/user/${this.user_details}`, this.user_details)
+      this.$api.put(`/user/${this.user_details.id}`, this.user_details)
         .then(response => {
           console.log('response', response)
         })
@@ -229,17 +232,13 @@ export default {
           console.log('response', response)
         })
     },
-    formatName (firstName, lastName) {
-      if (!firstName) {
-        if (lastName) {
-          return lastName
-        } else {
-          return ''
-        }
-      }
-      if (!lastName) lastName = ''
-
-      return firstName + ' ' + lastName
+    updatePassword () {
+      // this.$api.post('/auth/local', { identifier: this.user_details.username, password: 'password' }).then(response => {
+      //   console.log('success: ', response)
+      // }).catch(error => {
+      //   console.error('failure: ', error)
+      // })
+      console.log(this.$store.state.user)
     }
   },
   beforeMount () {
