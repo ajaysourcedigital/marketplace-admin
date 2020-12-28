@@ -50,15 +50,12 @@
               <q-card-section>
                 <div class="row">
                   <div class="col-xs-12 edit-content-form__cover">
-                    <q-uploader
+                    <file-preview-input
+                      filled
                       label="Cover"
-                      class="fit"
-                      accept="image/*"
+                      stack-label
                       v-model="content.cover"
-                      flat
-                      hide-upload-btn
-                      bordered
-                      @rejected="onRejected"
+                      accept="image/*"
                     />
                   </div>
                 </div>
@@ -73,7 +70,10 @@
                       label="Media Type *"
                       required
                       :options="mediaOpts"
-                      v-model="content.media"
+                      emit-value
+                      map-options
+                      option-value="id"
+                      v-model="content.mediaType"
                     >
                       <template #option="{opt, itemEvents, itemProps}">
                         <q-item
@@ -93,29 +93,29 @@
                       </template>
                     </q-select>
                   </div>
-                  <div
-                    class="col-xs-12 col-sm-8"
-                    v-if="content.media"
-                  >
-                    <template v-if="content.media.type === 'id'">
+                  <template v-if="selectedMediaType">
+                    <div
+                      class="col-xs-12 col-sm-8"
+                      v-if="selectedMediaType.type === 'id'"
+                    >
                       <q-input
                         label="Media ID *"
                         required
+                        v-model="content.mediaId"
                       />
-                    </template>
-                    <template v-else-if="content.media.type === 'file'">
-                      <q-uploader
-                        label="Media File *"
-                        class="fit"
-                        required
+                    </div>
+                    <div
+                      class="col-12"
+                      v-else-if="selectedMediaType.type === 'file'"
+                    >
+                      <file-preview-input
+                        v-model="content.mediaFile"
+                        filled
                         accept="video/*"
-                        flat
-                        hide-upload-btn
-                        bordered
-                        @rejected="onRejected"
+                        height="300px"
                       />
-                    </template>
-                  </div>
+                    </div>
+                  </template>
                 </div>
               </q-card-section>
               <q-card-section>
@@ -126,8 +126,7 @@
                       label="Settings"
                       filled
                       class="q-pt-sm"
-                      :value="typeof content.settings === 'string' ? content.settings : JSON.stringify(content.settings, null, 2)"
-                      @input="onSettingsChange"
+                      v-model="contentSettingsStr"
                       height="400px"
                       :rules="[val => isValidJSON(val) || 'Invalid JSON']"
                     />
@@ -156,8 +155,11 @@
                     <q-item-label>
                       {{ $d(new Date(content.updated_at), 'long') }}
                     </q-item-label>
-                    <q-item-label caption>
-                      by User Name
+                    <q-item-label
+                      caption
+                      v-if="content.updated_by"
+                    >
+                      By {{ [content.updated_by.firstname, content.updated_by.lastname].join(' ') }}
                     </q-item-label>
                   </q-item-section>
                 </q-item>
@@ -174,8 +176,11 @@
                     <q-item-label>
                       {{ $d(new Date(content.created_at), 'long') }}
                     </q-item-label>
-                    <q-item-label caption>
-                      by User Name
+                    <q-item-label
+                      caption
+                      v-if="content.created_by"
+                    >
+                      By {{ [content.created_by.firstname, content.created_by.lastname].join(' ') }}
                     </q-item-label>
                   </q-item-section>
                 </q-item>
@@ -191,11 +196,13 @@
 
 <script>
 import InnerLoading from 'components/InnerLoading'
+import { FilePreviewInput } from 'components/file-preview-input'
 
 export default {
   name: 'PageEditContent',
   components: {
-    InnerLoading
+    InnerLoading,
+    FilePreviewInput
   },
   props: {
     id: [String, Number]
@@ -203,6 +210,8 @@ export default {
   data () {
     return {
       content: null,
+      contentSettingsStr: null,
+      mediaVideoBlobUrl: null,
       mediaOpts: [
         { id: 'youtube', type: 'id', label: 'Youtube', icon: 'fab fa-youtube' },
         { id: 'vimeo', type: 'id', label: 'Vimeo', icon: 'fab fa-vimeo' },
@@ -213,18 +222,26 @@ export default {
   async created () {
     try {
       const { data } = await this.$api(`/distributions/${this.id}`)
-      this.content = data
+      this.setData(data)
     } catch (e) {
       console.error('Error occurred while fetching data.', e)
     }
   },
+  computed: {
+    selectedMediaType () {
+      if (!this.content) return null
+      return this.mediaOpts.find(i => i.id === this.content.mediaType)
+    }
+  },
   methods: {
-    // Quirky, temporary solution for json validation
-    onSettingsChange (val) {
-      if (this.isValidJSON(val)) this.content.settings = JSON.parse(val)
-      this.content.settings = val
+    setData (data) {
+      this.content = data
+      if (this.content.settings && typeof this.content.settings === 'object') {
+        this.contentSettingsStr = JSON.stringify(this.content.settings, null, 2)
+      } else this.contentSettingsStr = ''
     },
     isValidJSON (val) {
+      if (val === null || val === '') return true
       try {
         const obj = JSON.parse(val)
         return obj && typeof obj === 'object'
@@ -237,12 +254,42 @@ export default {
         message: 'This file is not supported.'
       })
     },
-    onSubmit () {
-      this.$q.notify({
-        type: 'positive',
-        message: 'Saved successfully'
-      })
+    async onSubmit () {
+      this.content.settings = this.contentSettingsStr ? JSON.parse(this.contentSettingsStr) : null
+
+      const data = {}
+      const payload = Object.keys(this.content).reduce((_payload, key) => {
+        const value = this.content[key]
+        if (value instanceof File) {
+          _payload.append(`files.${key}`, value, value.name)
+        } else if (Array.isArray(value)) {
+          value.filter(i => i instanceof File).forEach(i => {
+            _payload.append(`files.${key}`, i, i.name)
+          })
+        } else {
+          data[key] = value
+        }
+        return _payload
+      }, new FormData())
+
+      payload.append('data', JSON.stringify(data))
+
       this.debug(this.content)
+      this.$api.put(`/distributions/${this.id}`, payload)
+        .then(res => {
+          this.debug(res)
+          this.setData(res.data)
+          this.$q.notify({
+            type: 'positive',
+            message: 'Saved successfully'
+          })
+        }).catch(err => {
+          console.error('Error occurred while saving.', err, err.response)
+          this.$q.notify({
+            type: 'negative',
+            message: 'Error occurred'
+          })
+        })
     }
   }
 }

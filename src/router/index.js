@@ -35,5 +35,17 @@ export default function ({ store }) {
       next()
     }
   })
+
+  Router.beforeResolve((to, from, next) => {
+    if (localStorage.getItem('pathToLoadAfterLogin') && store.state.user.role && store.state.system.loaded) {
+      console.log('attempting redirect based on local storage flag: ', localStorage.getItem('pathToLoadAfterLogin'))
+      const nextPage = localStorage.getItem('pathToLoadAfterLogin') && localStorage.getItem('pathToLoadAfterLogin') !== 'undefined' ? localStorage.getItem('pathToLoadAfterLogin') : 'home'
+      localStorage.setItem('priorPath', nextPage)
+      localStorage.removeItem('pathToLoadAfterLogin')
+      next({ name: nextPage })
+    } else {
+      next()
+    }
+  })
   return Router
 }
