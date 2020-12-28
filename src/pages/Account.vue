@@ -221,10 +221,10 @@ export default {
     handleSubmit () {
       this.$api.put(`/user/${this.user_details.id}`, this.user_details)
         .then(response => {
-          console.log('response', response)
+          this.debug('response', response)
         })
         .catch(response => {
-          console.log('response', response)
+          this.debug('response', response)
         })
     },
     onPickFile () {
@@ -233,39 +233,17 @@ export default {
     onFilePicked (event) {
       const file = event.target.files[0]
       const formData = new FormData()
-      // formData.append('file', file)
-      // const request = new XMLHttpRequest()
-      // request.open('POST', `${this.$store.state.system.api.base}/upload`)
-      // request.send(formData)
       /* eslint-disable */
-      this.$api.get(`${this.$store.state.system.api.base}​​​​​​/upload/files`)
-        .then(response => {
-          console.log('get successful: ', response)
-        }).catch(error => {
-          console.error('get unsuccessful: ', error)
-        })
 
-      // constformData = newFormData()
       formData.append('files', file)
       formData.append('ref', 'user')
       formData.append('refId', this.user_details.id)
       formData.append('field', 'photo')
-      // formData.append('ref', 'distributions')
-      // formData.append('refId', 49)
-      // formData.append('field', 'cover')
       formData.append('source', 'users-permissions')
 
 
       this.$api.post(`${this.$store.state.system.api.base}​​​​​​/upload`, formData)
         .then(response => {
-          // const userId = 'insert user id'
-          // this.$api.put(`${this.$store.state.system.api.base}​​​​​​/user/${userId}`, { name: response.data.url })
-          //   .then(response => {
-          //     console.log('put successful: ', response)
-          //   }).catch(error => {
-          //     console.error('put unsuccessful: ', error)
-          //   })
-          console.log('response', response)
           this.user_details.photo = response.data[0]
           this.debug('DATA', response.data)
         })
@@ -274,14 +252,6 @@ export default {
 
           this.debug('CRAP', error)
         })
-
-      // this.$api.put('/distributions/49', {
-      //   creator: 'debugger@bugtown.com'
-      // }).then(response => {
-      //   console.log('put successful: ', response)
-      // }).catch(error => {
-      //   console.error('put unsuccessful: ', error)
-      // })
     },
     /* eslint-enable */
 
