@@ -12,7 +12,7 @@
               <q-item class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <q-item-section side>
                   <q-avatar size="100px">
-                    <img src="https://cdn.quasar.dev/img/boy-avatar.png" />
+                    <img :src="this.user_details.photo.formats.thumbnail.url" />
                   </q-avatar>
                 </q-item-section>
                 <q-item-section>
@@ -210,7 +210,8 @@ export default {
   data () {
     return {
       user_details: {},
-      password_dict: {}
+      password_dict: {},
+      componentKey: 0
     }
   },
   methods: {
@@ -248,21 +249,24 @@ export default {
       formData.append('files', file)
       formData.append('ref', 'user')
       formData.append('refId', this.user_details.id)
-      formData.append('field', 'name')
+      formData.append('field', 'photo')
       // formData.append('ref', 'distributions')
       // formData.append('refId', 49)
       // formData.append('field', 'cover')
+      formData.append('source', 'users-permissions')
+
 
       this.$api.post(`${this.$store.state.system.api.base}​​​​​​/upload`, formData)
         .then(response => {
-          const userId = 'insert user id'
-          this.$api.put(`${this.$store.state.system.api.base}​​​​​​/user/${userId}`, { name: response.data.url })
-            .then(response => {
-              console.log('put successful: ', response)
-            }).catch(error => {
-              console.error('put unsuccessful: ', error)
-            })
+          // const userId = 'insert user id'
+          // this.$api.put(`${this.$store.state.system.api.base}​​​​​​/user/${userId}`, { name: response.data.url })
+          //   .then(response => {
+          //     console.log('put successful: ', response)
+          //   }).catch(error => {
+          //     console.error('put unsuccessful: ', error)
+          //   })
           console.log('response', response)
+          this.user_details.photo = response.data[0]
           this.debug('DATA', response.data)
         })
         .catch(error => {
@@ -278,12 +282,12 @@ export default {
       // }).catch(error => {
       //   console.error('put unsuccessful: ', error)
       // })
-    }
+    },
     /* eslint-enable */
 
   },
   beforeMount () {
-    this.user_details = (({ username, id, name, email, address, city, zip }) => ({ username, id, name, email, address, city, zip }))(this.$store.state.user)
+    this.user_details = (({ username, id, name, email, address, city, zip, photo }) => ({ username, id, name, email, address, city, zip, photo }))(this.$store.state.user)
   }
 }
 </script>
