@@ -232,15 +232,26 @@ export default {
           console.log('response', response)
         })
     },
+    /* eslint-disable */
     updatePassword () {
-      // this.$api.post('/auth/local', { identifier: this.user_details.username, password: 'password' }).then(response => {
-      //   console.log('success: ', response)
-      // }).catch(error => {
-      //   console.error('failure: ', error)
-      // })
-      console.log(this.$store.state.user)
+      this.$api.post('/password',
+        {
+          identifier: this.user_details.username,
+          password: this.password_dict.current_password,
+          newPassword: this.password_dict.new_password,
+          confirmPassword: this.password_dict.confirm_new_password
+        }
+      ).then(response => {
+        this.password_dict = {};
+        this.$q.notify({ type: 'positive', message: 'Password successfully changed' })
+      }).catch(error => {
+        console.log(JSON.parse(JSON.stringify(error)))
+        this.$q.notify({ type: 'negative', message: error.response.data.data.message })
+      })
+
     }
   },
+  /* eslint-enable */
   beforeMount () {
     this.user_details = (({ username, id, name, email, address, city, state, country, zip }) => ({ username, id, name, email, address, city, state, country, zip }))(this.$store.state.user)
   }
