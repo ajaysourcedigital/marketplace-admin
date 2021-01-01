@@ -16,17 +16,25 @@
               <q-item class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <q-item-section side>
                   <q-avatar size="100px">
-                    <img src="https://cdn.quasar.dev/img/boy-avatar.png">
+                    <img :src="this.user_details.photo.formats.thumbnail.url" />
                   </q-avatar>
                 </q-item-section>
                 <q-item-section>
+                  <input
+                    type="file"
+                    style="display: none"
+                    ref="fileInput"
+                    accept="image/*"
+                    @change="onFilePicked"
+                  >
                   <q-btn
                     label="Add Photo"
                     class="text-capitalize"
                     rounded
                     color="info"
                     style="max-width: 120px"
-                  />
+                    @click="onPickFile"
+                  ></q-btn>
                 </q-item-section>
               </q-item>
 
@@ -216,7 +224,7 @@ export default {
     return {
       user_details: {},
       password_dict: {},
-      form_state: {}
+      componentKey: 0
     }
   },
   methods: {
@@ -226,12 +234,40 @@ export default {
     handleSubmit () {
       this.$api.put(`/user/${this.user_details.id}`, this.user_details)
         .then(response => {
-          console.log('response', response)
+          this.debug('response', response)
         })
         .catch(response => {
-          console.log('response', response)
+          this.debug('response', response)
         })
     },
+    onPickFile () {
+      this.$refs.fileInput.click()
+    },
+    onFilePicked (event) {
+      const file = event.target.files[0]
+      const formData = new FormData()
+      /* eslint-disable */
+
+      formData.append('files', file)
+      formData.append('ref', 'user')
+      formData.append('refId', this.user_details.id)
+      formData.append('field', 'photo')
+      formData.append('source', 'users-permissions')
+
+
+      this.$api.post(`${this.$store.state.system.api.base}​​​​​​/upload`, formData)
+        .then(response => {
+          this.user_details.photo = response.data[0]
+          this.debug('DATA', response.data)
+        })
+        .catch(error => {
+          console.log('error', error)
+
+          this.debug('CRAP', error)
+        })
+    },
+    /* eslint-enable */
+
     /* eslint-disable */
     updatePassword () {
       this.$api.post('/password',
@@ -253,7 +289,7 @@ export default {
   },
   /* eslint-enable */
   beforeMount () {
-    this.user_details = (({ username, id, name, email, address, city, state, country, zip }) => ({ username, id, name, email, address, city, state, country, zip }))(this.$store.state.user)
+    this.user_details = (({ username, id, name, email, address, city, state, country, zip, photo }) => ({ username, id, name, email, address, city, state, country, zip, photo }))(this.$store.state.user)
   }
 }
 </script>
