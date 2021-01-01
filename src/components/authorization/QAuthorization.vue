@@ -33,18 +33,16 @@
                 :register-page-description="registerPageDescription"
                 :privacy-text="privacyText"
                 @onSubmitRegister="onSubmitRegister"
-                :register-form-first-name="registerFormFirstName"
-                :register-form-last-name="registerFormLastName"
-                :register-form-email="registerFormEmail"
-                :register-form-password="registerFormPassword"
+                v-on="$_registrationEvents"
+                v-bind="$_registrationProps"
               />
             </div>
 
             <!-- Login Page -->
             <div v-else>
               <QAuthorizationLoginForm
-                :email-login="emailLogin"
-                :password-login="passwordLogin"
+                v-on="$_loginEvents"
+                v-bind="$_loginProps"
                 @handleLogin="handleLogin"
               />
             </div>
@@ -85,23 +83,23 @@ import QAuthorizationSwitchButton from './QAuthorizationSwitchButton'
 import QAuthorizationRegisterPage from './registration/QAuthorizationRegisterPage'
 import QAuthorizationLoginForm from './login/QAuthorizationLoginForm'
 import QAuthorizationSlider from './QAuthorizationSlider'
+import RegistrationMixin from './mixins/registration'
+import LoginMixin from './mixins/login'
+import props from './mixins/props'
 export default {
   name: 'QAuthorization',
+  mixins: [RegistrationMixin, LoginMixin],
   props: {
     companyInfo: Object,
     tagLine: Object,
-    emailLogin: String,
-    passwordLogin: String,
     registerPageDescription: Object,
     slide: Number,
     reviewsSlide: Array,
     showRightSide: Boolean,
     privacyText: String,
     switchButtonText: Object,
-    registerFormFirstName: String,
-    registerFormLastName: String,
-    registerFormEmail: String,
-    registerFormPassword: String
+    ...props.login,
+    ...props.registration
   },
   components: { QAuthorizationSwitchButton, QAuthorizationRegisterPage, QAuthorizationLoginForm, QAuthorizationSlider },
   data () {

@@ -80,7 +80,7 @@ export default {
   },
   methods: {
     onSubmitRegister (data) {
-      console.log('Submitted Register Data', data)
+      this.debug('Submitted Register Data', data)
       this.registerFormFirstName = data.registerFormFirstName
       this.registerFormLastName = data.registerFormLastName
       this.registerFormEmail = data.registerFormEmail
@@ -92,7 +92,9 @@ export default {
           this.$store.commit('replaceUser', result)
           this.debug('Login success', result)
           this.$q.notify({ type: 'positive', message: 'Login successful' })
-          this.$router.push({ name: 'home' })
+          const nextPage = (localStorage.getItem('pathToLoadAfterLogin') && localStorage.getItem('pathToLoadAfterLogin') !== 'login') ? localStorage.getItem('pathToLoadAfterLogin') : 'home'
+          localStorage.removeItem('pathToLoadAfterLogin')
+          this.$router.push({ name: nextPage })
         })
         .catch(result => {
           this.debug('Login error', JSON.parse(JSON.stringify(result)))

@@ -1035,7 +1035,7 @@
     core-js "^3.6.5"
     core-js-compat "^3.6.5"
 
-"@quasar/extras@^1.0.0":
+"@quasar/extras@^1.0.0", "@quasar/extras@^1.9.10":
   version "1.9.12"
   resolved "https://registry.yarnpkg.com/@quasar/extras/-/extras-1.9.12.tgz#33e8079d194ac64dabef570750b528db831fe52d"
   integrity sha512-RZxwvOBYfptUUFUz81fsgRCaifB/rdwRvb7+/+ng5OQyK+VqRoCJZK6GDWNZPj0wbNNyKprX28Mem3TNWTHCMg==
@@ -1052,10 +1052,25 @@
   dependencies:
     "@quasar/quasar-ui-qcalendar" "^3.3.1"
 
+"@quasar/quasar-app-extension-qmediaplayer@^1.1.4":
+  version "1.1.4"
+  resolved "https://registry.yarnpkg.com/@quasar/quasar-app-extension-qmediaplayer/-/quasar-app-extension-qmediaplayer-1.1.4.tgz#7a07622769325b7a3ea9361b260c17c6bf4ccde6"
+  integrity sha512-WgFJ46Z5pV/3RqAyELUcB5SJZyvGa5nAXWA/yD47wxvvQnAcMu6fVM/dl33tKfqy9C0vPeTVShbSY7P3fcH5dA==
+  dependencies:
+    "@quasar/quasar-ui-qmediaplayer" "^1.1.4"
+
 "@quasar/quasar-ui-qcalendar@^3.3.1":
   version "3.3.1"
   resolved "https://registry.yarnpkg.com/@quasar/quasar-ui-qcalendar/-/quasar-ui-qcalendar-3.3.1.tgz#bf6060e57ed909447cd1e86f44e97ff957885f35"
   integrity sha512-QVtklfGMWaKYWginfDj3lLabZCZaltAHb4aSRcq3PdL7r0ubf3IUuV8uKXqdzUN4RtJ5sAuRb3WFJWPR/xFFaw==
+
+"@quasar/quasar-ui-qmediaplayer@^1.1.4":
+  version "1.1.4"
+  resolved "https://registry.yarnpkg.com/@quasar/quasar-ui-qmediaplayer/-/quasar-ui-qmediaplayer-1.1.4.tgz#af45cee3dadf904288285828264e75acde5fc92b"
+  integrity sha512-zs4j2RA5XONgeLnc4h6HOT8ua9NmlHGw+9Pdq4PV4te6TP7mOnNBkm6A9vQDq0fN+y/N+EUjqr0IH9ALZQAlRw==
+  dependencies:
+    "@quasar/extras" "^1.9.10"
+    q-colorize-mixin "^1.0.10"
 
 "@sindresorhus/is@^0.14.0":
   version "0.14.0"
@@ -7103,6 +7118,11 @@ punycode@^2.1.0:
   resolved "https://registry.yarnpkg.com/punycode/-/punycode-2.1.1.tgz#b58b010ac40c22c5657616c8d2c2c02c7bf479ec"
   integrity sha512-XRsRjdf+j5ml+y/6GKHPZbrF/8p2Yga0JPtdqTIY2Xe5ohJPD9saDJJLPvp9+NSBprVvevdXZybnj2cv8OEd0A==
 
+q-colorize-mixin@^1.0.10:
+  version "1.0.10"
+  resolved "https://registry.yarnpkg.com/q-colorize-mixin/-/q-colorize-mixin-1.0.10.tgz#f0fbfa2826cbfdaffc5c6851e9949aff311da48a"
+  integrity sha512-pqMSb3mxTps0pfKh2zV/7ukgVvrzQT8+Ic2c3PaTkMI5yGPBbBK+t0SgF1ktBJ0PCYFE1bpK1unK20Z2OlTzlg==
+
 q@^1.1.2:
   version "1.5.1"
   resolved "https://registry.yarnpkg.com/q/-/q-1.5.1.tgz#7e32f75b41381291d04611f1bf14109ac00651d7"
@@ -8774,6 +8794,11 @@ uuid@^3.3.2, uuid@^3.4.0:
   resolved "https://registry.yarnpkg.com/uuid/-/uuid-3.4.0.tgz#b23e4358afa8a202fe7a100af1f5f883f02007ee"
   integrity sha512-HjSDRw6gZE5JMggctHBcjVak08+KEVhSIiDzFnT9S9aegmp85S/bReBVTb4QTFaRNptJ9kuYaNhnbNEOkbKb/A==
 
+v-runtime-template@^1.10.0:
+  version "1.10.0"
+  resolved "https://registry.yarnpkg.com/v-runtime-template/-/v-runtime-template-1.10.0.tgz#8ea7066c37cf4be5c701a06ca247e1afda89c4be"
+  integrity sha512-WLlq9jUepSfUrMEenw3mn7FDXX6hhbl11JjC1OKhwLzifHzVrY5a696TUHDPyj9jke3GGnR7b+2T3od/RL5cww==
+
 v8-compile-cache@^2.0.3:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/v8-compile-cache/-/v8-compile-cache-2.2.0.tgz#9471efa3ef9128d2f7c6a7ca39c4dd6b5055b132"
@@ -8839,6 +8864,11 @@ vue-i18n@^8.0.0:
   version "8.22.2"
   resolved "https://registry.yarnpkg.com/vue-i18n/-/vue-i18n-8.22.2.tgz#58299a5a050e67b4f799d96fee7dd8bd269e0907"
   integrity sha512-rb569fVJInPUgS/bbCxEQ9DrAoFTntuJvYoK4Fpk2VfNbA09WzdTKk57ppjz3S+ps9hW+p9H+2ASgMvojedkow==
+
+vue-json-pretty@1.6.2:
+  version "1.6.2"
+  resolved "https://registry.yarnpkg.com/vue-json-pretty/-/vue-json-pretty-1.6.2.tgz#7fb1eb5e6536ed30ada757df129889d0249c5505"
+  integrity sha512-thZrceEBt9HqEX94/xnws5N/d165BIXbLY1VPeT2UyDP8jbGNC54+wzzJuLFF1teZLtTRfNOz8wf8bmuoJ/kRw==
 
 vue-loader@15.9.5:
   version "15.9.5"

@@ -6,8 +6,8 @@
     <div class="row no-wrap">
       <q-input
         filled
-        v-model="mutableFirstName"
-        @input="$emit('update:registerFormFirstName', mutableFirstName)"
+        :value="registerFormFirstName"
+        @input="$emit('update:register-form-first-name', $event)"
         label="First Name"
         lazy-rules
         class="col-6 q-pr-md"
@@ -16,8 +16,8 @@
 
       <q-input
         filled
-        v-model="mutableLastName"
-        @input="$emit('update:registerFormLastName', mutableLastName)"
+        :value="registerFormLastName"
+        @input="$emit('update:register-form-last-name', $event)"
         label="Last Name"
         lazy-rules
         class="col-6 q-pl-md"
@@ -30,8 +30,8 @@
     <q-input
       filled
       type="email"
-      v-model="mutableEmail"
-      @input="$emit('update:registerFormEmail', mutableEmail)"
+      :value="registerFormEmail"
+      @input="$emit('update:register-form-email', $event)"
       label="Email"
       lazy-rules
       :rules="[
@@ -42,8 +42,8 @@
     <q-input
       filled
       type="password"
-      v-model="mutablePassword"
-      @input="$emit('update:registerFormPassword', mutablePassword)"
+      :value="registerFormPassword"
+      @input="$emit('update:register-form-password', $event)"
       label="Choose a Password"
       lazy-rules
       :rules="[
@@ -61,29 +61,19 @@
 </template>
 
 <script>
+import props from '../mixins/props'
 export default {
   name: 'QAuthorizationRegisterForm',
   props: {
-    registerFormFirstName: String,
-    registerFormLastName: String,
-    registerFormEmail: String,
-    registerFormPassword: String
-  },
-  data () {
-    return {
-      mutableFirstName: this.registerFormFirstName,
-      mutableLastName: this.registerFormLastName,
-      mutableEmail: this.registerFormEmail,
-      mutablePassword: this.registerFormPassword
-    }
+    ...props.registration
   },
   methods: {
     onSubmitRegister () {
       this.$emit('onSubmitRegister', {
-        firstName: this.mutableFirstName,
-        lastName: this.mutableLastName,
-        email: this.mutableEmail,
-        password: this.mutablePassword
+        firstName: this.registerFormFirstName,
+        lastName: this.registerFormLastName,
+        email: this.registerFormEmail,
+        password: this.registerFormPassword
       })
     }
   }
