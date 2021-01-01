@@ -196,7 +196,10 @@
             </q-item>
           </q-card-section>
           <q-card-actions align="right">
-            <q-btn class="text-capitalize bg-info text-black">
+            <q-btn
+              class="text-capitalize bg-info text-black"
+              @click="updatePassword"
+            >
               Change Password
             </q-btn>
           </q-card-actions>
@@ -221,7 +224,7 @@ export default {
       this.handleSubmit()
     },
     handleSubmit () {
-      this.$api.put(`/user/${this.user_details}`, this.user_details)
+      this.$api.put(`/user/${this.user_details.id}`, this.user_details)
         .then(response => {
           console.log('response', response)
         })
@@ -229,19 +232,26 @@ export default {
           console.log('response', response)
         })
     },
-    formatName (firstName, lastName) {
-      if (!firstName) {
-        if (lastName) {
-          return lastName
-        } else {
-          return ''
+    /* eslint-disable */
+    updatePassword () {
+      this.$api.post('/password',
+        {
+          identifier: this.user_details.username,
+          password: this.password_dict.current_password,
+          newPassword: this.password_dict.new_password,
+          confirmPassword: this.password_dict.confirm_new_password
         }
-      }
-      if (!lastName) lastName = ''
+      ).then(response => {
+        this.password_dict = {};
+        this.$q.notify({ type: 'positive', message: 'Password successfully changed' })
+      }).catch(error => {
+        console.log(JSON.parse(JSON.stringify(error)))
+        this.$q.notify({ type: 'negative', message: error.response.data.data.message })
+      })
 
-      return firstName + ' ' + lastName
     }
   },
+  /* eslint-enable */
   beforeMount () {
     this.user_details = (({ username, id, name, email, address, city, state, country, zip }) => ({ username, id, name, email, address, city, state, country, zip }))(this.$store.state.user)
   }
