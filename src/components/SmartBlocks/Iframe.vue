@@ -8,10 +8,19 @@
       <q-input
         label="URL"
         :value="settings.url"
+        @input='emitConfig'
+        clearable
+        clear-icon="close"
       />
     </div>
     <div v-else>
-      Your iframe goes here.
+      <iframe
+        :src='settings.url'
+        v-if='settings.url'
+        class='fit q-pa-sm'
+        frameBorder='0'
+      />
+      <div v-else>Your iframe goes here.</div>
     </div>
   </div>
 </template>
@@ -28,8 +37,8 @@ export default {
     },
     emitConfig (data) {
       const emit = JSON.parse(JSON.stringify(this.settings))
-      emit.image = data
-      this.$emit('config', JSON.stringify(emit))
+      emit.url = data
+      this.$emit('config', emit)
     }
   }
 }
