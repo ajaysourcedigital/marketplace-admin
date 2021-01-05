@@ -1,5 +1,8 @@
 <template>
-  <div class="q-pa-xs">
+  <div
+    class="q-pa-xs"
+    :style="`height:${height}!important;`"
+  >
     <q-toolbar :class="`bg-primary text-white`">
       Template
       <q-space />
@@ -22,17 +25,19 @@
       </q-tabs>
     </q-toolbar>
     <q-tab-panels
+      :style="`height:calc(${height} - 55px)`"
       v-model="currentTab"
       animated
       transition-prev="fade"
       transition-next="fade"
     >
       <q-tab-panel
+        class='fit'
         name="Template"
         style="margin:0px;padding:0px"
       >
         <draggable
-          class="list-group"
+          class="list-group fit"
           :list="metacontentBlocks"
           group="options"
           v-bind="dragOptions"
@@ -89,7 +94,8 @@ import RenderSmartBlock from 'components/Metacontent/RenderSmartBlock'
 export default {
   name: 'PreviewMetacontent',
   props: {
-    settings: Object
+    settings: Object,
+    height: String
   },
   components: {
     Draggable,
