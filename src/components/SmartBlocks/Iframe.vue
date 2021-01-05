@@ -4,14 +4,33 @@
       v-if="configure"
       class="q-pa-sm"
     >
-      Configure this iframe by dragging a URL from your favorite website.
+      Configure this iframe by pasting a URL from your favorite website.
       <q-input
         label="URL"
-        :value="settings.url"
-      />
+        ref="input"
+        v-model="settings.url"
+        clearable
+        clear-icon="close"
+      >
+        <template v-slot:append>
+          <q-btn
+            round
+            dense
+            flat
+            icon="check"
+            @click="emitConfig"
+          />
+        </template>
+      </q-input>
     </div>
     <div v-else>
-      Your iframe goes here.
+      <iframe
+        :src='settings.url'
+        v-if='settings.url'
+        class='fit q-pa-sm'
+        frameBorder='0'
+      />
+      <div v-else>Your iframe will appear here.</div>
     </div>
   </div>
 </template>
@@ -26,10 +45,14 @@ export default {
     emitAction () {
       this.$emit('action', 'Clicked')
     },
-    emitConfig (data) {
-      const emit = JSON.parse(JSON.stringify(this.settings))
-      emit.image = data
-      this.$emit('config', JSON.stringify(emit))
+    emitConfig () {
+      this.debug(this.$refs.input.value)
+      const data = this.$refs.input.value
+      if (data) {
+        const emit = JSON.parse(JSON.stringify(this.settings))
+        emit.url = data
+        this.$emit('config', emit)
+      }
     }
   }
 }
