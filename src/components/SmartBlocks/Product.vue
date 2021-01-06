@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="fit overflow-hidden">
     <div
       v-if="configure"
       class="q-pa-sm"
@@ -29,6 +29,7 @@
             :rules="[val => rule(val, con.required)]"
             clearable
             clear-icon="close"
+            :type="inputType(con.model)"
           />
           <q-input
             v-else-if="con.model === 'lowPrice' && sale"
@@ -37,6 +38,7 @@
             :rules="[val => rule(val, con.required)]"
             clearable
             clear-icon="close"
+            :type="inputType(con.model)"
           />
         </div>
         <div class="full-width row justify-end">
@@ -82,7 +84,10 @@
         <div
           v-if='settings.description'
           class="text-body1 q-my-sm scroll"
-        >{{settings.description || "N/A"}}</div>
+          style="max-height:250px;"
+        >
+          <div v-html="settings.description"></div>
+        </div>
       </div>
       <div v-else>Your product will show here.</div>
     </div>
@@ -124,6 +129,27 @@ export default {
     },
     reset () {
       this.temp = { ...this.settings }
+    },
+    inputType (model) {
+      let type
+      switch (model) {
+        case 'description':
+          type = 'textarea'
+          break
+        case 'image':
+          type = 'url'
+          break
+        case 'highPrice':
+          type = 'number'
+          break
+        case 'lowPrice':
+          type = 'number'
+          break
+        default:
+          type = 'text'
+          break
+      }
+      return type
     }
   },
   computed: {
