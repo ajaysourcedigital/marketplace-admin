@@ -7,11 +7,12 @@
       Customize your action button.
       <q-input
         label="Title"
-        :value="settings.title"
+        ref="input"
+        v-model="settings.title"
       />
       <q-input
         label="URL"
-        :value="settings.url"
+        v-model="settings.url"
       />
       <q-input
         label="Color"
@@ -49,11 +50,25 @@
           </q-icon>
         </template>
       </q-input>
+
+      <div class="text-right">
+        <q-btn
+          dense
+          color="primary"
+          label="Save"
+          class="q-mt-md q-px-md"
+          @click="emitConfig"
+        />
+      </div>
     </div>
     <q-btn
       v-else
       :label="settings.title"
       class="full-width"
+      :style="{
+        'background' : settings.color,
+        'color' : settings.textColor
+      }"
       @click="emitAction"
     />
   </div>
@@ -69,10 +84,14 @@ export default {
     emitAction () {
       this.$emit('action', 'Clicked')
     },
-    emitConfig (data) {
-      const emit = JSON.parse(JSON.stringify(this.settings))
-      emit.image = data
-      this.$emit('config', JSON.stringify(emit))
+    emitConfig () {
+      this.debug(this.$refs.input.value)
+      const data = this.$refs.input.value
+      if (data) {
+        const emit = JSON.parse(JSON.stringify(this.settings))
+        emit.title = data
+        this.$emit('config', emit)
+      }
     }
   }
 }
