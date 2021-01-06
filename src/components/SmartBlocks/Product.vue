@@ -45,7 +45,7 @@
           <q-btn
             round
             type="submit"
-            icon='check'
+            icon="check"
             color="primary"
           />
           <q-btn
@@ -61,28 +61,35 @@
     </div>
     <div v-else>
       <div
-        v-if='settings.title'
+        v-if="settings.title"
         class="q-pa-sm"
       >
         <q-img
           v-if="settings.image"
-          :src='settings.image'
+          :src="settings.image"
           contain
           :ratio="16/7"
         />
         <!-- Name & Price -->
-        <div class='text-center'>
+        <div class="text-center">
           <div class="q-mt-md text-subtitle1">{{settings.title}}</div>
           <span
-            class='text-strike text-bold'
-            v-if='saleCheck'
-          >${{settings.highPrice}}</span> Get it for <span class='text-bold'>${{ saleCheck ? settings.lowPrice : settings.highPrice }}</span>
+            class="text-strike text-bold"
+            v-if="sale"
+          >${{settings.highPrice}}</span> Get it for <span class="text-bold">${{ sale ? settings.lowPrice : settings.highPrice }}</span>
         </div>
         <!-- Add to cart -->
-        <div></div>
+        <div class="q-py-sm">
+          <q-btn
+            label="Add to Cart"
+            class="full-width"
+            color="primary"
+            @click="btnNotif"
+          />
+        </div>
         <!-- Description -->
         <div
-          v-if='settings.description'
+          v-if="settings.description"
           class="text-body1 q-my-sm scroll"
           style="max-height:250px;"
         >
@@ -102,7 +109,7 @@ export default {
   },
   data () {
     return {
-      sale: false,
+      sale: !!this.settings.lowPrice,
       temp: { ...this.settings },
       conf: [
         { label: 'Title', required: true, model: 'title' },
@@ -113,12 +120,23 @@ export default {
       ]
     }
   },
+  watch: {
+    'sale' (val) {
+      if (!val) this.emitSalePrice()
+    }
+  },
   methods: {
     emitAction () {
       this.$emit('action', 'Clicked')
     },
-    emitConfig (model) {
+    emitConfig () {
       const emit = JSON.parse(JSON.stringify(this.temp))
+      this.$emit('config', emit)
+    },
+    // only affect low price
+    emitSalePrice () {
+      const emit = JSON.parse(JSON.stringify(this.settings))
+      emit.lowPrice = null
       this.$emit('config', emit)
     },
     rule (val, req) {
@@ -150,11 +168,9 @@ export default {
           break
       }
       return type
-    }
-  },
-  computed: {
-    saleCheck () {
-      return !!this.settings.lowPrice
+    },
+    btnNotif () {
+      this.$q.notify('This would open the cart...')
     }
   }
 }
