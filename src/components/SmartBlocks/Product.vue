@@ -113,6 +113,7 @@ export default {
       temp: { ...this.settings },
       conf: [
         { label: 'Title', required: true, model: 'title' },
+        { label: 'Product ID', required: true, model: 'productId' },
         { label: 'Image', required: false, model: 'image' },
         { label: 'Price', required: true, model: 'highPrice' },
         { label: 'Sale Price', required: false, model: 'lowPrice' },
