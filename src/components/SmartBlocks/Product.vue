@@ -170,6 +170,7 @@ export default {
       return type
     },
     btnNotif () {
+      this.emitAction()
       this.$q.notify('This would open the cart...')
     }
   }
