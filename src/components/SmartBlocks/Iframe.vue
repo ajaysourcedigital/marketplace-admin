@@ -1,14 +1,15 @@
 <template>
-  <div>
+  <div class="fit">
     <div
       v-if="configure"
       class="q-pa-sm"
     >
       Configure this iframe by pasting a URL from your favorite website.
       <q-input
-        label="URL"
-        ref="input"
-        v-model="settings.url"
+        v-for="con in conf"
+        :key="con.label"
+        :label="con.label"
+        v-model="temp[con.model]"
         clearable
         clear-icon="close"
       >
@@ -18,16 +19,19 @@
             dense
             flat
             icon="check"
-            @click="emitConfig"
+            @click="emitConfig(con.model)"
           />
         </template>
       </q-input>
     </div>
-    <div v-else>
+    <div
+      v-else
+      class="fit"
+    >
       <iframe
         :src='settings.url'
         v-if='settings.url'
-        class='fit q-pa-sm'
+        class='fit'
         frameBorder='0'
       />
       <div v-else>Your iframe will appear here.</div>
@@ -41,18 +45,23 @@ export default {
     settings: Object,
     configure: Boolean
   },
+  data () {
+    return {
+      temp: { ...this.settings },
+      conf: [
+        { label: 'Url', model: 'url' },
+        { label: 'Height', model: 'height' }
+      ]
+    }
+  },
   methods: {
     emitAction () {
       this.$emit('action', 'Clicked')
     },
-    emitConfig () {
-      this.debug(this.$refs.input.value)
-      const data = this.$refs.input.value
-      if (data) {
-        const emit = JSON.parse(JSON.stringify(this.settings))
-        emit.url = data
-        this.$emit('config', emit)
-      }
+    emitConfig (model) {
+      const emit = JSON.parse(JSON.stringify(this.settings))
+      emit[model] = this.temp[model]
+      this.$emit('config', emit)
     }
   }
 }
