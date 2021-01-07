@@ -8,11 +8,22 @@
       content. Type or paste your markdown in the box below.
       <q-input
         label="Content"
+        ref="input"
         v-model="config.content"
         filled
         autogrow
         @blur="emit('change', config)"
       />
+
+      <div class="text-right">
+        <q-btn
+          dense
+          color="primary"
+          label="Save"
+          class="q-mt-md q-px-md"
+          @click="emitConfig"
+        />
+      </div>
     </div>
     <div
       v-else
@@ -43,6 +54,15 @@ export default {
       const cloned = this.$ee.util.clone(data)
       this.debug(event, cloned)
       this.$emit(event, cloned)
+    },
+    emitConfig () {
+      this.debug(this.$refs.input.value)
+      const data = this.$refs.input.value
+      if (data) {
+        const emit = JSON.parse(JSON.stringify(this.settings))
+        emit.content = data
+        this.$emit('config', emit)
+      }
     }
   }
 }
