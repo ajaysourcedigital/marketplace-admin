@@ -9,7 +9,7 @@
       </div>
       <q-select
         :loading="!appOptions"
-        label="App URL"
+        label="App"
         :options="appOptions"
         option-label="name"
         option-value="slug"
