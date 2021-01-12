@@ -44,16 +44,19 @@
           @start="drag = true"
           @end="drag = false"
         >
-          <render-smart-block
+          <div
             v-for="(item, index) in metacontentBlocks"
             :key="index"
-            :settings="item"
-            :preview="true"
-            @action="processAction(index, ...arguments)"
-            @change="processChange(index, ...arguments)"
-            @config="processConfig(index, ...arguments)"
-            @delete="processDelete(index, ...arguments)"
-          />
+          >
+            <render-smart-block
+              :settings="item"
+              :preview="true"
+              @action="processAction(index, ...arguments)"
+              @change="processChange(index, ...arguments)"
+              @config="processConfig(index, ...arguments)"
+              @delete="processDelete(index, ...arguments)"
+            />
+          </div>
           <!-- {{ metacontentBlocks }} -->
         </draggable>
       </q-tab-panel>
@@ -61,15 +64,18 @@
         name="Production"
         style="margin:0px;padding:0px"
       >
-        <render-smart-block
+        <div
           v-for="(item, index) in metacontentBlocks"
           :key="index"
-          :settings="item"
-          @action="processAction(index, ...arguments)"
-          @change="processChange(index, ...arguments)"
-          @config="processConfig(index, ...arguments)"
-          @delete="processDelete(index, ...arguments)"
-        />
+        >
+          <render-smart-block
+            :settings="item"
+            @action="processAction(index, ...arguments)"
+            @change="processChange(index, ...arguments)"
+            @config="processConfig(index, ...arguments)"
+            @delete="processDelete(index, ...arguments)"
+          />
+        </div>
       </q-tab-panel>
       <q-tab-panel name="Data">
         <vue-json-pretty
