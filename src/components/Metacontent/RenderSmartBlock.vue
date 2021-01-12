@@ -1,8 +1,8 @@
 <template>
-  <div :style="(currentTab === 'tabPreview' || !preview) && settings.settings.height ? `height:${settings.settings.height}` : ''">
+  <div>
     <div
       v-if="preview"
-      style="border: 1px solid #ccc;padding:0px;margin:0px;height:100%;"
+      style="border: 1px solid #ccc;padding:0px;margin:0px"
     >
       <!-- Rendering for preview does a lot of stuff -->
       <q-toolbar :class="`bg-${settings.color} text-white`">
@@ -34,7 +34,6 @@
         </q-tabs>
       </q-toolbar>
       <q-tab-panels
-        style="height:calc(100% - 50px)"
         v-model="currentTab"
         animated
         transition-prev="slide-right"
@@ -73,10 +72,7 @@
         </q-tab-panel>
       </q-tab-panels>
     </div>
-    <div
-      v-else
-      class="full-height"
-    >
+    <div v-else>
       <!-- Rendering for production just renders the block and proxies the events -->
       <component
         :is="`smart-block-${settings.name}`"
