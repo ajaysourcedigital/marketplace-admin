@@ -8,7 +8,7 @@
       <q-form
         @submit="emitConfig"
         @reset="reset"
-        class="q-gutter-sm q-pa-md"
+        class="q-gutter-y-sm"
       >
         <div
           v-for="con in conf"
@@ -41,20 +41,18 @@
           </q-input>
         </div>
 
-        <div class="full-width row justify-end">
+        <div class="text-right">
           <q-btn
-            round
-            type="submit"
-            icon="check"
-            color="primary"
-          />
-          <q-btn
-            round
+            label="Reset"
             type="reset"
-            icon="close"
             color="primary"
             flat
+          />
+          <q-btn
+            label="Save"
+            type="submit"
             class="q-ml-sm"
+            color="primary"
           />
         </div>
       </q-form>
@@ -64,8 +62,8 @@
       :label="settings.title"
       class="full-width"
       :style="{
-        'background' : settings.color,
-        'color' : settings.textColor
+        background: settings.color,
+        color: settings.textColor,
       }"
       @click="emitAction"
     />
