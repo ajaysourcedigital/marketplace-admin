@@ -15,12 +15,14 @@
         :options="appOptions"
         option-label="name"
         option-value="slug"
+        clearable
         v-model="internalSettings.slug"
         emit-value
         map-options
       />
       <q-input
         label="Minimum Height"
+        clearable
         v-model="internalSettings.style.minHeight"
       />
       <q-field :rules="[() => !settingsHasError]">
