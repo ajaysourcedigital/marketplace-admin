@@ -78,7 +78,7 @@
             flat
             color="grey-8"
             icon="support_agent"
-            @click="processAction({ action: 'app.route', payload: 'support'})"
+            @click="processAction({ action: 'app.support' })"
           >
             <q-badge
               v-if="user.conversations"
