@@ -1,6 +1,7 @@
 <template>
   <q-card
-    class="q-mt-sm"
+    class="column no-wrap justify-between"
+    style="flex-grow: 1"
     v-if="fullData"
   >
     <q-card-section class="text-h6 q-pb-none row no-wrap items-baseline">
@@ -42,9 +43,9 @@
     </q-card-section>
     <q-card-section class="q-pa-none q-ma-none">
       <q-table
-        card-container-style="height:400px;overflow:scroll;"
-        table-style="height: 400px;"
-        card-style="max-height:400px;"
+        card-container-style="max-height:550px;overflow:scroll;"
+        table-style="max-height: 550px;"
+        card-style="max-height:550px;"
         class="stickyTable"
         :data="validation"
         :grid="card"
@@ -136,70 +137,10 @@
           v-slot:item="props"
           v-if="card"
         >
-          <div class="q-pa-xs col-xs-12 col-sm-6 col-md-4 col-lg-3">
-            <q-card @click="$emit('row-click', props.row)">
-              <div
-                class="q-pa-md"
-                v-if="props.row.image"
-              >
-                <q-img
-                  :ratio="16/9"
-                  :src="props.row.image"
-                />
-              </div>
-              <q-list
-                dense
-                class="scroll"
-                style="max-height:300px;"
-              >
-                <q-item
-                  v-for="col in props.cols"
-                  :key="col.name"
-                >
-                  <q-item-section v-if="typeItem(col.value)">
-                    <q-item-label>{{ col.label }}</q-item-label>
-                  </q-item-section>
-                  <q-item-section
-                    v-if="typeItem(col.value)"
-                    side
-                  >
-                    <q-item-label
-                      caption
-                      lines="1"
-                      style="max-width:150px;"
-                    >
-                      {{ col.value || 'N/A' }}
-                      <q-popup-edit
-                        v-if="edit"
-                        auto-save
-                        v-model="props.row[col.name]"
-                        @save="$emit('saved', props.row[col.name], props.row, col.label)"
-                      >
-                        <editInPlace
-                          :props="props"
-                          :col="col"
-                        />
-                      </q-popup-edit>
-                    </q-item-label>
-                  </q-item-section>
-                  <div
-                    v-else
-                    class="full-width"
-                  >
-                    <!-- If object has more than 3 items -->
-                    <q-expansion-item
-                      @click.stop="debug('Clicked on row')"
-                      :label="col.label"
-                      class="full-width q-pa-none"
-                      expand-separator
-                    >
-                      {{ col.value }}
-                    </q-expansion-item>
-                  </div>
-                </q-item>
-              </q-list>
-            </q-card>
-          </div>
+          <content-card
+            :props="props"
+            @row-click="$emit('row-click', props.row)"
+          />
         </template>
       </q-table>
     </q-card-section>
@@ -210,6 +151,7 @@
 const Ajv = require('ajv')
 const ajv = new Ajv({ allErrors: true })
 import editInPlace from './EditInPlace'
+import contentCard from './contentCard'
 export default {
   name: 'QResources',
   props: {
@@ -219,7 +161,7 @@ export default {
     sticky: { type: Boolean, default: true },
     fullData: { type: Object, default: null }
   },
-  components: { editInPlace },
+  components: { editInPlace, contentCard },
   data () {
     return {
       card: false,
