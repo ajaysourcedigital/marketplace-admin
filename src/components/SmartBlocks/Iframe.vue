@@ -5,24 +5,38 @@
       class="q-pa-sm"
     >
       Configure this iframe by pasting a URL from your favorite website.
-      <q-input
-        v-for="con in conf"
-        :key="con.label"
-        :label="con.label"
-        v-model="temp[con.model]"
-        clearable
-        clear-icon="close"
+      <q-form
+        @submit="emitConfig"
+        @reset="reset"
+        class="q-gutter-sm q-pa-md"
       >
-        <template v-slot:append>
+        <q-input
+          label="Url"
+          v-model="temp.url"
+          clearable
+          clear-icon="close"
+        />
+        <q-input
+          label="Height"
+          v-model="temp.style.minHeight"
+          clearable
+          clear-icon="close"
+        />
+        <div class="full-width row justify-end q-pt-md">
           <q-btn
-            round
-            dense
-            flat
-            icon="check"
-            @click="emitConfig(con.model)"
+            type="submit"
+            color="primary"
+            label='Save'
           />
-        </template>
-      </q-input>
+          <q-btn
+            type="reset"
+            label='Reset'
+            color="primary"
+            flat
+            class="q-ml-sm"
+          />
+        </div>
+      </q-form>
     </div>
     <div
       v-else
@@ -31,7 +45,8 @@
       <iframe
         :src='settings.url'
         v-if='settings.url'
-        class='fit'
+        class='full-width'
+        :height="settings.style.minHeight"
         frameBorder='0'
       />
       <div v-else>Your iframe will appear here.</div>
@@ -39,6 +54,7 @@
   </div>
 </template>
 <script>
+import clonedeep from 'lodash/clonedeep'
 export default {
   name: 'SmartBlockIframe',
   props: {
@@ -47,21 +63,19 @@ export default {
   },
   data () {
     return {
-      temp: { ...this.settings },
-      conf: [
-        { label: 'Url', model: 'url' },
-        { label: 'Height', model: 'height' }
-      ]
+      temp: clonedeep(this.settings)
     }
   },
   methods: {
     emitAction () {
       this.$emit('action', 'Clicked')
     },
-    emitConfig (model) {
-      const emit = JSON.parse(JSON.stringify(this.settings))
-      emit[model] = this.temp[model]
+    emitConfig () {
+      const emit = JSON.parse(JSON.stringify(this.temp))
       this.$emit('config', emit)
+    },
+    reset () {
+      this.temp = clonedeep(this.settings)
     }
   }
 }
