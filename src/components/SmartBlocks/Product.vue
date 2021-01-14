@@ -43,15 +43,13 @@
         </div>
         <div class="full-width row justify-end">
           <q-btn
-            round
+            label="Save"
             type="submit"
-            icon="check"
             color="primary"
           />
           <q-btn
-            round
+            label="Reset"
             type="reset"
-            icon="close"
             color="primary"
             flat
             class="q-ml-sm"
@@ -101,6 +99,7 @@
   </div>
 </template>
 <script>
+import clonedeep from 'lodash/clonedeep'
 export default {
   name: 'SmartBlockProduct',
   props: {
@@ -110,7 +109,7 @@ export default {
   data () {
     return {
       sale: !!this.settings.lowPrice,
-      temp: { ...this.settings },
+      temp: clonedeep(this.settings),
       conf: [
         { label: 'Title', required: true, model: 'title' },
         { label: 'Product ID', required: true, model: 'productId' },
@@ -147,7 +146,7 @@ export default {
       })
     },
     reset () {
-      this.temp = { ...this.settings }
+      this.temp = clonedeep(this.settings)
     },
     inputType (model) {
       let type
