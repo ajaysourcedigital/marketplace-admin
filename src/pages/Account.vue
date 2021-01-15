@@ -16,7 +16,7 @@
               <q-item class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <q-item-section side>
                   <q-avatar size="100px">
-                    <img :src="this.user_details.photo.formats.thumbnail.url" />
+                    <img :src="this.user_details.photo.formats.thumbnail.url">
                   </q-avatar>
                 </q-item-section>
                 <q-item-section>
@@ -34,7 +34,7 @@
                     color="info"
                     style="max-width: 120px"
                     @click="onPickFile"
-                  ></q-btn>
+                  />
                 </q-item-section>
               </q-item>
 
@@ -141,7 +141,9 @@
             <q-btn
               class="text-capitalize bg-info text-black"
               @click="handleSubmit"
-            >Update User Info</q-btn>
+            >
+              Update User Info
+            </q-btn>
           </q-card-actions>
         </q-card>
       </div>
@@ -246,7 +248,6 @@ export default {
     onFilePicked (event) {
       const file = event.target.files[0]
       const formData = new FormData()
-      /* eslint-disable */
 
       formData.append('files', file)
       formData.append('ref', 'user')
@@ -254,8 +255,7 @@ export default {
       formData.append('field', 'photo')
       formData.append('source', 'users-permissions')
 
-
-      this.$api.post(`${this.$store.state.system.api.base}​​​​​​/upload`, formData)
+      this.$api.post(`${this.$store.state.system.api.base}/upload`, formData)
         .then(response => {
           this.user_details.photo = response.data[0]
           this.debug('DATA', response.data)
@@ -266,9 +266,6 @@ export default {
           this.debug('CRAP', error)
         })
     },
-    /* eslint-enable */
-
-    /* eslint-disable */
     updatePassword () {
       this.$api.post('/password',
         {
@@ -278,16 +275,14 @@ export default {
           confirmPassword: this.password_dict.confirm_new_password
         }
       ).then(response => {
-        this.password_dict = {};
+        this.password_dict = {}
         this.$q.notify({ type: 'positive', message: 'Password successfully changed' })
       }).catch(error => {
         console.log(JSON.parse(JSON.stringify(error)))
         this.$q.notify({ type: 'negative', message: error.response.data.data.message })
       })
-
     }
   },
-  /* eslint-enable */
   beforeMount () {
     this.user_details = (({ username, id, name, email, address, city, state, country, zip, photo }) => ({ username, id, name, email, address, city, state, country, zip, photo }))(this.$store.state.user)
   }

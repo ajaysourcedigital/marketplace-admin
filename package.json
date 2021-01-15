@@ -21,6 +21,7 @@
     "experience-engine": "^0.1.9",
     "lodash": "^4.17.20",
     "quasar": "^1.0.0",
+    "sanitize-html": "^2.3.0",
     "stacktrace-js": "^2.0.2",
     "survey-vue": "^1.8.21",
     "v-jsoneditor": "^1.4.2",
