@@ -77,8 +77,8 @@
             dense
             flat
             color="grey-8"
-            icon="message"
-            @click="processAction({ action: 'app.route', payload: 'messages'})"
+            icon="support_agent"
+            @click="processAction({ action: 'app.support' })"
           >
             <q-badge
               v-if="user.conversations"
@@ -88,7 +88,7 @@
             >
               {{ user.messages.length }}
             </q-badge>
-            <q-tooltip>Messages</q-tooltip>
+            <q-tooltip>Help</q-tooltip>
           </q-btn>
           <q-btn
             round

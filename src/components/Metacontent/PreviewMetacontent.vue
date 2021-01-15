@@ -30,9 +30,11 @@
       animated
       transition-prev="fade"
       transition-next="fade"
+      keep-alive
+      :keep-alive-include="['Template']"
     >
       <q-tab-panel
-        class='fit'
+        class="fit"
         name="Template"
         style="margin:0px;padding:0px"
       >
