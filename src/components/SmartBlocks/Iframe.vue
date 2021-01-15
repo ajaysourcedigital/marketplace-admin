@@ -8,7 +8,7 @@
       <q-form
         @submit="emitConfig"
         @reset="reset"
-        class="q-gutter-sm q-pa-md"
+        class="q-gutter-sm"
       >
         <q-input
           label="Url"
@@ -24,16 +24,16 @@
         />
         <div class="full-width row justify-end q-pt-md">
           <q-btn
-            type="submit"
-            color="primary"
-            label='Save'
-          />
-          <q-btn
             type="reset"
-            label='Reset'
+            label="Reset"
             color="primary"
             flat
             class="q-ml-sm"
+          />
+          <q-btn
+            type="submit"
+            color="primary"
+            label="Save"
           />
         </div>
       </q-form>
@@ -43,13 +43,15 @@
       class="fit"
     >
       <iframe
-        :src='settings.url'
-        v-if='settings.url'
-        class='full-width'
+        :src="settings.url"
+        v-if="settings.url"
+        class="full-width"
         :height="settings.style.minHeight"
-        frameBorder='0'
+        frameBorder="0"
       />
-      <div v-else>Your iframe will appear here.</div>
+      <div v-else>
+        Your iframe will appear here.
+      </div>
     </div>
   </div>
 </template>
@@ -67,9 +69,6 @@ export default {
     }
   },
   methods: {
-    emitAction () {
-      this.$emit('action', 'Clicked')
-    },
     emitConfig () {
       const emit = JSON.parse(JSON.stringify(this.temp))
       this.$emit('config', emit)
