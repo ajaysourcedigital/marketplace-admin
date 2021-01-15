@@ -59,11 +59,11 @@
     </div>
     <q-btn
       v-else
-      :label="settings.title"
+      :label="temp.title"
       class="full-width"
       :style="{
-        background: settings.color,
-        color: settings.textColor,
+        background: temp.color,
+        color: temp.textColor,
       }"
       @click="emitAction"
     />

@@ -4,49 +4,38 @@
       v-if="configure"
       class="q-pa-sm"
     >
-      <div class="row full-width justify-between q-pt-sm q-px-md">
-        <div>Configure this.</div>
-        <q-toggle
-          v-model="sale"
-          left-label
-          dense
-          label="Add sale price"
-        />
-      </div>
       <q-form
         @submit="emitConfig"
         @reset="reset"
-        class="q-gutter-sm q-pa-md"
+        greedy
+        class="q-gutter-sm"
       >
+        <q-field
+          borderless
+          hide-bottom-space
+        >
+          <q-toggle
+            v-model="sale"
+            dense
+            label="Add sale price"
+          />
+        </q-field>
         <div
           v-for="con in conf"
           :key="con.label"
         >
           <q-input
-            v-if="con.model !== 'lowPrice'"
-            :label="con.label"
+            v-if="con.model !== 'lowPrice' || sale"
+            :label="con.label + (con.required ? ' *' : '')"
             v-model="temp[con.model]"
-            :rules="[val => rule(val, con.required)]"
+            :rules="[val => !con.required || !!val || '* Required']"
             clearable
-            clear-icon="close"
-            :type="inputType(con.model)"
-          />
-          <q-input
-            v-else-if="con.model === 'lowPrice' && sale"
-            :label="con.label"
-            v-model="temp[con.model]"
-            :rules="[val => rule(val, con.required)]"
-            clearable
+            hide-bottom-space
             clear-icon="close"
             :type="inputType(con.model)"
           />
         </div>
         <div class="full-width row justify-end">
-          <q-btn
-            label="Save"
-            type="submit"
-            color="primary"
-          />
           <q-btn
             label="Reset"
             type="reset"
@@ -54,27 +43,36 @@
             flat
             class="q-ml-sm"
           />
+          <q-btn
+            label="Save"
+            type="submit"
+            color="primary"
+          />
         </div>
       </q-form>
     </div>
     <div v-else>
       <div
-        v-if="settings.title"
+        v-if="temp.title"
         class="q-pa-sm"
       >
         <q-img
-          v-if="settings.image"
-          :src="settings.image"
+          v-if="temp.image"
+          :src="temp.image"
           contain
           :ratio="16/7"
         />
         <!-- Name & Price -->
         <div class="text-center">
-          <div class="q-mt-md text-subtitle1">{{settings.title}}</div>
-          <span
-            class="text-strike text-bold"
-            v-if="sale"
-          >${{settings.highPrice}}</span> Get it for <span class="text-bold">${{ sale ? settings.lowPrice : settings.highPrice }}</span>
+          <div class="q-mt-md text-subtitle1">
+            {{ temp.title }}
+          </div>
+
+          <span v-if="temp.lowPrice">Get it for <span class="text-strike text-bold text-grey">${{ temp.highPrice }}</span>&nbsp;<span class="text-bold text-negative">${{ temp.lowPrice }}</span>
+          </span>
+          <span v-else>
+            Get it for <span class="text-bold">${{ temp.highPrice }}</span>
+          </span>
         </div>
         <!-- Add to cart -->
         <div class="q-py-sm">
@@ -87,14 +85,16 @@
         </div>
         <!-- Description -->
         <div
-          v-if="settings.description"
+          v-if="temp.description"
           class="text-body1 q-my-sm scroll"
           style="max-height:250px;"
         >
-          <div v-html="settings.description"></div>
+          <div v-html="$sanitize(temp.description)" />
         </div>
       </div>
-      <div v-else>Your product will show here.</div>
+      <div v-else>
+        Your product will show here.
+      </div>
     </div>
   </div>
 </template>
@@ -122,7 +122,7 @@ export default {
   },
   watch: {
     'sale' (val) {
-      if (!val) this.emitSalePrice()
+      if (!val) this.temp.lowPrice = null
     }
   },
   methods: {
@@ -133,20 +133,9 @@ export default {
       const emit = JSON.parse(JSON.stringify(this.temp))
       this.$emit('config', emit)
     },
-    // only affect low price
-    emitSalePrice () {
-      const emit = JSON.parse(JSON.stringify(this.settings))
-      emit.lowPrice = null
-      this.$emit('config', emit)
-    },
-    rule (val, req) {
-      return new Promise((resolve, reject) => {
-        if (req) resolve(!!val || '* Required')
-        else resolve()
-      })
-    },
     reset () {
       this.temp = clonedeep(this.settings)
+      this.sale = !!this.temp.lowPrice
     },
     inputType (model) {
       let type

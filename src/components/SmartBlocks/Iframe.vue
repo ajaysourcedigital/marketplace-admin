@@ -43,10 +43,10 @@
       class="fit"
     >
       <iframe
-        :src="settings.url"
-        v-if="settings.url"
+        :src="temp.url"
+        v-if="temp.url"
         class="full-width"
-        :height="settings.style.minHeight"
+        :height="temp.style.minHeight"
         frameBorder="0"
       />
       <div v-else>
