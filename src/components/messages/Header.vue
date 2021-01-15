@@ -32,6 +32,6 @@ export default {
 
 <style scoped>
 #msgHeader .q-toolbar {
-    min-height: 0;
+  min-height: 0;
 }
 </style>
