@@ -31,6 +31,11 @@ export default {
       this.createDialog = true
       this.createName = name
       this.debug('Name', name)
+    },
+    // Handles Zendesk...
+    'app.support' () {
+      this.$zendesk.show()
+      this.$zendesk.open()
     }
   },
   data () {
@@ -65,6 +70,7 @@ export default {
             this.$store.commit('replaceApp', result)
             this.debug('Application state loaded', result)
             this.$store.commit('loaded', true)
+            this.$zendesk.load('key')
             this.$router.push({ name: 'home' })
           })
       })

@@ -1,8 +1,9 @@
 <template>
   <div>
-    <div
+    <q-card
       v-if="preview"
-      style="border: 1px solid #ccc;padding:0px;margin:0px"
+      flat
+      bordered
     >
       <!-- Rendering for preview does a lot of stuff -->
       <q-toolbar :class="`bg-${settings.color} text-white`">
@@ -33,15 +34,10 @@
           />
         </q-tabs>
       </q-toolbar>
-      <q-tab-panels
-        v-model="currentTab"
-        animated
-        transition-prev="slide-right"
-        transition-next="slide-left"
-      >
+      <q-tab-panels :value="currentTabPanel">
         <q-tab-panel
-          name="tabPreview"
-          style="margin:0px;padding:0px"
+          name="tabComponent"
+          class="q-pa-none"
         >
           <component
             :is="`smart-block-${settings.name}`"
@@ -49,19 +45,7 @@
             @change="processChange"
             @config="processConfig"
             :settings="settings.settings"
-          />
-        </q-tab-panel>
-        <q-tab-panel
-          name="tabSettings"
-          style="margin:0px;padding:0px"
-        >
-          <component
-            :is="`smart-block-${settings.name}`"
-            @action="processAction"
-            @change="processChange"
-            @config="processConfig"
-            :settings="settings.settings"
-            :configure="true"
+            :configure="configureMode"
           />
         </q-tab-panel>
         <q-tab-panel name="tabData">
@@ -71,7 +55,7 @@
           />
         </q-tab-panel>
       </q-tab-panels>
-    </div>
+    </q-card>
     <div v-else>
       <!-- Rendering for production just renders the block and proxies the events -->
       <component
@@ -107,6 +91,15 @@ export default {
   data () {
     return {
       currentTab: 'tabPreview'
+    }
+  },
+  computed: {
+    currentTabPanel () {
+      if (this.currentTab === 'tabData') return 'tabData'
+      else return 'tabComponent'
+    },
+    configureMode () {
+      return this.currentTab === 'tabSettings'
     }
   },
   components: {

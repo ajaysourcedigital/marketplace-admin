@@ -1,7 +1,8 @@
 <template>
   <div>
-    <div
+    <q-form
       v-if="configure"
+      @submit="emitConfig"
       class="q-pa-sm q-gutter-y-sm"
     >
       <div>
@@ -9,34 +10,45 @@
       </div>
       <q-select
         :loading="!appOptions"
-        label="App"
+        label="App *"
+        required
         :options="appOptions"
         option-label="name"
         option-value="slug"
-        :value="settings.slug"
+        clearable
+        v-model="internalSettings.slug"
         emit-value
         map-options
-        @input="updateConfig($event, 'slug')"
       />
       <q-input
         label="Minimum Height"
-        :value="settings.style ? settings.style.minHeight : null"
-        @input="updateConfig($event, 'style.minHeight')"
+        clearable
+        v-model="internalSettings.style.minHeight"
       />
-      <v-jsoneditor
-        :value="settings.settings"
-        :options="{
-          mode: 'code',
-        }"
-        @input="updateConfig($event, 'settings')"
-      />
-    </div>
+      <q-field :rules="[() => !settingsHasError]">
+        <v-jsoneditor
+          :value="internalSettings.settings"
+          @input="onSettingsInput"
+          :options="{
+            mode: 'code',
+          }"
+          @error="onSettingsError"
+        />
+      </q-field>
+      <div class="text-right">
+        <q-btn
+          color="primary"
+          label="Save"
+          type="submit"
+        />
+      </div>
+    </q-form>
     <div v-else>
       <iframe
         :src="url"
         v-if="url"
         class="fit q-pa-sm"
-        :style="style"
+        :style="internalSettings.style"
         frameBorder="0"
       />
       <div v-else>
@@ -48,6 +60,7 @@
 <script>
 import VJsoneditor from 'v-jsoneditor'
 import set from 'lodash/set'
+import clonedeep from 'lodash/clonedeep'
 export default {
   name: 'SmartBlockApp',
   components: {
@@ -59,28 +72,37 @@ export default {
   },
   data () {
     return {
-      appOptions: null
+      appOptions: null,
+      internalSettings: null,
+      settingsHasError: false
     }
   },
   async created () {
+    this.internalSettings = Object.assign({ style: {} }, clonedeep(this.settings))
     const { data } = await this.$api.get('apps', { params: { type: 'Activation' } })
     this.appOptions = data
   },
   computed: {
     url () {
-      if (!this.settings || !this.settings.slug) return null
+      if (!this.internalSettings || !this.internalSettings.slug) return null
       let url = `https://apps.sourcesync.io/${encodeURIComponent(this.settings.slug)}/`
-      if (this.settings.settings) url += `?settings=${encodeURIComponent(JSON.stringify(this.settings.settings))}`
+      if (this.internalSettings.settings) url += `?settings=${encodeURIComponent(JSON.stringify(this.internalSettings.settings))}`
       return url
-    },
-    style () {
-      if (!this.settings || !this.settings.style) return {}
-      return this.settings.style
     }
   },
   methods: {
+    onSettingsError () {
+      this.settingsHasError = true
+    },
+    onSettingsInput ($event) {
+      this.settingsHasError = false
+      this.internalSettings.settings = $event
+    },
+    emitConfig () {
+      this.$emit('config', this.internalSettings)
+    },
     updateConfig (value, prop) {
-      this.$emit('config', set({ ...this.settings }, prop, value))
+      set(this.internalSettings, prop, value)
     }
   }
 }
