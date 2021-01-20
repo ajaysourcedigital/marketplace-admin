@@ -46,9 +46,14 @@ jobs:
     - uses: skitionek/notify-microsoft-teams@master
       if: failure()
       with:
-        webhook_url: ${{ secrets.MSTEAMS_WEBHOOK }}
+        needs: ${{ toJson(needs) }}
+        job: ${{ toJson(job) }}
+        steps: ${{ toJson(steps) }}
 
   TeamsSuccessNotification:
+    name: MSTeams success status Notification
+    needs: [setup-build-push]
+    if: success()
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
@@ -60,4 +65,3 @@ jobs:
           needs: ${{ toJson(needs) }}
           job: ${{ toJson(job) }}
           steps: ${{ toJson(steps) }}
-          dry_run: True
