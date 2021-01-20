@@ -1,0 +1,63 @@
+name: marketplace-admin-build-and-push
+
+on: 
+  push:
+    branches:
+      - main
+        
+env:
+  PROJECT_ID: ${{ secrets.GKE_PROJECT }}
+  BUCKET: ${{ secrets.BUCKET }}
+
+jobs:
+  TeamsNotification:
+    name: One with everything
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@master
+      - name: Microsoft Teams Notification
+        uses: skitionek/notify-microsoft-teams@master
+        with:
+          webhook_url: ${{ secrets.MSTEAMS_WEBHOOK }}
+
+
+  setup-build-push:
+    name: Setup, Build and Push
+    needs: [TeamsNotification]
+    if: success()
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    # Setup gcloud CLI
+    - uses: GoogleCloudPlatform/github-actions/setup-gcloud@v0.2.0
+      with:
+        service_account_key: ${{ secrets.GCLOUD_JSON_KEY }}
+        project_id: ${{ secrets.GKE_PROJECT }}
+    
+    - uses: actions/setup-node@v1
+      with:
+        node-version: '12.x'
+    - run: |-
+        yarn install
+        yarn run build
+        gsutil -h "Cache-Control:no-cache,max-age=0" cp -r ./dist/spa/* gs://${{ secrets.BUCKET }}/
+    - uses: skitionek/notify-microsoft-teams@master
+      if: failure()
+      with:
+        webhook_url: ${{ secrets.MSTEAMS_WEBHOOK }}
+
+  TeamsSuccessNotification:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - name: Microsoft Teams Notification
+        uses: skitionek/notify-microsoft-teams@master
+        if: success()
+        with:
+          webhook_url: ${{ secrets.MSTEAMS_WEBHOOK }}
+          needs: ${{ toJson(needs) }}
+          job: ${{ toJson(job) }}
+          steps: ${{ toJson(steps) }}
+          dry_run: True
