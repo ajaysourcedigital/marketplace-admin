@@ -11,7 +11,7 @@ env:
 
 jobs:
   TeamsNotification:
-    name: One with everything
+    name: Teams Notification
     runs-on: ubuntu-18.04
     steps:
       - uses: actions/checkout@master
