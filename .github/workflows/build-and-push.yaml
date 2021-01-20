@@ -49,6 +49,9 @@ jobs:
         webhook_url: ${{ secrets.MSTEAMS_WEBHOOK }}
 
   TeamsSuccessNotification:
+    name: MSTeams success status Notification
+    needs: [setup-build-push]
+    if: success()
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
