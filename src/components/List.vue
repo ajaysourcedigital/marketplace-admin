@@ -164,7 +164,7 @@ export default {
   components: { editInPlace, contentCard },
   data () {
     return {
-      card: false,
+      card: true,
       row: null
     }
   },
