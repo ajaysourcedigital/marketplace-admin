@@ -1,7 +1,6 @@
 <template>
   <q-card
-    class="column no-wrap justify-between"
-    style="flex-grow: 1"
+    class="column no-wrap justify-between list-card"
     v-if="fullData"
   >
     <q-card-section class="text-h6 q-pb-none row no-wrap items-baseline">
@@ -43,9 +42,7 @@
     </q-card-section>
     <q-card-section class="q-pa-none q-ma-none">
       <q-table
-        card-container-style="max-height:550px;overflow:scroll;"
-        table-style="max-height: 550px;"
-        card-style="max-height:550px;"
+        table-style="max-height: 75vh"
         class="stickyTable"
         :data="validation"
         :grid="card"
@@ -55,7 +52,7 @@
         wrap-cells
         @row-click="(evt, row, index) => $emit('row-click', evt, row, index)"
       >
-        <!-- Default | List view -->
+        <!-- List view -->
         <template
           v-slot:header="props"
           v-if="!card"
@@ -132,7 +129,7 @@
             </q-td>
           </q-tr>
         </template>
-        <!-- Card view -->
+        <!-- Default | Card view -->
         <template
           v-slot:item="props"
           v-if="card"
@@ -199,6 +196,20 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
+.list-card {
+  flex-grow: 1;
+  height: 75vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.items-baseline {
+  position: sticky;
+  top: 0;
+  background-color: white;
+  z-index: 9;
+}
+
 .stickyTable {
   .q-table__top, .q-table__bottom, thead tr:first-child th {
     background-color: #fff;
