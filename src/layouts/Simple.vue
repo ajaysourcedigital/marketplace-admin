@@ -4,7 +4,10 @@
     class="bg-grey-1"
   >
     <!-- The header -->
-    <q-header class="bg-white text-grey-8">
+    <q-header
+      elevated
+      class="bg-white text-grey-8"
+    >
       <q-toolbar class="GNL__toolbar">
         <!-- Menu button -->
         <q-btn
@@ -16,6 +19,7 @@
           aria-label="Menu"
           icon="menu"
           class="q-mr-sm"
+          style="color: #011924"
         />
 
         <!-- Logo -->
@@ -24,10 +28,12 @@
           shrink
           class="row items-center no-wrap"
         >
-          <img
+          <q-img
             :src="settings.logo.wide"
             @click="$bus.emit('route', '')"
-          >
+            style="width: 110px"
+            contain
+          />
         </q-toolbar-title>
 
         <q-space />
@@ -46,8 +52,48 @@
             round
             dense
             flat
-            color="grey-8"
+            style="color: #011924"
+            icon="chat"
+            class="q-mx-sm"
+            @click="processAction({ action: 'app.live' })"
+          >
+            <q-tooltip>Chat</q-tooltip>
+          </q-btn>
+
+          <q-btn
+            round
+            dense
+            flat
+            style="color: #011924"
+            class="q-mx-sm"
+            @click="processAction({ action: 'app.route', payload: 'updates'})"
+          >
+            <q-avatar>
+              <q-img
+                style="width: 20px"
+                src="../../public/icons/bullhorn.png"
+                contain
+              />
+            </q-avatar>
+
+            <q-badge
+              v-if="updates"
+              color="red"
+              text-color="white"
+              floating
+            >
+              {{ updates.length }}
+            </q-badge>
+            <q-tooltip>Updates</q-tooltip>
+          </q-btn>
+
+          <q-btn
+            round
+            dense
+            flat
+            style="color: #011924"
             icon="support_agent"
+            class="q-mx-sm"
             @click="processAction({ action: 'app.support' })"
           >
             <q-badge
@@ -60,32 +106,19 @@
             </q-badge>
             <q-tooltip>Help</q-tooltip>
           </q-btn>
+
           <q-btn
-            round
-            dense
             flat
-            color="grey-8"
-            icon="flag"
-            @click="processAction({ action: 'app.route', payload: 'updates'})"
-          >
-            <q-badge
-              v-if="updates"
-              color="red"
-              text-color="white"
-              floating
-            >
-              {{ updates.length }}
-            </q-badge>
-            <q-tooltip>Updates</q-tooltip>
-          </q-btn>
-          <q-btn
-            round
-            flat
+            no-caps
+            class="q-mx-sm"
             @click="processAction({ action: 'app.route', payload: 'account'})"
           >
             <q-avatar size="26px">
               <img src="https://cdn.quasar.dev/img/boy-avatar.png">
             </q-avatar>
+            <div class="q-ml-sm">
+              {{ user_details.name }}
+            </div>
             <q-tooltip>Account</q-tooltip>
           </q-btn>
         </div>
@@ -94,7 +127,7 @@
             round
             dense
             flat
-            color="grey-8"
+            style="color: #011924"
             icon="login"
             @click="$bus.emit('route', 'login')"
           >
@@ -111,12 +144,12 @@
       show-if-above
       bordered
       :mini="miniState"
-      content-class="bg-white"
+      content-class="GNL__drawer"
       :width="280"
     >
       <q-list
         padding
-        class="text-grey-8"
+        class="text-grey-8 q-pt-md"
       >
         <!-- Menu items -->
         <div
@@ -126,7 +159,8 @@
           <q-separator
             v-if="link.type === 'separator'"
             inset
-            class="q-my-sm"
+            class="q-my-sm bg-white"
+            style="height: 0.5px"
           />
           <q-item v-else-if="link.type === 'button'">
             <q-btn
@@ -143,20 +177,24 @@
             class="GNL__drawer-button-dropdown"
           >
             <q-btn-dropdown
-              rounded
               padding="10px"
               :color="link.color"
-              class="text-grey-8"
+              class="text-white icon-none "
+              :class="miniState?'':'q-pr-md'"
+              style="background-color: #1a8cc1"
+              no-caps
             >
               <template v-slot:label>
                 <div class="row items-center no-wrap">
                   <q-icon
-                    v-if="!miniState"
                     left
                     :name="link.icon"
                   />
-                  <div class="text-center">
-                    {{ miniState?'':link.text }}
+                  <div
+                    class="text-center"
+                    :class="miniState?'':'q-ml-sm'"
+                  >
+                    {{ miniState?null:link.text }}
                   </div>
                 </div>
               </template>
@@ -189,7 +227,9 @@
               />
             </q-item-section>
             <q-item-section>
-              <q-item-label>{{ link.text }}</q-item-label>
+              <q-item-label class="text-white">
+                {{ link.text }}
+              </q-item-label>
             </q-item-section>
           </q-item>
         </div>
@@ -231,7 +271,8 @@ export default {
       updates: [],
       leftDrawerOpen: true,
       miniState: false,
-      search: ''
+      search: '',
+      user_details: {}
     }
   },
   mounted () {
@@ -249,6 +290,9 @@ export default {
       this.debug(`Processing action ${link.action} (${link.payload})`)
       this.$bus.emit(link.action, link.payload)
     }
+  },
+  beforeMount () {
+    this.user_details = (({ username, id, name, email, address, city, state, country, zip, photo }) => ({ username, id, name, email, address, city, state, country, zip, photo }))(this.$store.state.user)
   }
 }
 </script>
@@ -256,10 +300,6 @@ export default {
 <style>
 .GNL__toolbar {
   height: 64px;
-}
-
-.GNL__toolbar-input {
-  /* width: 55%; */
 }
 
 .GNL__drawer-item {
@@ -279,5 +319,26 @@ export default {
 }
 .GNL__drawer-button-dropdown .q-btn-dropdown--simple .q-btn-dropdown__arrow {
   margin-left: 0px !important;
+}
+
+.GNL__drawer {
+  background-color: #011924;
+  border-radius: 4px;
+}
+
+.icon-none .q-btn-dropdown__arrow-container {
+  display: none;
+}
+
+.q-drawer {
+  background-color: #fafafa;
+}
+
+.q-drawer--left.q-drawer--bordered {
+  border-right: none;
+}
+
+.icon-none .on-left {
+  margin-right: 0;
 }
 </style>

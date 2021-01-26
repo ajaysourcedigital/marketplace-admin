@@ -26,13 +26,14 @@
         val => val !== null && val !== '' || 'Please, type your password'
       ]"
     />
-
-    <q-btn
-      label="Sign In"
-      type="submit"
-      color="primary"
-      class="q-mt-lg"
-    />
+    <div class="row justify-center">
+      <q-btn
+        label="Sign In"
+        type="submit"
+        no-caps
+        style="background: #188cc1; color: white"
+      />
+    </div>
   </q-form>
 </template>
 

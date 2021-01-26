@@ -18,6 +18,7 @@
       >
         <template v-slot:prepend>
           <q-icon
+            style="color: #011924"
             v-if="searchInput === ''"
             name="search"
           />
@@ -65,7 +66,7 @@ export default {
   position: absolute;
   z-index: 10000;
   top: 14px;
-  right: 148px;
+  right: 315px;
   transform-origin: 100% 0;
   transition-property: min-height, width, top, right, background;
   transition-duration: 0.5s;

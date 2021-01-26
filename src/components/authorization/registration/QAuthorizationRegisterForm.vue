@@ -50,13 +50,14 @@
         val => val !== null && val !== '' || 'The password field is required'
       ]"
     />
-
-    <q-btn
-      label="Submit"
-      type="submit"
-      color="primary"
-      class="q-mt-lg"
-    />
+    <div class="row justify-center">
+      <q-btn
+        label="Submit"
+        type="submit"
+        no-caps
+        style="background: #188cc1; color: white"
+      />
+    </div>
   </q-form>
 </template>
 
