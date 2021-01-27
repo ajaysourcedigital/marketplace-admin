@@ -18,7 +18,6 @@
           @click="miniState = !miniState"
           aria-label="Menu"
           icon="menu"
-          class="q-mr-sm"
           style="color: #011924"
         />
 
@@ -31,7 +30,7 @@
           <q-img
             :src="settings.logo.wide"
             @click="$bus.emit('route', '')"
-            style="width: 110px"
+            style="width: 95px;"
             contain
           />
         </q-toolbar-title>

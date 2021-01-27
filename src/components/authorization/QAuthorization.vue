@@ -20,7 +20,7 @@
               <div class="q-mr-sm">
                 <q-img
                   :src="companyInfo.logo"
-                  style="width: 150px"
+                  style="width: 110px"
                   contain
                 />
               </div>
