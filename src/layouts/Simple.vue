@@ -32,16 +32,13 @@
 
         <q-space />
 
-        <!-- Search box -->
-        <search-box />
-
-        <q-space />
-
         <!-- Right buttons -->
         <div
           v-if="user.role"
-          class="q-gutter-sm row items-center no-wrap"
+          class="q-gutter-sm row items-center no-wrap relative-position"
         >
+          <!-- Search box -->
+          <search-box />
           <q-btn
             round
             dense

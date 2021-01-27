@@ -10,13 +10,13 @@
       <q-input
         class="GNL__toolbar-input search-bar-input cursor-pointer"
         rounded
-        outlined
+        borderless
         dense
         v-model="searchInput"
         color="bg-grey-7"
-        :placeholder="$t('search.bar.text')"
+        :placeholder="search ? $t('search.bar.text') : ''"
       >
-        <template v-slot:prepend>
+        <template v-slot:append>
           <q-icon
             v-if="searchInput === ''"
             name="search"
@@ -31,6 +31,40 @@
       </q-input>
     </div>
 
+    <div
+      class="q-mt-lg row justify-center q-gutter-lg"
+      v-if="search"
+    >
+      <div
+        class="col-lg-3 col-md-3 col-sm-11 col-xs-12"
+        v-for="(row, i) in rows"
+        :key="i"
+      >
+        <div class="q-mb-md text-h6">
+          {{ row.name }}
+        </div>
+
+        <q-card
+          v-for="(item, i) in row.info"
+          :key="i"
+          class="q-mb-md"
+        >
+          <q-item
+            clickable
+            v-ripple
+          >
+            <q-item-section avatar>
+              <q-avatar>
+                <img :src="item.image">
+              </q-avatar>
+            </q-item-section>
+
+            <q-item-section>{{ item.text }}</q-item-section>
+          </q-item>
+        </q-card>
+      </div>
+    </div>
+
     <span
       class="search-bar-close"
       @click="closeForm()"
@@ -43,7 +77,68 @@ export default {
   data () {
     return {
       search: '',
-      searchInput: ''
+      searchInput: '',
+      rows: [
+        {
+          name: 'Content',
+          info: [
+            {
+              image: 'https://cdn.quasar.dev/img/avatar5.jpg',
+              text: 'Rachel Smith'
+            },
+            {
+              image: 'https://cdn.quasar.dev/img/boy-avatar.png',
+              text: 'Peter Finlan'
+            },
+            {
+              image: 'https://cdn.quasar.dev/img/avatar6.jpg',
+              text: 'Ideas for Hovering effects'
+            },
+            {
+              image: 'https://cdn.quasar.dev/img/avatar3.jpg',
+              text: 'Ideas for Hovering effects'
+            },
+            {
+              image: 'https://cdn.quasar.dev/img/avatar4.jpg',
+              text: 'Ideas for Hovering effects'
+            }
+          ]
+        },
+        {
+          name: 'Meta content',
+          info: [
+            {
+              image: 'https://cdn.quasar.dev/img/avatar.png',
+              text: 'Page preloading effect'
+            },
+            {
+              image: 'https://cdn.quasar.dev/img/avatar2.jpg',
+              text: 'Ideas for Hovering effects'
+            },
+            {
+              image: 'https://cdn.quasar.dev/img/avatar4.jpg',
+              text: 'Ideas for Hovering effects'
+            },
+            {
+              image: 'https://cdn.quasar.dev/img/avatar1.jpg',
+              text: 'Ideas for Hovering effects'
+            }
+          ]
+        },
+        {
+          name: 'Other',
+          info: [
+            {
+              image: 'https://cdn.quasar.dev/img/boy-avatar.png',
+              text: 'Tooltip style'
+            },
+            {
+              image: 'https://cdn.quasar.dev/img/avatar.png',
+              text: 'Tab style'
+            }
+          ]
+        }
+      ]
     }
   },
   methods: {
@@ -60,12 +155,13 @@ export default {
 
 <style lang="stylus" scoped>
 .search-bar {
-  width: 35px;
+  width: 25px;
   min-height: 35px;
   position: absolute;
   z-index: 10000;
-  top: 14px;
-  right: 148px;
+  top: 11px;
+  right: 102%;
+  margin: 0 !important;
   transform-origin: 100% 0;
   transition-property: min-height, width, top, right, background;
   transition-duration: 0.5s;
@@ -74,6 +170,9 @@ export default {
   .q-icon {
     margin-left: -5px;
     margin-bottom: 2px;
+    transition-property: font-size;
+    transition-duration: 0.5s;
+    transition-timing-function: cubic-bezier(0.7, 0, 0.3, 1);
   }
 
   /deep/.q-field--outlined .q-field__control:before {
@@ -81,16 +180,38 @@ export default {
   }
 
   &.open {
-    width: 100%;
+    width: 100vw;
     background: #f1f1f1;
     min-height: 100vh;
-    top: 0px;
-    right: 0px;
+    top: -10px;
+    right: -12px;
 
     .search-bar-form {
       width: 80%;
       height: 160px;
       transform: translate3d(0, 3em, 0);
+      color: #ec5a62;
+    }
+
+    .search-bar-input {
+      font-size: 6em;
+    }
+
+    /deep/.q-field__control {
+      height: auto;
+
+      &:before {
+        border: none;
+      }
+    }
+
+    /deep/.q-field__append {
+      height: auto;
+    }
+
+    .q-icon {
+      font-size: 4em;
+      cursor: default;
     }
 
     .search-bar-close {
@@ -100,9 +221,17 @@ export default {
       transition: opacity 0.3s, transform 0.3s;
       transition-delay: 0.5s;
     }
+  }
+}
 
-    /deep/.q-field--outlined .q-field__control:before {
-      border: 1px solid rgba(0, 0, 0, 0.24);
+.search-bar-input {
+  transition: font-size 0.5s cubic-bezier(0.7, 0, 0.3, 1);
+
+  /deep/.q-field__native {
+    color: #ec5a62;
+
+    &::placeholder {
+      color: #c2c2c2;
     }
   }
 }
@@ -116,10 +245,6 @@ export default {
   transition-property: width, height, transform;
   transition-duration: 0.5s;
   transition-timing-function: cubic-bezier(0.7, 0, 0.3, 1);
-
-  &:hover {
-    background: rgb(240, 240, 240);
-  }
 }
 
 .search-bar-close {
