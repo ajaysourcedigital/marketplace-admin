@@ -17,10 +17,7 @@
             :style="{ width: breakPoint ? '90%' : '80%'}"
           >
             <div class="row justify-center items-center q-mb-lg">
-              <div
-                size="1.9rem"
-                class="q-mr-sm"
-              >
+              <div class="q-mr-sm">
                 <q-img
                   :src="companyInfo.logo"
                   style="width: 150px"

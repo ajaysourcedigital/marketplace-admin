@@ -55,7 +55,7 @@
             style="color: #011924"
             icon="chat"
             class="q-mx-sm"
-            @click="processAction({ action: 'app.live' })"
+            @click="processAction({ action: 'app.route', payload: 'live' })"
           >
             <q-tooltip>Chat</q-tooltip>
           </q-btn>
