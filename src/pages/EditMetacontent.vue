@@ -28,7 +28,7 @@
           <!-- The right side (sandbox/production/data view) -->
           <preview-metacontent
             :settings="content"
-            :height='getHeight'
+            :height="getHeight"
             @action="processAction"
             @change="processChange"
             @config="processConfig"

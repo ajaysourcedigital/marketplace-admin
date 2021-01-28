@@ -1,6 +1,6 @@
 <template>
   <div
-    class="search-bar"
+    class="search-bar q-mx-sm"
     :class="{ 'open': search }"
   >
     <div
@@ -18,6 +18,7 @@
       >
         <template v-slot:append>
           <q-icon
+            style="color: #011924"
             v-if="searchInput === ''"
             name="search"
           />
@@ -31,39 +32,42 @@
       </q-input>
     </div>
 
-    <div
-      class="q-mt-lg row justify-center q-gutter-lg"
-      v-if="search"
-    >
+    <transition name="fade">
       <div
-        class="col-lg-3 col-md-3 col-sm-11 col-xs-12"
-        v-for="(row, i) in rows"
-        :key="i"
+        class="q-mt-sm row justify-center q-gutter-lg relative-position"
+        style="height: 85vh;overflow-y: auto;"
+        v-if="search"
       >
-        <div class="q-mb-md text-h6">
-          {{ row.name }}
-        </div>
-
-        <q-card
-          v-for="(item, i) in row.info"
-          :key="i"
-          class="q-mb-md"
+        <div
+          class="col-lg-3 col-md-3 col-sm-5 col-xs-11"
+          v-for="(row, index) in rows"
+          :key="index"
         >
-          <q-item
-            clickable
-            v-ripple
-          >
-            <q-item-section avatar>
-              <q-avatar>
-                <img :src="item.image">
-              </q-avatar>
-            </q-item-section>
+          <div class="q-mb-md text-h6">
+            {{ row.name }}
+          </div>
 
-            <q-item-section>{{ item.text }}</q-item-section>
-          </q-item>
-        </q-card>
+          <q-card
+            v-for="(item, i) in row.info"
+            :key="i"
+            class="q-mb-md"
+          >
+            <q-item
+              clickable
+              v-ripple
+            >
+              <q-item-section avatar>
+                <q-avatar>
+                  <img :src="item.image">
+                </q-avatar>
+              </q-item-section>
+
+              <q-item-section>{{ item.text }}</q-item-section>
+            </q-item>
+          </q-card>
+        </div>
       </div>
-    </div>
+    </transition>
 
     <span
       class="search-bar-close"
@@ -154,18 +158,47 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
+.fade-enter-active, .fade-leave-active {
+  transition: all 2s;
+}
+
+.fade-enter, .fade-leave-to {
+  opacity: 0;
+  display: none;
+}
+
 .search-bar {
   width: 25px;
   min-height: 35px;
   position: absolute;
   z-index: 10000;
-  top: 11px;
+  top: 0;
   right: 102%;
-  margin: 0 !important;
+  // margin: 0;
   transform-origin: 100% 0;
   transition-property: min-height, width, top, right, background;
   transition-duration: 0.5s;
   transition-timing-function: cubic-bezier(0.7, 0, 0.3, 1);
+
+  &:before {
+    content: '';
+    position: absolute;
+    width: 35px;
+    height: 35px;
+    display: block;
+    background-color: #E8EAEB;
+    border-radius: 50%;
+    top: 0;
+    right: -4px;
+    opacity: 0;
+    transition: all 0.3s;
+  }
+
+  &:hover {
+    &:before {
+      opacity: 1;
+    }
+  }
 
   .q-icon {
     margin-left: -5px;
@@ -182,13 +215,15 @@ export default {
   &.open {
     width: 100vw;
     background: #f1f1f1;
-    min-height: 100vh;
+    min-height: 101vh;
     top: -10px;
-    right: -12px;
+    right: -13px;
+    margin: 0;
 
     .search-bar-form {
       width: 80%;
-      height: 160px;
+      height: auto;
+      margin-bottom: 40px;
       transform: translate3d(0, 3em, 0);
       color: #ec5a62;
     }
@@ -212,6 +247,7 @@ export default {
     .q-icon {
       font-size: 4em;
       cursor: default;
+      margin: 0;
     }
 
     .search-bar-close {
@@ -283,6 +319,20 @@ export default {
   &:hover {
     &::before, &::after {
       opacity: 1;
+    }
+  }
+}
+
+@media only screen and (max-width: 720px) {
+  .search-bar {
+    &.open {
+      .search-bar-input {
+        font-size: 3em;
+      }
+
+      .q-icon {
+        font-size: 2em;
+      }
     }
   }
 }

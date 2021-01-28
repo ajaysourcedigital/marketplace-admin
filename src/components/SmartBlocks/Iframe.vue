@@ -56,7 +56,7 @@
   </div>
 </template>
 <script>
-import clonedeep from 'lodash/clonedeep'
+import clonedeep from 'lodash/cloneDeep'
 export default {
   name: 'SmartBlockIframe',
   props: {
