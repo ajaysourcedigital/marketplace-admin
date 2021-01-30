@@ -45,6 +45,7 @@
         table-style="max-height: 75vh"
         class="stickyTable"
         :data="validation"
+        :columns="genColumns"
         :grid="card"
         hide-bottom
         virtual-scroll
@@ -63,6 +64,7 @@
               v-for="col in props.cols"
               :key="col.name"
               :props="props"
+              class="text-uppercase ellipsis"
             >
               {{ col.label }}
             </q-th>
@@ -72,7 +74,6 @@
           <q-tr
             :props="props"
             class="cursor-pointer"
-            auto-width
             @click="$emit('row-click', props.row)"
           >
             <q-td>
@@ -112,10 +113,10 @@
               <div v-else>
                 <!-- If object has more than 3 items -->
                 <q-btn
-                  icon="add"
+                  :icon="expandIcon(props, col) ? 'keyboard_arrow_up' : 'keyboard_arrow_down'"
                   round
                   color="primary"
-                  @click.stop="expandRow(props, col)"
+                  @click.stop="expandColumn(props, col.value, col)"
                 />
               </div>
             </q-td>
@@ -125,7 +126,10 @@
             :props="props"
           >
             <q-td colspan="100%">
-              <div>{{ row }}</div>
+              <expansion-card
+                :key="refreshKey"
+                :prop="rows[props.rowIndex].items"
+              />
             </q-td>
           </q-tr>
         </template>
@@ -147,8 +151,10 @@
 <script>
 const Ajv = require('ajv')
 const ajv = new Ajv({ allErrors: true })
-import editInPlace from './EditInPlace'
+import editInPlace from './resourceList/EditInPlace'
 import contentCard from './contentCard'
+import { uniq } from 'lodash'
+import ExpansionCard from './resourceList/expansionCard.vue'
 export default {
   name: 'QResources',
   props: {
@@ -158,11 +164,11 @@ export default {
     sticky: { type: Boolean, default: true },
     fullData: { type: Object, default: null }
   },
-  components: { editInPlace, contentCard },
+  components: { editInPlace, contentCard, ExpansionCard },
   data () {
     return {
       card: true,
-      row: null
+      refreshKey: 0
     }
   },
   methods: {
@@ -172,9 +178,30 @@ export default {
       else if (e === null || e === '') return true
       else return false
     },
-    expandRow (props, col) {
-      props.expand = !props.expand
-      this.row = col.value
+    // checks if column exists in rows, adds/removes it -- refreshes expand card
+    expandColumn (props, val, col) {
+      let found = false
+      if (this.rows[props.rowIndex].items.length > 0) {
+        this.rows[props.rowIndex].items.forEach(column => {
+          if (column.col === col.name) {
+            this.rows[props.rowIndex].items = [...this.rows[props.rowIndex].items.filter(filt => filt.col !== col.name)]
+            found = true
+          }
+        })
+        if (!found) this.rows[props.rowIndex].items.push({ col: col.name, val })
+      } else this.rows[props.rowIndex].items.push({ col: col.name, val })
+      this.refreshKey += 1
+      props.expand = this.rows[props.rowIndex].items.length > 0
+    },
+    // same as above, but only returns true or false
+    expandIcon (props, col) {
+      let icon = false
+      if (this.rows[props.rowIndex].items.length > 0) {
+        this.rows[props.rowIndex].items.forEach(column => {
+          if (column.col === col.name) icon = true
+        })
+      }
+      return icon
     }
   },
   computed: {
@@ -190,6 +217,37 @@ export default {
         else list.push(item)
       })
       return list
+    },
+    // generates rows to store expanded columns
+    rows () {
+      const row = []
+      this.validation.forEach(e => {
+        row.push({ id: e.id, items: [] })
+      })
+      return row
+    },
+    // generates columns from validated items' object keys
+    genColumns () {
+      const arr = []
+      const columns = []
+      this.validation.forEach(obj => {
+        Object.keys(obj).forEach(key => {
+          arr.push(key)
+        })
+      })
+      const filtered = uniq(arr)
+      filtered.forEach(name => {
+        columns.push({
+          name: name,
+          label: name,
+          required: true,
+          align: 'left',
+          field: name,
+          format: val => val,
+          sortable: true
+        })
+      })
+      return columns
     }
   }
 }
@@ -218,18 +276,7 @@ export default {
   thead tr th {
     position: sticky;
     z-index: 1;
-  }
-
-  thead tr:last-child th {
-    top: 48px;
-  }
-
-  thead tr:first-child th {
     top: 0;
   }
-}
-
-/deep/.q-expansion-item .q-item {
-  padding: 0px;
 }
 </style>
