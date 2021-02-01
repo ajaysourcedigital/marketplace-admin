@@ -1,5 +1,5 @@
 <template>
-  <q-card>
+  <q-card class="q-ma-md">
     <q-item
       :style="`background-color: ${settings.color}`"
       class="q-pa-none"

@@ -1,5 +1,5 @@
 <template>
-  <q-card class="q-mt-sm">
+  <q-card class="q-mt-md q-mx-md">
     <q-card-section class="text-h6 q-pb-none">
       <q-item>
         <q-item-section

@@ -1,5 +1,8 @@
 <template>
-  <q-page class="q-pa-sm">
+  <q-page
+    class="q-pa-sm"
+    style="background-color: #eef8fc;"
+  >
     <stats :settings="user.settings.admin.content.stats" />
     <breakdown :settings="content" />
     <list :settings="content" />

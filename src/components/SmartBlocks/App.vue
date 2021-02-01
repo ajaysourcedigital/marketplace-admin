@@ -60,7 +60,7 @@
 <script>
 import VJsoneditor from 'v-jsoneditor'
 import set from 'lodash/set'
-import clonedeep from 'lodash/clonedeep'
+import clonedeep from 'lodash/cloneDeep'
 export default {
   name: 'SmartBlockApp',
   components: {

@@ -1,6 +1,6 @@
 <template>
-  <q-page class="q-pa-sm">
-    <stats :settings="user.settings.admin.metacontent.stats" />
+  <q-page class="q-pa-sm column no-wrap">
+    <!-- <stats :settings="user.settings.admin.metacontent.stats" /> -->
     <list
       :settings="records"
       @row-click="rowClick"
@@ -12,12 +12,12 @@
 </template>
 
 <script>
-import Stats from 'components/Stats.vue'
+// import Stats from 'components/Stats.vue'
 import List from 'components/List.vue'
 export default {
   name: 'PageMetacontent',
   components: {
-    Stats,
+    // Stats,
     List
   },
   mounted () {
