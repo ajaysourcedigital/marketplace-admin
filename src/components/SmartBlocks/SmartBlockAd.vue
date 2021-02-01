@@ -61,11 +61,13 @@ export default {
           const url = baseURL + '?' + params.toString()
           this.$listeners.render && this.$emit('render', { url })
           if (process.env.NODE_ENV === 'development' && window.location.hostname === 'localhost') {
-            console.error('This ad do not work in localhost. url: ' + url)
+            const message = 'This ad do not work in localhost. url: ' + url
+            console.error(message)
+            this.$emit('update:error', { message })
           } else {
             const { data: html, status } = await this.$axios.get(url)
             if (status !== 200) {
-              this.$emit('update:error', { html, status })
+              this.$emit('update:error', { message: html, status })
             } else {
               this.adContent = html
             }
