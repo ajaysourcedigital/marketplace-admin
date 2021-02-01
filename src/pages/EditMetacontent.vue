@@ -28,7 +28,7 @@
           <!-- The right side (sandbox/production/data view) -->
           <preview-metacontent
             :settings="content"
-            :height='getHeight'
+            :height="getHeight"
             @action="processAction"
             @change="processChange"
             @config="processConfig"
@@ -98,7 +98,6 @@ export default {
       this.$q.notify(`Config: ${JSON.stringify(data)}`)
     },
     onResize (size) {
-      console.log(size)
       this.size = size
     }
   },
