@@ -82,7 +82,7 @@
   </div>
 </template>
 <script>
-import clonedeep from 'lodash/clonedeep'
+import clonedeep from 'lodash/cloneDeep'
 let iabOptions
 export default {
   name: 'SmartBlockAdEditor',
