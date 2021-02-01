@@ -9,21 +9,24 @@
         Configure this ad by entering the advertizers API and campaign.
       </div>
       <q-input
-        label="Publisher ID"
+        label="Publisher ID *"
+        hide-bottom-space
         v-model="internalSettings.advangelists.pubId"
-        required
+        :rules="[$rules.required]"
       />
       <q-input
-        label="Width"
+        label="Width *"
         type="number"
+        hide-bottom-space
         v-model="internalSettings.width"
-        required
+        :rules="[val => val === 0 || $rules.required(val)]"
       />
       <q-input
-        label="Height"
+        label="Height *"
         type="number"
+        hide-bottom-space
         v-model="internalSettings.height"
-        required
+        :rules="[val => val === 0 || $rules.required(val)]"
       />
       <q-select
         label="IAB Categories"
