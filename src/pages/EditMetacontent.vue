@@ -98,7 +98,6 @@ export default {
       this.$q.notify(`Config: ${JSON.stringify(data)}`)
     },
     onResize (size) {
-      console.log(size)
       this.size = size
     }
   },

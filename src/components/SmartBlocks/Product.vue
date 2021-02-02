@@ -28,7 +28,7 @@
             v-if="con.model !== 'lowPrice' || sale"
             :label="con.label + (con.required ? ' *' : '')"
             v-model="temp[con.model]"
-            :rules="[val => !con.required || !!val || '* Required']"
+            :rules="[val => !con.required || $rules.required(val)]"
             clearable
             hide-bottom-space
             clear-icon="close"
