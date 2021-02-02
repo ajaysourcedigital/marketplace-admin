@@ -89,7 +89,7 @@ export default {
           impressions: '2477473',
           contentItems: '3600',
           engagements: '15660',
-          mobile: '0',
+          actions: '0',
           thisMonth: '0',
           allTime: '0'
         },
