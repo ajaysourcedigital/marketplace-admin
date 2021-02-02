@@ -27,19 +27,19 @@
           >
             <div class="row justify-between q-mb-xs">
               <div v-if="props.row.items">
-                {{ filteredNumber(props.row.items) }} items
+                {{ filteredNumber(props.row.items) }} Campaigns
               </div>
               <div v-if="props.row.impressions">
-                {{ filteredNumber(props.row.impressions) }} impressions
+                {{ filteredNumber(props.row.impressions) }} Impressions
               </div>
             </div>
 
             <div class="row justify-between q-mb-xs">
               <div v-if="props.row.contentItems">
-                {{ filteredNumber(props.row.contentItems) }} content items
+                {{ filteredNumber(props.row.contentItems) }} Content items
               </div>
               <div v-if="props.row.engagements">
-                {{ filteredNumber(props.row.engagements) }} engagements
+                {{ filteredNumber(props.row.engagements) }} Engagements
               </div>
             </div>
 
@@ -48,7 +48,7 @@
                 {{ filteredNumber(props.row.appearences) }} appearences
               </div>
               <div v-if="props.row.actions">
-                {{ filteredNumber(props.row.actions) }} actions
+                {{ filteredNumber(props.row.actions) }} Conversions
               </div>
             </div>
 
