@@ -26,24 +26,39 @@
             style="font-size: 0.775rem;"
           >
             <div class="row justify-between q-mb-xs">
-              <div>{{ props.row.items }} items</div>
-              <div>{{ props.row.impressions }} impressions</div>
+              <div v-if="props.row.items">
+                {{ filteredNumber(props.row.items) }} items
+              </div>
+              <div v-if="props.row.impressions">
+                {{ filteredNumber(props.row.impressions) }} impressions
+              </div>
             </div>
 
             <div class="row justify-between q-mb-xs">
-              <div>{{ props.row.contentItems }} content items</div>
-              <div>{{ props.row.engagements }} engagements</div>
+              <div v-if="props.row.contentItems">
+                {{ filteredNumber(props.row.contentItems) }} content items
+              </div>
+              <div v-if="props.row.engagements">
+                {{ filteredNumber(props.row.engagements) }} engagements
+              </div>
             </div>
 
             <div class="row justify-between q-mb-lg">
-              <div>{{ props.row.appearences }} appearences</div>
-              <div>{{ props.row.actions }} actions</div>
+              <div v-if="props.row.appearences">
+                {{ filteredNumber(props.row.appearences) }} appearences
+              </div>
+              <div v-if="props.row.actions">
+                {{ filteredNumber(props.row.actions) }} actions
+              </div>
             </div>
 
             <div class="row justify-between">
               <div>
-                <div class="text-center">
-                  ${{ props.row.thisMonth }}
+                <div
+                  class="text-center"
+                  v-if="props.row.thisMonth"
+                >
+                  ${{ filteredNumber(props.row.thisMonth) }}
                 </div>
                 <div class="text-caption text-bold">
                   this month
@@ -51,8 +66,11 @@
               </div>
 
               <div>
-                <div class="text-center">
-                  ${{ props.row.allTime }}
+                <div
+                  class="text-center"
+                  v-if="props.row.allTime"
+                >
+                  ${{ filteredNumber(props.row.allTime) }}
                 </div>
                 <div class="text-caption text-bold">
                   all time
@@ -71,6 +89,18 @@
 export default {
   props: {
     props: { type: Object, default: null }
+  },
+  methods: {
+    filteredNumber (value) {
+      const ending = ['k', 'm', 'b', 't']
+      const n = value
+      if (n.length < 4) {
+        return n
+      } else {
+        return `${n[0]}${n[1] !== '0' ? `.${n[1]}` : ''}${ending[Math.floor((n.length - 1) / 3) - 1]}`
+      }
+      // return '$' + this.props.row.impressions
+    }
   }
 }
 </script>
