@@ -36,7 +36,7 @@
 
             <div class="row justify-between q-mb-xs">
               <div v-if="props.row.contentItems">
-                {{ filteredNumber(props.row.contentItems) }} Content items
+                {{ filteredNumber(props.row.contentItems) }} Content Video Plays
               </div>
               <div v-if="props.row.engagements">
                 {{ filteredNumber(props.row.engagements) }} Engagements
@@ -97,6 +97,9 @@ export default {
       if (n.length < 4) {
         return n
       } else {
+        if (n.length < 7) {
+          return (n / 1000) + 'k'
+        }
         return `${n[0]}${n[1] !== '0' ? `.${n[1]}` : ''}${ending[Math.floor((n.length - 1) / 3) - 1]}`
       }
       // return '$' + this.props.row.impressions

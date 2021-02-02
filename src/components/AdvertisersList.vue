@@ -120,7 +120,7 @@ export default {
         {
           name: 'userName',
           required: true,
-          label: 'User Name',
+          label: 'Account Name',
           align: 'left',
           field: row => row.userName,
           format: val => `${val}`,
@@ -129,7 +129,7 @@ export default {
         { name: 'media', align: 'center', label: 'Media', field: 'media', sortable: true },
         { name: 'items', label: 'Items', field: 'items', sortable: true },
         { name: 'impressions', label: 'Impressions', field: 'impressions', sortable: true },
-        { name: 'contentItems', label: 'Content Items', field: 'contentItems', sortable: true },
+        { name: 'contentItems', label: 'Content Video Plays', field: 'contentItems', sortable: true },
         { name: 'engagements', label: 'Engagements', field: 'engagements', sortable: true },
         { name: 'appearences', label: 'Appearences', field: 'appearences', sortable: true },
         { name: 'actions', label: 'Actions', field: 'actions', sortable: true },
