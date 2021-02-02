@@ -1,0 +1,24 @@
+<template>
+  <q-page class="q-pa-sm column no-wrap">
+    <advertisers-list :full-data="records" />
+  </q-page>
+</template>
+
+<script>
+import AdvertisersList from 'components/AdvertisersList.vue'
+export default {
+  name: 'Advertisers',
+  components: {
+    AdvertisersList
+  },
+  data () {
+    return {
+      records: {
+        icon: 'fas fa-chart-line',
+        header: 'Advertisers',
+        subheader: 'These are people or organizations that have created metacontent that exist within your content'
+      }
+    }
+  }
+}
+</script>
