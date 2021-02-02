@@ -16,15 +16,13 @@
             class="q-authorization__form-wrapper"
             :style="{ width: breakPoint ? '90%' : '80%'}"
           >
-            <div class="row items-center q-mb-lg">
-              <q-avatar
-                size="1.9rem"
-                class="q-mr-sm"
-              >
-                <img :src="companyInfo.logo">
-              </q-avatar>
-              <div class="text-h4 text-blue-grey-9">
-                {{ companyInfo.name }}
+            <div class="row justify-center items-center q-mb-lg">
+              <div class="q-mr-sm">
+                <q-img
+                  :src="companyInfo.logo"
+                  style="width: 150px"
+                  contain
+                />
               </div>
             </div>
             <!-- Register page -->

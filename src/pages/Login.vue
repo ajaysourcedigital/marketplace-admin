@@ -30,8 +30,7 @@ export default {
   data () {
     return {
       companyInfo: {
-        logo: 'statics/logo.png',
-        name: 'Source Digital'
+        logo: 'statics/logo.png'
       },
       tagLine: {
         main: 'Tagline goes here',
