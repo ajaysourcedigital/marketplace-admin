@@ -11,7 +11,7 @@
       <q-select
         :loading="!appOptions"
         label="App *"
-        required
+        :rules="[$rules.required]"
         :options="appOptions"
         option-label="name"
         option-value="slug"

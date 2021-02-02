@@ -38,16 +38,13 @@
 
         <q-space />
 
-        <!-- Search box -->
-        <search-box />
-
-        <q-space />
-
         <!-- Right buttons -->
         <div
           v-if="user.role"
-          class="q-gutter-sm row items-center no-wrap"
+          class="q-gutter-sm row items-center no-wrap relative-position"
         >
+          <!-- Search box -->
+          <search-box />
           <q-btn
             round
             dense
@@ -93,7 +90,6 @@
             flat
             style="color: #011924"
             icon="support_agent"
-            class="q-mx-sm"
             @click="processAction({ action: 'app.support' })"
           >
             <q-badge
@@ -110,13 +106,16 @@
           <q-btn
             flat
             no-caps
-            class="q-mx-sm"
+            class="user-name"
             @click="processAction({ action: 'app.route', payload: 'account'})"
           >
             <q-avatar size="26px">
               <img src="https://cdn.quasar.dev/img/boy-avatar.png">
             </q-avatar>
-            <div class="q-ml-sm">
+            <div
+              class="q-ml-sm ellipsis"
+              style="max-width: 95px"
+            >
               {{ user_details.name }}
             </div>
             <q-tooltip>Account</q-tooltip>
@@ -340,5 +339,9 @@ export default {
 
 .icon-none .on-left {
   margin-right: 0;
+}
+
+.user-name .q-btn__content {
+  flex-wrap: nowrap;
 }
 </style>
