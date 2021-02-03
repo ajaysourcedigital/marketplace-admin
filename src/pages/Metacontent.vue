@@ -1,7 +1,14 @@
 <template>
   <q-page class="q-pa-sm column no-wrap">
     <!-- <stats :settings="user.settings.admin.metacontent.stats" /> -->
-    <list
+    <!-- <list
+      :settings="records"
+      @row-click="rowClick"
+      :data="records.data"
+      :schema="schema"
+      :full-data="records"
+    /> -->
+    <metacontent-list
       :settings="records"
       @row-click="rowClick"
       :data="records.data"
@@ -13,12 +20,14 @@
 
 <script>
 // import Stats from 'components/Stats.vue'
-import List from 'components/List.vue'
+// import List from 'components/List.vue'
+import MetacontentList from 'components/MetacontentList.vue'
 export default {
   name: 'PageMetacontent',
   components: {
     // Stats,
-    List
+    // List
+    MetacontentList
   },
   mounted () {
     this.$api.get('/activations')
@@ -31,9 +40,9 @@ export default {
       })
   },
   methods: {
-    rowClick (ev = {}) {
+    rowClick (ev, row, index) {
       this.debug('Row', ev)
-      const { id } = ev
+      const { id } = row
       if (!id) throw new Error('`id` is required.')
       this.$router.push({ name: 'edit-metacontent', params: { id } })
     }
