@@ -11,6 +11,7 @@ const routes = [
       { name: 'content', path: '/content', component: () => import('pages/Content.vue') },
       { name: 'metacontent', path: '/metacontent', component: () => import('pages/Metacontent.vue') },
       { name: 'campaigns', path: '/campaigns', component: () => import('pages/Campaigns.vue') },
+      { name: 'advertisers', path: '/advertisers', component: () => import('pages/Advertisers.vue') },
       { name: 'account', path: '/account', component: () => import('pages/Account.vue') },
       { name: 'team', path: '/team', component: () => import('pages/Team.vue') },
       { name: 'inviteTeam', path: '/invite-team', component: () => import('pages/InviteTeam.vue') },
