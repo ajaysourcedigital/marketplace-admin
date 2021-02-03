@@ -6,7 +6,7 @@
       class="q-pa-sm q-gutter-y-sm"
     >
       <div>
-        Configure this ad by entering the advertizers API and campaign.
+        Configure this ad by entering the advertisers API and campaign.
       </div>
       <q-input
         label="Publisher ID *"

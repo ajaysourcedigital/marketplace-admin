@@ -33,6 +33,7 @@
     "vuedraggable": "^2.23.2"
   },
   "devDependencies": {
+    "@arkweid/lefthook": "^0.7.2",
     "@quasar/app": "^2.0.0",
     "@quasar/quasar-app-extension-qcalendar": "^3.3.1",
     "@quasar/quasar-app-extension-qmediaplayer": "^1.1.4",
