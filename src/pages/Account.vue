@@ -1,219 +1,351 @@
 <template>
-  <q-page class="q-pa-sm">
+  <q-page
+    class="q-pa-md account-page"
+    style="background-color: rgb(238, 248, 252)"
+  >
+    <div class="row">
+      <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+        <q-card-section class="text-h6">
+          <div class="text-h6">
+            Edit Profile
+          </div>
+          <div class="text-subtitle2">
+            Complete your profile
+          </div>
+        </q-card-section>
+
+        <q-list>
+          <q-item class="col-lg-12 col-md-12 col-sm-12 col-xs-12 items-center">
+            <q-item-section side>
+              <q-avatar size="100px">
+                <img :src="this.user_details.photo.formats.thumbnail.url">
+              </q-avatar>
+            </q-item-section>
+            <div>
+              <input
+                type="file"
+                style="display: none"
+                ref="fileInput"
+                accept="image/*"
+                @change="onFilePicked"
+              >
+              <q-btn
+                label="Add Photo"
+                padding="5px 10px"
+                class="text-white icon-none "
+                style="max-width: 90px; background-color: rgb(26, 140, 193);"
+                no-caps
+                @click="onPickFile"
+              />
+            </div>
+          </q-item>
+        </q-list>
+      </div>
+
+      <q-card-section
+        class="text-h6 col-lg-6 col-md-6 col-xs-12 col-sm-12 self-end"
+        v-if="$q.screen.gt.sm"
+      >
+        <div class="text-h6 q-pl-md">
+          Change Password
+        </div>
+      </q-card-section>
+    </div>
     <div class="row q-col-gutter-sm">
-      <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
-        <q-card class="card-bg text-black">
-          <q-card-section class="text-h6">
-            <div class="text-h6">
-              Edit Profile
-            </div>
-            <div class="text-subtitle2">
-              Complete your profile
-            </div>
-          </q-card-section>
+      <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+        <div class="text-black">
           <q-card-section class="q-pa-sm">
             <q-list class="row">
               <q-item class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                <q-item-section side>
-                  <q-avatar size="100px">
-                    <img :src="this.user_details.photo.formats.thumbnail.url">
-                  </q-avatar>
-                </q-item-section>
                 <q-item-section>
-                  <input
-                    type="file"
-                    style="display: none"
-                    ref="fileInput"
-                    accept="image/*"
-                    @change="onFilePicked"
-                  >
-                  <q-btn
-                    label="Add Photo"
-                    class="text-capitalize"
-                    rounded
-                    color="info"
-                    style="max-width: 120px"
-                    @click="onPickFile"
+                  <div class="text-caption required-hint">
+                    Required*
+                  </div>
+                  <q-input
+                    @blur="handleBlur"
+                    dense
+                    outlined
+                    round
+                    v-model="user_details.username"
+                    name="username"
+                    :rules="[val => !!val || 'User Name is required']"
+                    :class="user_details.username.length === 0 ? 'empty' : ''"
+                  />
+                </q-item-section>
+              </q-item>
+              <q-item class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <q-item-section>
+                  <div class="text-caption required-hint">
+                    Required*
+                  </div>
+                  <q-input
+                    @blur="handleBlur"
+                    dense
+                    outlined
+                    round
+                    v-model="user_details.name"
+                    placeholder="First Name"
+                    name="firstName"
+                    :rules="[val => !!val || 'First Name is required']"
+                    :class="user_details.name.length === 0 ? 'empty' : ''"
+                  />
+                </q-item-section>
+              </q-item>
+              <q-item class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <q-item-section>
+                  <div class="text-caption required-hint">
+                    Required*
+                  </div>
+                  <q-input
+                    @blur="handleBlur"
+                    dense
+                    outlined
+                    round
+                    v-model="details.lastName"
+                    placeholder="Last Name"
+                    name="lastName"
+                    :rules="[val => !!val || 'Last Name is required']"
+                    :class="details.lastName.length === 0 ? 'empty' : ''"
+                  />
+                </q-item-section>
+              </q-item>
+              <q-item class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <q-item-section>
+                  <div class="text-caption required-hint">
+                    Required*
+                  </div>
+                  <q-input
+                    @blur="handleBlur"
+                    dense
+                    outlined
+                    round
+                    v-model="user_details.email"
+                    placeholder="Email Address"
+                    name="email"
+                    :rules="[val => !!val || 'Field is required']"
+                    :class="user_details.email.length === 0 ? 'empty' : ''"
                   />
                 </q-item-section>
               </q-item>
 
-              <q-item class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+              <q-item class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <q-item-section>
+                  <div class="text-caption optional-hint">
+                    Optional
+                  </div>
                   <q-input
                     @blur="handleBlur"
-                    color="white"
                     dense
-                    v-model="user_details.username"
-                    label="User Name"
-                    name="username"
+                    outlined
+                    round
+                    v-model="user_details.phoneNumber"
+                    type="tel"
+                    placeholder="Phone number"
+                    name="phoneNumber"
+                    :class="details.phoneNumber.length === 0 ? 'empty' : ''"
                   />
                 </q-item-section>
               </q-item>
-              <q-item class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+
+              <q-item class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <q-item-section>
+                  <div class="text-caption optional-hint">
+                    Optional
+                  </div>
                   <q-input
                     @blur="handleBlur"
-                    color="white"
                     dense
-                    v-model="user_details.email"
-                    label="Email Address"
-                    name="email"
+                    outlined
+                    round
+                    v-model="user_details.country"
+                    placeholder="Country"
+                    name="country"
+                    :class="user_details.country.length === 0 ? 'empty' : ''"
                   />
                 </q-item-section>
               </q-item>
-              <q-item class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+
+              <q-item class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <q-item-section>
+                  <div class="text-caption optional-hint">
+                    Optional
+                  </div>
                   <q-input
                     @blur="handleBlur"
-                    color="white"
                     dense
-                    v-model="user_details.name"
-                    label="Name"
-                    name="firstName"
+                    outlined
+                    round
+                    v-model="user_details.address"
+                    placeholder="Street Address"
+                    name="address"
+                    :class="user_details.address.length === 0 ? 'empty' : ''"
+                  />
+                </q-item-section>
+              </q-item>
+
+              <q-item class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <q-item-section>
+                  <div class="text-caption optional-hint">
+                    Optional
+                  </div>
+                  <q-input
+                    @blur="handleBlur"
+                    dense
+                    outlined
+                    round
+                    v-model="user_details.apartmentNumber"
+                    placeholder="Apartment Number"
+                    name="apartmentNumber"
+                    :class="details.apartmentNumber.length === 0 ? 'empty' : ''"
+                  />
+                </q-item-section>
+              </q-item>
+
+              <q-item class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <q-item-section>
+                  <div class="text-caption optional-hint">
+                    Optional
+                  </div>
+                  <q-input
+                    @blur="handleBlur"
+                    dense
+                    outlined
+                    round
+                    v-model="user_details.city"
+                    placeholder="City"
+                    name="city"
+                    :class="user_details.city.length === 0 ? 'empty' : ''"
                   />
                 </q-item-section>
               </q-item>
               <q-item class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <q-item-section>
+                  <div class="text-caption optional-hint">
+                    Optional
+                  </div>
                   <q-input
                     @blur="handleBlur"
-                    color="white"
-                    autogrow
                     dense
-                    v-model="user_details.address"
-                    label="Address"
-                    name="address"
-                  />
-                </q-item-section>
-              </q-item>
-              <q-item class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                <q-item-section>
-                  <q-input
-                    @blur="handleBlur"
-                    color="white"
-                    dense
-                    v-model="user_details.city"
-                    label="City"
-                    name="city"
-                  />
-                </q-item-section>
-              </q-item>
-              <q-item class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                <q-item-section>
-                  <q-input
-                    @blur="handleBlur"
-                    color="white"
-                    dense
+                    outlined
+                    round
                     v-model="user_details.state"
-                    label="State"
+                    placeholder="State"
                     name="state"
+                    :class="user_details.state.length === 0 ? 'empty' : ''"
                   />
                 </q-item-section>
               </q-item>
-              <q-item class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+              <q-item class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <q-item-section>
+                  <div class="text-caption optional-hint">
+                    Optional
+                  </div>
                   <q-input
                     @blur="handleBlur"
-                    color="white"
                     dense
+                    outlined
+                    round
                     v-model="user_details.zip"
-                    label="Postal Code"
+                    placeholder="Zip Code"
                     name="zip"
-                  />
-                </q-item-section>
-              </q-item>
-              <q-item class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                <q-item-section>
-                  <q-input
-                    @blur="handleBlur"
-                    color="white"
-                    dense
-                    v-model="user_details.country"
-                    label="Country"
-                    name="country"
+                    :class="user_details.zip.length === 0 ? 'empty' : ''"
                   />
                 </q-item-section>
               </q-item>
             </q-list>
           </q-card-section>
-          <q-card-actions align="right">
+
+          <q-card-actions
+            align="right"
+            class="q-mr-md"
+          >
             <q-btn
-              class="text-capitalize bg-info text-black"
+              label="Update User Info"
+              padding="5px 10px"
+              class="text-white icon-none "
+              style=" background-color: rgb(26, 140, 193);"
+              no-caps
               @click="handleSubmit"
-            >
-              Update User Info
-            </q-btn>
+            />
           </q-card-actions>
-        </q-card>
+        </div>
       </div>
 
-      <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
-        <q-card class="card-bg text-black">
-          <q-card-section class="text-h6 q-pa-sm">
-            <div class="text-h6">
+      <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+        <div class="text-black">
+          <q-card-section
+            class="text-h6 col-lg-6 col-md-6 col-xs-12 col-sm-12 self-end"
+            v-if="$q.screen.lt.md"
+          >
+            <div class="text-h6 q-pl-md">
               Change Password
             </div>
           </q-card-section>
           <q-card-section class="q-pa-sm row">
-            <q-item class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-              <q-item-section> Current Password </q-item-section>
-            </q-item>
-            <q-item class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+            <q-item class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
               <q-item-section>
+                <div class="text-caption required-hint">
+                  Required*
+                </div>
                 <q-input
                   type="password"
                   dense
                   outlined
-                  color="white"
                   round
                   v-model="password_dict.current_password"
-                  label="Current Password"
+                  placeholder="Current Password"
+                  :rules="[val => !!val || 'Current Password is required']"
+                  :class="password_dict.current_password.length === 0 ? 'empty' : ''"
                 />
               </q-item-section>
             </q-item>
-            <q-item class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-              <q-item-section> New Password </q-item-section>
-            </q-item>
-            <q-item class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+            <q-item class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
               <q-item-section>
+                <div class="text-caption required-hint">
+                  Required*
+                </div>
                 <q-input
                   type="password"
                   dense
                   outlined
-                  color="white"
                   round
                   v-model="password_dict.new_password"
-                  label="New Password"
+                  placeholder="New Password"
+                  :rules="[val => !!val || 'New Password is required']"
+                  :class="password_dict.new_password.length === 0 ? 'empty' : ''"
                 />
               </q-item-section>
             </q-item>
-            <q-item class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-              <q-item-section> Confirm New Password </q-item-section>
-            </q-item>
-            <q-item class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+
+            <q-item class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
               <q-item-section>
+                <div class="text-caption required-hint">
+                  Required*
+                </div>
                 <q-input
                   type="password"
                   dense
                   outlined
                   round
-                  color="white"
                   v-model="password_dict.confirm_new_password"
-                  label="Confirm New Password"
+                  placeholder="Confirm New Password"
+                  :rules="[val => !!val || 'Confirm New Password is required']"
+                  :class="password_dict.confirm_new_password.length === 0 ? 'empty' : ''"
                 />
               </q-item-section>
             </q-item>
           </q-card-section>
           <q-card-actions align="right">
             <q-btn
-              class="text-capitalize bg-info text-black"
+              label="Change Password"
+              padding="5px 10px"
+              class="text-white icon-none q-mr-md"
+              style=" background-color: rgb(26, 140, 193);"
+              no-caps
               @click="updatePassword"
-            >
-              Change Password
-            </q-btn>
+            />
           </q-card-actions>
-        </q-card>
+        </div>
       </div>
     </div>
   </q-page>
@@ -225,8 +357,17 @@ export default {
   data () {
     return {
       user_details: {},
-      password_dict: {},
-      componentKey: 0
+      password_dict: {
+        current_password: '',
+        new_password: '',
+        confirm_new_password: ''
+      },
+      componentKey: 0,
+      details: {
+        lastName: '',
+        phoneNumber: '',
+        apartmentNumber: ''
+      }
     }
   },
   methods: {
@@ -284,13 +425,50 @@ export default {
     }
   },
   beforeMount () {
-    this.user_details = (({ username, id, name, email, address, city, state, country, zip, photo }) => ({ username, id, name, email, address, city, state, country, zip, photo }))(this.$store.state.user)
+    this.user_details = (({ username, id, name, lastName, email, phoneNumber, address, apartmentNumber, city, state, country, zip, photo }) => ({ username, id, name, lastName, email, phoneNumber, address, apartmentNumber, city, state, country, zip, photo }))(this.$store.state.user)
   }
 }
 </script>
 
-<style scoped>
-.card-bg {
-  background-color: #fff;
+<style lang="stylus" scoped>
+.required-hint {
+  color: #d3242a;
+  text-align: right;
+}
+
+.optional-hint {
+  color: #8c898a;
+  text-align: right;
+}
+
+.account-page {
+  .q-field__bottom {
+    display: none;
+  }
+
+  .q-field--with-bottom {
+    padding-bottom: 0;
+  }
+
+  /deep/.q-field__bottom.q-field__bottom--animated {
+    display: none;
+  }
+
+  /deep/.q-field {
+    background: #ffffff;
+  }
+
+  /deep/.q-field__control:before {
+    border-color: #011924;
+  }
+
+  /deep/.empty {
+    background-color: #f7f8f9;
+    color: #c7cfd3;
+
+    .q-field__control:before {
+      border-color: #c7cfd3;
+    }
+  }
 }
 </style>

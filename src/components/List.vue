@@ -1,10 +1,10 @@
 <template>
-  <q-card
-    class="column no-wrap justify-between list-card"
+  <div
+    class="column no-wrap justify-between list-card hide-scrollbar"
     v-if="fullData"
   >
-    <q-card-section class="text-h6 q-pb-none row no-wrap items-baseline">
-      <q-item class="col-8">
+    <q-card-section class="text-h6 q-pa-none row no-wrap items-baseline">
+      <q-item class="col-8 q-py-none">
         <q-item-section
           avatar
           class=""
@@ -141,7 +141,7 @@
         </template>
       </q-table>
     </q-card-section>
-  </q-card>
+  </div>
 </template>
 
 <script>
@@ -206,7 +206,7 @@ export default {
 .items-baseline {
   position: sticky;
   top: 0;
-  background-color: white;
+  background-color: rgb(238, 248, 252);
   z-index: 9;
 }
 

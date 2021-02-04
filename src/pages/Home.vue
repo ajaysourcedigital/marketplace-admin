@@ -1,24 +1,27 @@
 <template>
   <q-page
-    class="q-pa-sm"
+    class="q-pa-md"
     style="background-color: #eef8fc;"
   >
-    <stats :settings="user.settings.admin.content.stats" />
-    <breakdown :settings="content" />
+    <h3 class="q-ma-lg">
+      Welcome
+    </h3>
+    <!-- <stats :settings="user.settings.admin.content.stats" /> -->
+    <!-- <breakdown :settings="content" /> -->
     <list :settings="content" />
   </q-page>
 </template>
 
 <script>
-import Stats from 'components/Stats.vue'
-import Breakdown from 'components/Breakdown.vue'
+// import Stats from 'components/Stats.vue'
+// import Breakdown from 'components/Breakdown.vue'
 import List from 'src/components/List.vue'
 
 export default {
   name: 'PageHome',
   components: {
-    Stats,
-    Breakdown,
+    // Stats,
+    // Breakdown,
     List
   },
   data () {

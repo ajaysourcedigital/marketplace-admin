@@ -1,5 +1,8 @@
 <template>
-  <q-page class="q-pa-sm bg-white">
+  <q-page
+    class="q-pa-md"
+    style="background-color: rgb(238, 248, 252)"
+  >
     <q-resize-observer @resize="onResize" />
 
     <div
@@ -138,7 +141,7 @@
           </q-tabs>
         </q-card>
       </div>
-      <div class="col-lg-8 q-pl-xs col-md-8 col-sm-12 col-xs-12">
+      <div class="col-lg-8 q-pl-md col-md-8 col-sm-12 col-xs-12">
         <q-card
           class="no-border no-border"
           :style="{'height':size['height']-24+'px !important'}"

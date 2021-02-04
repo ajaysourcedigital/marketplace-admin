@@ -1,6 +1,6 @@
 <template>
   <div
-    class="search-bar q-mx-sm"
+    class="search-bar"
     :class="{ 'open': search }"
   >
     <div

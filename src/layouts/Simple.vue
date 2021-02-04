@@ -41,67 +41,10 @@
         <!-- Right buttons -->
         <div
           v-if="user.role"
-          class="q-gutter-sm row items-center no-wrap relative-position"
+          class="row items-center no-wrap relative-position"
         >
           <!-- Search box -->
           <search-box />
-          <q-btn
-            round
-            dense
-            flat
-            style="color: #011924"
-            icon="chat"
-            class="q-mx-sm"
-            @click="processAction({ action: 'app.route', payload: 'live' })"
-          >
-            <q-tooltip>Chat</q-tooltip>
-          </q-btn>
-
-          <q-btn
-            round
-            dense
-            flat
-            style="color: #011924"
-            class="q-mx-sm"
-            @click="processAction({ action: 'app.route', payload: 'updates'})"
-          >
-            <q-avatar>
-              <q-img
-                style="width: 20px"
-                src="../../public/icons/bullhorn.png"
-                contain
-              />
-            </q-avatar>
-
-            <q-badge
-              v-if="updates"
-              color="red"
-              text-color="white"
-              floating
-            >
-              {{ updates.length }}
-            </q-badge>
-            <q-tooltip>Updates</q-tooltip>
-          </q-btn>
-
-          <q-btn
-            round
-            dense
-            flat
-            style="color: #011924"
-            icon="support_agent"
-            @click="processAction({ action: 'app.support' })"
-          >
-            <q-badge
-              v-if="user.conversations"
-              color="red"
-              text-color="white"
-              floating
-            >
-              {{ user.messages.length }}
-            </q-badge>
-            <q-tooltip>Help</q-tooltip>
-          </q-btn>
 
           <q-btn
             flat
@@ -143,7 +86,7 @@
       show-if-above
       bordered
       :mini="miniState"
-      content-class="GNL__drawer"
+      content-class="GNL__drawer hide-scrollbar"
       :width="280"
     >
       <q-list
@@ -173,10 +116,10 @@
           </q-item>
           <q-item
             v-else-if="link.type === 'button-dropdown'"
-            class="GNL__drawer-button-dropdown"
+            class="GNL__drawer-button-dropdown q-mb-md"
           >
             <q-btn-dropdown
-              padding="10px"
+              padding="0 5px"
               :color="link.color"
               class="text-white icon-none "
               :class="miniState?'':'q-pr-md'"
@@ -303,7 +246,10 @@ export default {
 
 .GNL__drawer-item {
   line-height: 24px;
-  border-radius: 0 24px 24px 0;
+}
+
+.GNL__drawer-item:hover {
+  background: #1a8cc1;
 }
 
 .GNL__drawer-item .q-item__section--avatar .q-icon {

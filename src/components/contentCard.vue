@@ -1,67 +1,74 @@
 <template>
-  <div class="q-pa-xs col-xs-12 col-sm-6 col-md-4 col-lg-3">
+  <div class="q-pa-sm col-xs-12 col-sm-6 col-md-6 col-lg-4">
     <q-card
       @click="$emit('row-click', props.row)"
-      class="content-list__card cursor-pointer hide-scrollbar"
+      class="q-pa-xs content-list__card cursor-pointer hide-scrollbar "
       style="overflow-y: auto"
     >
-      <div
-        class="column no-wrap justify-between"
-        style="height: 100%;"
-      >
-        <div v-if="props.row.media">
+      <q-card-section horizontal>
+        <q-card-section class="col-5 q-pa-xs flex flex-center">
           <q-img
-            :ratio="16/9"
+            class="rounded-borders"
+            v-if="props.row.media"
+            :ratio="1"
             :src="`https://img.youtube.com/vi/${props.row.media}/0.jpg`"
           />
-        </div>
-        <div>
-          <q-card-section class="q-py-sm">
-            <div class="col text-h6 ellipsis">
-              {{ props.row.name }}
-            </div>
-          </q-card-section>
+          <q-img
+            class="rounded-borders"
+            v-else
+            :ratio="1"
+            src="../../public/img/media/notAvailable.jpg"
+          />
+        </q-card-section>
 
-          <q-card-section class="q-py-sm row no-wrap justify-between">
-            <div class="ellipsis">
-              <div class="col ellipsis text-subtitle1 text-grey">
+        <div class="q-py-sm col-7">
+          <div>
+            <q-card-section class="q-py-xs q-px-sm">
+              <div class="col text-subtitle2 ellipsis">
+                {{ props.row.name }}
+              </div>
+            </q-card-section>
+
+            <q-card-section class="q-px-sm q-pt-xs q-pb-lg">
+              <div class="text-body2 text-grey">
                 {{ props.row.slug }}
               </div>
-              <div class="col ellipsis text-subtitle2 text-grey">
-                {{ props.row.type }}
+            </q-card-section>
+          </div>
+
+          <q-card-section class="row no-wrap items-center justify-between q-px-sm q-pt-sm q-pb-none">
+            <div class="row no-wrap items-center">
+              <q-avatar
+                size="28px"
+                class="q-mr-sm"
+              >
+                <img src="https://cdn.quasar.dev/img/boy-avatar.png">
+              </q-avatar>
+              <div>
+                <div class="text-caption">
+                  {{ props.row.creator }}
+                </div>
+                <div class="text-caption text-grey">
+                  {{ moment(props.row.created_at).format('MMM Do, YYYY') }}
+                </div>
               </div>
             </div>
 
-            <div class="col-auto text-grey text-caption q-px-md row items-center">
-              <img
-                :src="`img/media/${contentMediaIcon}.svg`"
-                height="40px"
-              >
-            </div>
+            <q-icon
+              color="grey"
+              size="sm"
+              style="transform: rotate(90deg)"
+              class="q-ml-sm"
+              name="reply"
+            />
           </q-card-section>
         </div>
-
-        <q-card-section class="q-pt-none">
-          <div
-            v-if="props.row.production"
-            class="text-subtitle1 ellipsis"
-          >
-            {{ props.row.production.name }}
-          </div>
-          <div
-            v-if="props.row.property"
-            class="text-caption text-grey ellipsis"
-          >
-            {{ props.row.property.Name }}
-          </div>
-        </q-card-section>
-      </div>
+      </q-card-section>
     </q-card>
   </div>
 </template>
 
 <script>
-
 export default {
   props: {
     props: { type: Object, default: null }
@@ -89,6 +96,7 @@ export default {
 
 <style lang="stylus">
 .content-list__card {
-  height: 350px;
+  height: 100%;
+  // height: 250px;
 }
 </style>
