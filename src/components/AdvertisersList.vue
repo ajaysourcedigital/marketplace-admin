@@ -1,5 +1,8 @@
 <template>
-  <q-card class="column no-wrap flex-start list-card">
+  <q-card
+    flat
+    class="column no-wrap flex-start list-card"
+  >
     <q-card-section class="text-h6 q-pb-none row no-wrap items-baseline">
       <q-item class="col-8">
         <q-item-section avatar>

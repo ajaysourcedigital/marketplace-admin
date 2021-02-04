@@ -1,11 +1,11 @@
 <template>
   <q-page
     class="q-pa-md"
-    style="background-color: #eef8fc;"
+    style="background-color: rgba(255, 255, 255);"
   >
-    <h3 class="q-ma-lg">
+    <h4 class="q-ma-lg">
       Welcome
-    </h3>
+    </h4>
     <!-- <stats :settings="user.settings.admin.content.stats" /> -->
     <!-- <breakdown :settings="content" /> -->
     <list :settings="content" />

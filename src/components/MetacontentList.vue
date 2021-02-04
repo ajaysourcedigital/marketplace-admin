@@ -1,6 +1,7 @@
 <template>
   <q-card
-    class="column no-wrap justify-between list-card"
+    flat
+    class="column no-wrap justify-start list-card"
     v-if="fullData"
   >
     <q-card-section class="text-h6 q-pb-none row no-wrap items-baseline">

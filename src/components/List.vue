@@ -1,6 +1,6 @@
 <template>
   <div
-    class="column no-wrap justify-between list-card hide-scrollbar"
+    class="column no-wrap justify-start list-card hide-scrollbar"
     v-if="fullData"
   >
     <q-card-section class="text-h6 q-pa-none row no-wrap items-baseline">
@@ -40,7 +40,7 @@
         </div>
       </div>
     </q-card-section>
-    <q-card-section class="q-pa-none q-ma-none">
+    <q-card-section class="q-pa-none q-ma-none q-mt-md">
       <q-table
         table-style="max-height: 75vh"
         class="stickyTable"
@@ -206,7 +206,7 @@ export default {
 .items-baseline {
   position: sticky;
   top: 0;
-  background-color: rgb(238, 248, 252);
+  background-color: rgb(255, 255, 255);
   z-index: 9;
 }
 

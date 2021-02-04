@@ -1,7 +1,7 @@
 <template>
   <q-page
     class="q-pa-md account-page"
-    style="background-color: rgb(238, 248, 252)"
+    style="background-color: rgb(255, 255, 255)"
   >
     <div class="row">
       <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">

@@ -1,9 +1,9 @@
 <template>
   <q-page
     class="column no-wrap q-px-md q-pt-md"
-    style="background-color: rgb(238, 248, 252)"
+    style="background-color: rgb(255,255,255)"
   >
-    <!-- <stats :settings="user.settings.admin.metacontent.stats" /> -->
+    <!-- <stats :settings='user.settings.admin.metacontent.stats' /> -->
     <list
       :data="records.data"
       :schema="schema"
@@ -24,7 +24,8 @@ export default {
     List
   },
   mounted () {
-    this.$api.get('/distributions')
+    this.$api
+      .get('/distributions')
       .then(response => {
         this.records.data = response.data
         this.debug('DATA', response.data)
