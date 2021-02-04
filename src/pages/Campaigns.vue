@@ -1,10 +1,14 @@
 <template>
-  <q-page class="q-pa-sm bg-white">
+  <q-page
+    class="q-pa-md "
+    style="background-color: rgb(238, 248, 252)"
+  >
     <q-calendar
       v-model="selectedDate"
       view="month"
       locale="en-us"
       :day-height="100"
+      class="campaign-calendar"
     >
       <template #week="{ week, weekdays }">
         <template>
@@ -237,5 +241,10 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="stylus" scoped>
+.campaign-calendar {
+  /deep/.q-calendar-weekly__head-weekday {
+    padding: 16px;
+  }
+}
 </style>

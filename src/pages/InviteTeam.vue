@@ -1,6 +1,7 @@
 <template>
   <q-page
-    class="q-pa-sm"
+    class="q-pa-md"
+    style="background-color: rgb(238, 248, 252)"
     :key="inviteFlag"
   >
     <invite-header />

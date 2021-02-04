@@ -2,6 +2,9 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import routes from './routes'
 import appDebug from 'src/utils/debug'
+import moment from 'moment'
+
+Vue.prototype.moment = moment
 
 const debug = appDebug.extend('router')
 

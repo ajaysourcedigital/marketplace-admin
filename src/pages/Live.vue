@@ -1,10 +1,13 @@
 <template>
-  <q-page class="bg-white">
+  <q-page
+    class="q-pa-md"
+    style="background-color: rgb(238, 248, 252)"
+  >
     <div
       class="row q-mt-xs"
       group="columns"
     >
-      <div class="col-3 rounded-borders q-px-xs">
+      <div class="col-3 rounded-borders">
         <q-card class="q-pa-xs custom_bg ">
           <q-item
             style="cursor: move;"
@@ -152,7 +155,7 @@
         </q-card>
       </div>
 
-      <div class="col-3 q-px-xs">
+      <div class="col-3 q-px-md">
         <q-card class="q-pa-xs custom_bg2 ">
           <q-item
             style="cursor: move;"
@@ -290,7 +293,7 @@
           </q-scroll-area>
         </q-card>
       </div>
-      <div class="col-6 q-px-xs">
+      <div class="col-6">
         <q-card class="q-pa-xs custom_bg3 ">
           <q-item
             style="cursor: move;"

@@ -1,5 +1,8 @@
 <template>
-  <q-page class="q-pa-sm column no-wrap">
+  <q-page
+    class="q-pa-sm column no-wrap"
+    style="background-color: rgb(238, 248, 252)"
+  >
     <!-- <stats :settings="user.settings.admin.metacontent.stats" /> -->
     <list
       :settings="records"
