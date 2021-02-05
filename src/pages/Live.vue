@@ -1,17 +1,21 @@
 <template>
   <q-page
+    fit
     class="q-pa-md"
-    style="background-color: rgb(238, 248, 252)"
+    style=""
   >
     <div
-      class="row q-mt-xs"
+      class="row q-mt-xs q-gutter-x-md"
       group="columns"
     >
-      <div class="col-3 rounded-borders">
-        <q-card class="q-pa-xs custom_bg ">
+      <div class="col-3 ">
+        <q-card
+          style="border-radius: 10px;"
+          class="q-pa-sm custom_bg"
+        >
           <q-item
             style="cursor: move;"
-            class="q-pa-none text-white q-pa-sm rounded-borders"
+            class="text-white q-pa-sm rounded-borders"
           >
             <q-item-section class="text-h6 text-weight-bolder text-color">
               Available
@@ -58,7 +62,8 @@
               <q-card
                 v-for="(item, index) in rtData.available"
                 :key="index"
-                class="rounded-borders q-my-sm"
+                class="rounded-borders q-my-md q-ma-sm activation-card"
+                style="border-radius: 10px;"
                 @mouseover="$set(task_selected_index,'planned',index)"
                 @mouseleave="task_selected_index.planned = null"
               >
@@ -155,8 +160,11 @@
         </q-card>
       </div>
 
-      <div class="col-3 q-px-md">
-        <q-card class="q-pa-xs custom_bg2 ">
+      <div class="col-3">
+        <q-card
+          style="border-radius: 10px;"
+          class="q-pa-sm custom_bg2"
+        >
           <q-item
             style="cursor: move;"
             class="q-pa-none text-white q-pa-sm"
@@ -206,7 +214,8 @@
               <q-card
                 v-for="(item, index) in rtData.scheduled"
                 :key="index"
-                class="rounded-borders q-my-sm"
+                class="rounded-borders q-my-md q-ma-sm activation-card"
+                style="border-radius: 10px;"
                 @mouseover="task_selected_index.wip = index"
                 @mouseleave="task_selected_index.wip = null"
               >
@@ -293,8 +302,12 @@
           </q-scroll-area>
         </q-card>
       </div>
-      <div class="col-6">
-        <q-card class="q-pa-xs custom_bg3 ">
+
+      <div class="col">
+        <q-card
+          style="border-radius: 10px;"
+          class="q-pa-sm custom_bg3"
+        >
           <q-item
             style="cursor: move;"
             class="q-pa-none text-white q-pa-sm"
@@ -326,7 +339,13 @@
               </q-icon>
             </q-item-section>
           </q-item>
-          {{ rtData }}
+          <div
+            style="border-radius: 10px;"
+            class="q-pa-md q-pb-md q-ma-sm bg-grey-2"
+          >
+            {{ rtData }}
+          </div>
+
           <!--
           <iframe
             style="width: 100%; height: 785px"
@@ -470,22 +489,28 @@ export default {
 
 <style scoped>
 .custom_bg {
-  background-image: linear-gradient(to bottom, #a18cd1 0%, #fbc2eb 100%);
+  background-color: rgba(1, 25, 36, 0.7);
 }
 
 .custom_bg2 {
-  background-image: linear-gradient(to bottom, #4facfe 0%, #00f2fe 100%);
+  background-color: rgba(1, 25, 36, 0.7);
 }
 
 .custom_bg3 {
-  background-image: linear-gradient(to right, #74ebd5 0%, #9face6 100%);
+  background-color: rgba(1, 25, 36, 0.7);
 }
 
 .custom_bg4 {
-  background-image: linear-gradient(to bottom, #a18cd1 0%, #fbc2eb 100%);
+  background-color: rgba(1, 25, 36, 0.7);
 }
 
 .text-color {
   color: white;
+}
+
+.activation-card:hover {
+  box-shadow: 1px 1px 1px rgba(108, 122, 137, 1);
+  bottom: 2px;
+  right: 2px;
 }
 </style>

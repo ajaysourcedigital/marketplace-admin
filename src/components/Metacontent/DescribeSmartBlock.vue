@@ -1,9 +1,9 @@
 <template>
-  <div class="justify-around">
+  <div class="flex flex-row flex-center ">
     <q-card
-      :class="`col-xs-12 shadow-4 col-sm-auto q-pa-xs q-ma-sm bg-${settings.settings.color} text-white smartblock-card`"
-      size="lg"
-      style="border-radius: 15px; width: 400px;"
+      :class="`col-xs-12 col-sm-10 shadow-4 q-pa-xs q-ma-sm bg-${settings.settings.color} text-white smartblock-card`"
+
+      style="border-radius: 15px; width: 80%;"
     >
       <q-card-section
         horizontal
