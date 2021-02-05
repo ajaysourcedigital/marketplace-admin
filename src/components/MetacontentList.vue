@@ -66,7 +66,10 @@
         </template>
         <template #body="props">
           <!-- Display -->
-          <tr :props="props">
+          <tr
+            :props="props"
+            @click="$emit('row-click', props.row)"
+          >
             <q-td key="display">
               <q-avatar size="xl">
                 <q-img
