@@ -3,7 +3,10 @@
     class="q-pa-xs"
     :style="`height:${height}!important;`"
   >
-    <q-toolbar :class="`bg-primary text-white`">
+    <q-toolbar
+      style="border-radius: 8px;"
+      :class="`bg-primary text-white`"
+    >
       Template
       <q-space />
       <q-tabs
