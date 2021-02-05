@@ -1,6 +1,5 @@
 <template>
   <q-page
-    fit
     class="q-pa-md"
     style=""
   >
@@ -10,7 +9,7 @@
     >
       <div class="col-3 ">
         <q-card
-          style="border-radius: 10px;"
+          style="border-radius: 8px;"
           class="q-pa-sm custom_bg"
         >
           <q-item
@@ -23,6 +22,7 @@
             <q-item-section avatar>
               <q-icon
                 name="more_vert"
+                color="blue-grey-6"
                 class="cursor-pointer"
               >
                 <q-menu
@@ -63,14 +63,14 @@
                 v-for="(item, index) in rtData.available"
                 :key="index"
                 class="rounded-borders q-my-md q-ma-sm activation-card"
-                style="border-radius: 10px;"
+                style="border-radius: 8px;"
                 @mouseover="$set(task_selected_index,'planned',index)"
                 @mouseleave="task_selected_index.planned = null"
               >
                 <q-card-section class="row q-pa-sm">
                   <div class="col-12">
                     <span class="text-weight-bold text-h6 q-ml-sm">{{ item.title }}</span>
-                    <span class="float-right text-grey-8 q-mt-sm">{{ item.label }}
+                    <span class="float-right text-grey-8 q-mt-sm text-weight-medium">{{ item.label }}
                       <q-icon
                         filled
                         size="xs"
@@ -82,9 +82,13 @@
                     </span>
                   </div>
                 </q-card-section>
-                <q-card-section class="q-pa-sm">
+                <q-card-section
+                  style="border-radius: 10px;"
+                  class="q-py-xs q-mr-xl q-ml-md"
+                >
                   <q-chip
                     dense
+                    class="tag-chip"
                     v-for="(tag, tagIndex) in item.tags"
                     :key="tagIndex"
                     :color="tag.color"
@@ -93,7 +97,7 @@
                     {{ tag.name }}
                   </q-chip>
                 </q-card-section>
-                <q-card-section class="q-pa-sm text-grey-8">
+                <q-card-section class="q-pa-md text-grey-8">
                   {{ item.description }}
                 </q-card-section>
               </q-card>
@@ -162,7 +166,7 @@
 
       <div class="col-3">
         <q-card
-          style="border-radius: 10px;"
+          style="border-radius: 8px;"
           class="q-pa-sm custom_bg2"
         >
           <q-item
@@ -175,6 +179,7 @@
             <q-item-section avatar>
               <q-icon
                 name="more_vert"
+                color="blue-grey-6"
                 class="cursor-pointer"
               >
                 <q-menu
@@ -215,14 +220,14 @@
                 v-for="(item, index) in rtData.scheduled"
                 :key="index"
                 class="rounded-borders q-my-md q-ma-sm activation-card"
-                style="border-radius: 10px;"
+                style="border-radius: 8px;"
                 @mouseover="task_selected_index.wip = index"
                 @mouseleave="task_selected_index.wip = null"
               >
                 <q-card-section class="row q-pa-sm">
                   <div class="col-12">
                     <span class="text-weight-bold text-h6 q-ml-sm">{{ item.title }}</span>
-                    <span class="float-right text-grey-8 q-mt-sm">{{ item.label }}
+                    <span class="float-right text-grey-8 q-mt-sm text-weight-medium">{{ item.label }}
                       <q-icon
                         filled
                         size="xs"
@@ -234,9 +239,13 @@
                     </span>
                   </div>
                 </q-card-section>
-                <q-card-section class="q-pa-sm">
+                <q-card-section
+                  style="border-radius: 10px;"
+                  class="q-py-xs q-mr-xl q-ml-md"
+                >
                   <q-chip
                     dense
+                    class="tag-chip"
                     v-for="(tag, tagIdx) in item.tags"
                     :key="tagIdx"
                     :color="tag.color"
@@ -245,7 +254,7 @@
                     {{ tag.name }}
                   </q-chip>
                 </q-card-section>
-                <q-card-section class="q-pa-sm text-grey-8">
+                <q-card-section class="q-pa-md text-grey-8">
                   {{ item.description }}
                 </q-card-section>
               </q-card>
@@ -305,7 +314,7 @@
 
       <div class="col">
         <q-card
-          style="border-radius: 10px;"
+          style="border-radius: 8px;"
           class="q-pa-sm custom_bg3"
         >
           <q-item
@@ -318,6 +327,7 @@
             <q-item-section avatar>
               <q-icon
                 name="more_vert"
+                color="blue-grey-6"
                 class="cursor-pointer"
               >
                 <q-menu
@@ -340,8 +350,8 @@
             </q-item-section>
           </q-item>
           <div
-            style="border-radius: 10px;"
-            class="q-pa-md q-pb-md q-ma-sm bg-grey-2"
+            style="border-radius: 8px;"
+            class="q-pa-md q-pb-md q-ma-sm"
           >
             {{ rtData }}
           </div>
@@ -489,27 +499,35 @@ export default {
 
 <style scoped>
 .custom_bg {
-  background-color: rgba(1, 25, 36, 0.7);
+  background-color: rgba(236, 240, 241, 1);
 }
 
 .custom_bg2 {
-  background-color: rgba(1, 25, 36, 0.7);
+  background-color: rgba(236, 240, 241, 1);
 }
 
 .custom_bg3 {
-  background-color: rgba(1, 25, 36, 0.7);
+  background-color: rgba(236, 240, 241, 1);
 }
 
 .custom_bg4 {
-  background-color: rgba(1, 25, 36, 0.7);
+  background-color: rgba(1, 25, 36, 0.1);
 }
 
 .text-color {
-  color: white;
+  color: rgba(108, 122, 137, 1);
+}
+
+.activation-card {
+  box-shadow: 1px 3px 4px rgba(108, 122, 137, 1);
+}
+
+.tag-chip {
+  box-shadow: 1px 1px 4px rgba(108, 122, 137, 1);
 }
 
 .activation-card:hover {
-  box-shadow: 1px 1px 1px rgba(108, 122, 137, 1);
+  box-shadow: 1px 3px 4px rgba(108, 122, 137, 1);
   bottom: 2px;
   right: 2px;
 }
