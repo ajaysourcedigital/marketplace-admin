@@ -1,6 +1,9 @@
 <template>
   <div class="q-pa-xs">
-    <q-toolbar :class="`bg-primary text-white`">
+    <q-toolbar
+      style="border-radius: 8px;"
+      :class="`bg-primary text-white`"
+    >
       Metacontent
       <q-space />
       <q-tabs

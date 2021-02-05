@@ -1,6 +1,7 @@
 <template>
   <q-card
     flat
+    clickable
     class="column no-wrap justify-start list-card"
     v-if="fullData"
   >

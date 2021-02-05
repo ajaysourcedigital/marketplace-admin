@@ -3,7 +3,7 @@
     <div v-if="content">
       <!-- The header -->
       <q-item class="q-pa-none q-pa-sm rounded-borders">
-        <q-item-section class="text-h6 text-weight-bolder text-color">
+        <q-item-section class="text-h6 text-weight-bold text-color">
           Editing "{{ content.name }}"
         </q-item-section>
         <q-item-section avatar>
