@@ -28,7 +28,7 @@
       </q-tabs>
     </q-toolbar>
     <q-tab-panels
-      :style="`height:calc(${height} - 55px)`"
+      :style="`height:calc(${height} - 55px);background-color: rgba(236, 240, 241, 1);`"
       v-model="currentTab"
       animated
       transition-prev="fade"
@@ -39,10 +39,10 @@
       <q-tab-panel
         class="fit"
         name="Template"
-        style="margin:0px;padding:0px"
+        style="margin-top:10px; padding:0px; background-color: rgba(236, 240, 241, 1); border-radius: 8px;"
       >
         <draggable
-          class="list-group fit"
+          class="list-group fit q-pt-md"
           :list="metacontentBlocks"
           group="options"
           v-bind="dragOptions"
@@ -54,6 +54,7 @@
             :key="index"
           >
             <render-smart-block
+              style="border-radius: 8px;"
               :settings="item"
               :preview="true"
               @action="processAction(index, ...arguments)"
@@ -67,7 +68,7 @@
       </q-tab-panel>
       <q-tab-panel
         name="Production"
-        style="margin:0px;padding:0px"
+        style="margin:0px;padding:0px;  border-radius: 8px;"
       >
         <div
           v-for="(item, index) in metacontentBlocks"
@@ -82,7 +83,10 @@
           />
         </div>
       </q-tab-panel>
-      <q-tab-panel name="Data">
+      <q-tab-panel
+        name="Data"
+        style="background-color: rgba(236, 240, 241, 1); border-radius: 8px;"
+      >
         <vue-json-pretty
           :data="metacontentBlocks"
           :deep="2"

@@ -1,5 +1,8 @@
 <template>
-  <div class="q-pa-xs">
+  <div
+    style="background-color: rgba(236, 240, 241, 1);"
+    class="q-pa-xs"
+  >
     <q-toolbar
       style="border-radius: 8px;"
       :class="`bg-primary text-white`"
@@ -27,26 +30,39 @@
     <q-tab-panels
       v-model="currentTab"
       animated
+      style="background-color: rgba(236, 240, 241, 1);"
       transition-prev="fade"
       transition-next="fade"
     >
       <q-tab-panel
         name="SmartBlocks"
-        style="margin:0px;padding:0px"
+        class="fit"
+        style="margin-top:10px;padding:0px; background-color: rgba(236, 240, 241, 1); border-radius: 8px;"
       >
-        Don't see functionality you need?
         <list-smart-blocks />
       </q-tab-panel>
       <q-tab-panel
         name="Data"
-        style="margin:0px;padding:0px"
+        style="margin-top:10px;padding:0px; background-color: rgba(236, 240, 241, 1); border-radius: 8px;"
       >
-        <data-editor :settings="settings" />
+        <data-editor
+          class="q-pa-md"
+          :settings="settings"
+        />
       </q-tab-panel>
-      <q-tab-panel name="Events">
-        This is a list of events that were triggered while engaging with the
-        metacontent. Use this to make sure everything is working as planned.
-        <event-log :log="log" />
+      <q-tab-panel
+        name="Events"
+        style="margin-top:10px;padding:0px; background-color: rgba(236, 240, 241, 1); border-radius: 8px;"
+      >
+        <div class="q-pa-md">
+          <div class="q-pa-md">
+            This is a list of events that were triggered while engaging with the
+            metacontent. Use this to make sure everything is working as planned.
+          </div>
+          <div class="">
+            <event-log :log="log" />
+          </div>
+        </div>
       </q-tab-panel>
     </q-tab-panels>
   </div>
