@@ -1,5 +1,8 @@
 <template>
-  <q-page class="q-pa-sm">
+  <q-page
+    class="q-pa-sm"
+    style="background-color: rgba(236, 240, 241, 1);"
+  >
     <div v-if="content">
       <!-- The header -->
       <q-item class="q-pa-none q-pa-sm rounded-borders">

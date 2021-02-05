@@ -1,12 +1,17 @@
 <template>
-  <div>
+  <div
+    class="q-ma-sm"
+    style="border-radius: 8px;"
+  >
     <q-card
       v-if="preview"
       flat
       bordered
+      :class="`bg-${settings.color} text-white q-pa-xs`"
+      style="border-radius: 8px;"
     >
       <!-- Rendering for preview does a lot of stuff -->
-      <q-toolbar :class="`bg-${settings.color} text-white`">
+      <q-toolbar class="bg-white text-black">
         {{ settings.title }}
         <q-space />
         <q-tabs
@@ -16,14 +21,17 @@
           <q-tab
             name="tabPreview"
             label="Preview"
+            class="bg-white text-black"
           />
           <q-tab
             name="tabSettings"
             label="Settings"
+            class="bg-white text-black"
           />
           <q-tab
             name="tabData"
             label="Data"
+            class="bg-white text-black"
           />
           <q-btn
             @click="deleteMe"
@@ -37,9 +45,11 @@
       <q-tab-panels :value="currentTabPanel">
         <q-tab-panel
           name="tabComponent"
-          class="q-pa-none"
+          class="q-pa-sm text-black"
+          style="margin-top:10px;padding:0px; background-color: rgba(255, 255, 255, 1); border-radius: 8px;"
         >
           <component
+            class="q-pa-md"
             :is="`smart-block-${settings.name}`"
             @action="processAction"
             @change="processChange"
@@ -48,10 +58,15 @@
             :configure="configureMode"
           />
         </q-tab-panel>
-        <q-tab-panel name="tabData">
+        <q-tab-panel
+          name="tabData"
+          class="q-pa-sm text-black"
+          style="margin-top:10px;padding:0px; background-color: rgba(236, 240, 241, 0.8); border-radius: 8px;"
+        >
           <vue-json-pretty
             :data="settings.settings"
             :deep="5"
+            class="q-pa-md q-mx-sm text-black"
           />
         </q-tab-panel>
       </q-tab-panels>
