@@ -48,11 +48,11 @@ export default {
 <style lang="stylus">
 
 .smartblock-card {
-  padding: 2.2px;
+  padding: 3.8px;
 }
 
 .smartblock-card:hover {
-  box-shadow: 1px 1px 6px 1px rgba(0, 0, 0, 0.6)
+  box-shadow: 1px 1px 2px 1px rgba(0, 0, 0, 0.4)
   bottom: 2px
   right: 2px
 }

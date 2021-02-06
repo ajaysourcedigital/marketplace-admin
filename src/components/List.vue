@@ -45,7 +45,7 @@
     </q-card-section>
     <q-card-section class="q-pa-none q-ma-none q-mt-md">
       <q-table
-        table-style="max-height: 75vh"
+        table-style="max-height: 90vh"
         class="stickyTable"
         :data="validation"
         :grid="card"
@@ -201,7 +201,7 @@ export default {
 <style lang="stylus" scoped>
 .list-card {
   flex-grow: 1;
-  height: 75vh;
+  height: 85vh;
   overflow-y: auto;
   overflow-x: hidden;
 }
