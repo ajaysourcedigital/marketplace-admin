@@ -29,9 +29,9 @@
           class="row items-center no-wrap"
         >
           <q-img
-            :src="settings.logo.wide"
+            src="https://storage.googleapis.com/cdn.sourcesync.io/media/0a3ef908-0b1b-4bdc-bcf1-5debe4c750d3.png"
             @click="$bus.emit('route', '')"
-            style="width: 110px"
+            style="width: 90px"
             contain
           />
         </q-toolbar-title>
