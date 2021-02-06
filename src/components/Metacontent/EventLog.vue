@@ -1,7 +1,9 @@
 <template>
-  <div class="q-pa-xs">
+  <div
+    style="border-radius: 8px;"
+    class="q-pa-xs"
+  >
     <q-list
-      bordered
       padding
     >
       <q-item

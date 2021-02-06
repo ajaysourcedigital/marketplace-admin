@@ -3,7 +3,10 @@
     class="column no-wrap justify-start list-card hide-scrollbar"
     v-if="fullData"
   >
-    <q-card-section class="text-h6 q-pa-none row no-wrap items-baseline">
+    <q-card-section
+      style="background-color: rgba(236, 240, 241, 1);"
+      class="text-h6 q-pa-none row no-wrap items-baseline"
+    >
       <q-item class="col-8 q-py-none">
         <q-item-section
           avatar

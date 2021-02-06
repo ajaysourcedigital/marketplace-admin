@@ -1,6 +1,12 @@
 <template>
-  <q-page class="q-pa-sm column no-wrap">
-    <advertisers-list :full-data="records" />
+  <q-page
+    style="background-color: rgba(236, 240, 241, 1);"
+    class="q-pa-sm column no-wrap"
+  >
+    <advertisers-list
+      style="background-color: rgba(236, 240, 241, 1);"
+      :full-data="records"
+    />
   </q-page>
 </template>
 

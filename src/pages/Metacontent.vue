@@ -1,7 +1,7 @@
 <template>
   <q-page
-    class="q-pa-sm column no-wrap"
-    style="background-color: rgb(255, 255, 255)"
+    class="column no-wrap"
+    style="background-color: rgba(236, 240, 241, 1);"
   >
     <!-- <stats :settings="user.settings.admin.metacontent.stats" /> -->
     <!-- <list

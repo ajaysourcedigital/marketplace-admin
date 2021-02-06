@@ -1,7 +1,7 @@
 <template>
   <q-page
     class="q-pa-md"
-    style=""
+    style="background-color: rgba(236, 240, 241, 1);"
   >
     <div
       class="row q-mt-xs q-gutter-x-md"
@@ -9,6 +9,7 @@
     >
       <div class="col-3 ">
         <q-card
+          flat
           style="border-radius: 8px;"
           class="q-pa-sm custom_bg"
         >
@@ -163,9 +164,13 @@
           </q-scroll-area>
         </q-card>
       </div>
-
+      <q-separator
+        vertical
+        inset
+      />
       <div class="col-3">
         <q-card
+          flat
           style="border-radius: 8px;"
           class="q-pa-sm custom_bg2"
         >
@@ -311,9 +316,13 @@
           </q-scroll-area>
         </q-card>
       </div>
-
+      <q-separator
+        vertical
+        inset
+      />
       <div class="col">
         <q-card
+          flat
           style="border-radius: 8px;"
           class="q-pa-sm custom_bg3"
         >

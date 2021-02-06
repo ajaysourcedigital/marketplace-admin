@@ -1,7 +1,7 @@
 <template>
   <q-page
     class="q-pa-md"
-    style="background-color: rgba(255, 255, 255);"
+    style="background-color: rgba(236, 240, 241, 1);"
   >
     <h4 class="q-ma-lg">
       Welcome

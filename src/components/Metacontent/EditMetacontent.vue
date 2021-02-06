@@ -5,9 +5,13 @@
   >
     <q-toolbar
       style="border-radius: 8px;"
-      :class="`bg-primary text-white`"
+      :class="`text-grey-10`"
     >
-      Metacontent
+      <div
+        class="text-h6"
+      >
+        Metacontent
+      </div>
       <q-space />
       <q-tabs
         v-model="currentTab"
@@ -37,31 +41,39 @@
       <q-tab-panel
         name="SmartBlocks"
         class="fit"
-        style="margin-top:10px;padding:0px; background-color: rgba(236, 240, 241, 1); border-radius: 8px;"
+        style="margin-top:5px;padding:0px; background-color: rgba(236, 240, 241, 1); border-radius: 8px;"
       >
         <list-smart-blocks />
       </q-tab-panel>
       <q-tab-panel
         name="Data"
-        style="margin-top:10px;padding:0px; background-color: rgba(236, 240, 241, 1); border-radius: 8px;"
+        style="margin-top:5px;padding:0px; background-color: rgba(236, 240, 241, 1); border-radius: 8px;"
       >
-        <data-editor
-          class="q-pa-md"
-          :settings="settings"
-        />
+        <q-card
+          style="margin-top:10px;padding:0px; border-radius: 8px;"
+          class="q-ma-md bg-grey-2"
+        >
+          <data-editor
+            class="q-pa-md"
+            :settings="settings"
+          />
+        </q-card>
       </q-tab-panel>
       <q-tab-panel
         name="Events"
-        style="margin-top:10px;padding:0px; background-color: rgba(236, 240, 241, 1); border-radius: 8px;"
+        style="margin-top:0px;padding:0px; background-color: rgba(236, 240, 241, 1); border-radius: 8px;"
       >
         <div class="q-pa-md">
-          <div class="q-pa-md">
+          <div class="q-pa-md text-subtitle2">
             This is a list of events that were triggered while engaging with the
             metacontent. Use this to make sure everything is working as planned.
           </div>
-          <div class="">
+          <q-card
+            style="border-radius: 8px;"
+            class="bg-grey-2 q-mx-md"
+          >
             <event-log :log="log" />
-          </div>
+          </q-card>
         </div>
       </q-tab-panel>
     </q-tab-panels>

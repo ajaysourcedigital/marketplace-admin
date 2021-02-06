@@ -1,34 +1,38 @@
 <template>
   <div>
     <div v-if="configure">
-      <img
-        src="https://surveyjs.io/Content/Images/logo_1200x630.jpg"
-        width="100%"
-      >
-      <div class="q-pa-sm">
-        This block uses Survey.js survey objects. You can create absolutely any
-        type of form you can imagine. Visit
-        <a href="https://surveyjs.io/create-survey">the SurveyJS creator</a> to
-        build content, then paste it below...
-        <q-input
-          class="q-pa-sm"
-          outlined
-          @input="emitConfig"
-        />
+      <q-card style="border-radius: 8px;">
+        <img
+          src="https://surveyjs.io/Content/Images/logo_1200x630.jpg"
+          width="100%"
+        >
+        <q-card-section>
+          <div class="q-pa-sm">
+            This block uses Survey.js survey objects. You can create absolutely any
+            type of form you can imagine. Visit
+            <a href="https://surveyjs.io/create-survey">the SurveyJS creator</a> to
+            build content, then paste it below...
+            <q-input
+              class="q-pa-sm"
+              outlined
+              @input="emitConfig"
+            />
 
-        <q-input
-          label="API endpoint"
-          class="q-pa-sm"
-        />
-        <q-input
-          label="Data transformer"
-          class="q-pa-sm"
-        />
-        <q-input
-          label="Action label"
-          class="q-pa-sm"
-        />
-      </div>
+            <q-input
+              label="API endpoint"
+              class="q-pa-sm"
+            />
+            <q-input
+              label="Data transformer"
+              class="q-pa-sm"
+            />
+            <q-input
+              label="Action label"
+              class="q-pa-sm"
+            />
+          </div>
+        </q-card-section>
+      </q-card>
     </div>
     <survey
       v-else

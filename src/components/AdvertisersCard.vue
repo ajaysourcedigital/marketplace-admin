@@ -1,9 +1,12 @@
 <template>
-  <div class="row justify">
-    <div class="col-xs-11 col-sm-6 col-md-4 col-lg-3 q-ma-md">
+  <div
+    style="background-color: rgba(236, 240, 241, 1);"
+    class="row justify"
+  >
+    <div class="col-xs-11 col-sm-6 col-md-4 col-lg-3 q-ma-md transparent">
       <q-card
-        class="content-list__card hide-scrollbar q-pa-sm"
-        style="overflow-y: auto"
+        class="content-list__card hide-scrollbar q-pa-sm advertiser-card"
+        style="overflow-y: auto; border-radius: 8px;"
       >
         <div
           class="column no-wrap justify-between"
@@ -24,7 +27,7 @@
           </div>
           <div>
             <q-card-section
-              class="text-subtitle2 q-pa-xs bg-grey-1 q-pa-sm"
+              class="text-subtitle2 q-pa-xs bg-grey-2 q-pa-sm"
               style="font-size: 0.775rem; border-radius: 8px;"
             >
               <div class="row justify-between q-mb-xs">
@@ -115,5 +118,11 @@ export default {
 .content-list__card {
   height: 350px;
   width: 350px;
+}
+
+.advertiser-card:hover {
+  box-shadow: 1px 1px 6px 1px rgba(0, 0, 0, 0.6)
+  bottom: 2px
+  right: 2px
 }
 </style>
