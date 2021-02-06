@@ -1,7 +1,8 @@
 <template>
   <q-page
+    fit
     class="q-pa-md"
-    style="background-color: rgb(255, 255, 255)"
+    style="background-color: rgba(236, 240, 241, 1);"
   >
     <q-resize-observer @resize="onResize" />
 
@@ -17,7 +18,8 @@
           <q-tab-panels
             v-model="tab"
             animated
-            class="bg-white"
+            style="background-color: rgba(236, 240, 241, 1);"
+            class=""
           >
             <q-tab-panel
               name="all"
@@ -502,7 +504,7 @@
       >
         <q-card
           class="no-border no-border"
-          :style="{'height':size['height']-100+'px !important'}"
+          :style="{'height':size['height']-200+'px !important'}"
         >
           <q-toolbar class="text-black ">
             <q-btn

@@ -1,15 +1,19 @@
 <template>
   <q-page
     class="q-pa-md "
-    style="background-color: rgb(255, 255, 255)"
+    style="background-color: rgba(236, 240, 241, 1);"
   >
-    <q-card class="q-pa-md">
+    <q-card
+      style="border-radius: 8px;"
+      class="q-pa-md"
+    >
       <q-calendar
         v-model="selectedDate"
         view="month"
         locale="en-us"
         :day-height="100"
-        class="campaign-calendar"
+        class="campaign-calendar q-pa-sm"
+        style="border-radius: 8px;"
       >
         <template #week="{ week, weekdays }">
           <template>

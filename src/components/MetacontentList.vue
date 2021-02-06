@@ -1,11 +1,13 @@
 <template>
-  <q-card
-    flat
+  <div
     clickable
-    class="column no-wrap justify-start list-card"
+    class="column no-wrap transparent justify-start list-card"
     v-if="fullData"
   >
-    <q-card-section class="text-h6 q-pb-none row no-wrap items-baseline">
+    <q-card-section
+      style="background-color: rgba(236, 240, 241, 1);"
+      class="text-h6 q-pb-md row no-wrap items-baseline"
+    >
       <q-item class="col-8">
         <q-item-section avatar>
           <q-icon
@@ -39,10 +41,14 @@
         </div>
       </div> -->
     </q-card-section>
-    <q-card-section class="q-pa-none q-ma-none">
+    <q-card-section
+      style="border-radius: 8px;"
+      class="q-pa-md q-ma-none"
+    >
       <q-table
         table-style="max-height: 75vh"
-        class="stickyTable"
+        style="border-radius: 8px;"
+        class="stickyTable shadow-3 q-py-md"
         :data="validation"
         :columns="columns"
         hide-bottom
@@ -59,6 +65,7 @@
               :key="col.name"
               :props="props"
               auto-width
+              class=""
             >
               {{ col.label }}
             </q-th>
@@ -126,7 +133,7 @@
         </template>
       </q-table>
     </q-card-section>
-  </q-card>
+  </div>
 </template>
 
 <script>

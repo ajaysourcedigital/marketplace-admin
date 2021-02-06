@@ -5,9 +5,11 @@
   >
     <q-toolbar
       style="border-radius: 8px;"
-      :class="`bg-primary text-white`"
+      :class="`text-grey-10`"
     >
-      Template
+      <div class="text-h6">
+        Template
+      </div>
       <q-space />
       <q-tabs
         v-model="currentTab"
@@ -28,7 +30,7 @@
       </q-tabs>
     </q-toolbar>
     <q-tab-panels
-      :style="`height:calc(${height} - 55px);background-color: rgba(236, 240, 241, 1);`"
+      :style="`height:calc(${height} - 55px); background-color: rgba(236, 240, 241, 1);`"
       v-model="currentTab"
       animated
       transition-prev="fade"
@@ -39,10 +41,10 @@
       <q-tab-panel
         class="fit"
         name="Template"
-        style="margin-top:10px; padding:0px; background-color: rgba(236, 240, 241, 1); border-radius: 8px;"
+        style="margin-top:25px;padding:0px; background-color: rgba(255, 255, 255, 0.0); border-radius: 8px;"
       >
         <draggable
-          class="list-group fit q-pt-md"
+          class="list-group fit q-pt-xs"
           :list="metacontentBlocks"
           group="options"
           v-bind="dragOptions"
@@ -68,7 +70,7 @@
       </q-tab-panel>
       <q-tab-panel
         name="Production"
-        style="margin:0px;padding:0px;  border-radius: 8px;"
+        style="margin-top:20px;padding:5px; background-color: rgba(255,255,255, 0.8); border-radius: 8px;"
       >
         <div
           v-for="(item, index) in metacontentBlocks"
@@ -85,12 +87,18 @@
       </q-tab-panel>
       <q-tab-panel
         name="Data"
-        style="background-color: rgba(236, 240, 241, 1); border-radius: 8px;"
+        style="margin-top:5px;padding:0px; background-color: rgba(236, 240, 241, 1); border-radius: 8px;"
       >
-        <vue-json-pretty
-          :data="metacontentBlocks"
-          :deep="2"
-        />
+        <q-card
+          style="margin-top:10px;padding:5px; border-radius: 8px;"
+          class="q-ma-md bg-grey-2"
+        >
+          <vue-json-pretty
+            class="q-ma-md"
+            :data="metacontentBlocks"
+            :deep="2"
+          />
+        </q-card>
       </q-tab-panel>
     </q-tab-panels>
   </div>

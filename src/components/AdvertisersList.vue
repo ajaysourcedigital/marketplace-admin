@@ -3,7 +3,10 @@
     flat
     class="column no-wrap flex-start list-card"
   >
-    <q-card-section class="text-h6 q-pb-none row no-wrap items-baseline">
+    <q-card-section
+      style="background-color: rgba(236, 240, 241, 1);"
+      class="text-h6 q-pb-none row no-wrap items-baseline"
+    >
       <q-item class="col-8">
         <q-item-section avatar>
           <q-icon
@@ -37,9 +40,14 @@
         </div>
       </div>
     </q-card-section>
-    <q-card-section class="q-pa-none q-mt-lg q-ma-none">
+    <q-card-section
+      style="border-radius: 8px;"
+      class="q-pa-sm q-mt-lg q-ma-none"
+    >
       <q-table
-        table-style="max-height: 75vh"
+        table-style="max-height: 75vh;"
+        style="border-radius: 8px;"
+        class="q-pa-md"
         :data="advData"
         :grid="card"
         :columns="columns"
