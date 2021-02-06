@@ -3,26 +3,48 @@
     class="q-pa-md"
     style="background-color: rgba(236, 240, 241, 1);"
   >
-    <h4 class="q-ma-lg">
-      Welcome
-    </h4>
+    <q-card
+      class="q-mx-md q-mt-lg"
+      style="border-radius: 8px;"
+    >
+      <q-card-section
+        class="row justify-end q-pa-none q-ma-none"
+        style="height: 130px;"
+      >
+        <div>
+          <div class="row q-mx-lg">
+            <h4 class="">
+              Welcome
+            </h4>
+          </div>
+          <div class="row" />
+        </div>
+        <q-space />
+        <div />
+      </q-card-section>
+      <q-card-section class="">
+        <div class="row" />
+        <div class="row" />
+      </q-card-section>
+    </q-card>
+
     <!-- <stats :settings="user.settings.admin.content.stats" /> -->
     <!-- <breakdown :settings="content" /> -->
-    <list :settings="content" />
+    <!-- <list :settings="content" /> -->
   </q-page>
 </template>
 
 <script>
 // import Stats from 'components/Stats.vue'
 // import Breakdown from 'components/Breakdown.vue'
-import List from 'src/components/List.vue'
+// import List from 'src/components/List.vue'
 
 export default {
   name: 'PageHome',
   components: {
     // Stats,
     // Breakdown,
-    List
+    // List
   },
   data () {
     return {
