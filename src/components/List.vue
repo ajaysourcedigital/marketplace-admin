@@ -205,7 +205,7 @@ export default {
 <style lang="stylus" scoped>
 .list-card {
   flex-grow: 1;
-  height: 75vh;
+  height: 85vh;
   overflow-y: auto;
   overflow-x: hidden;
 }

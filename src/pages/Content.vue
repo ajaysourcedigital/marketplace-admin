@@ -4,12 +4,14 @@
     style="background-color: rgb(236, 240, 241, 1)"
   >
     <!-- <stats :settings='user.settings.admin.metacontent.stats' /> -->
-    <list
-      :data="records.data"
-      :schema="schema"
-      :full-data="records"
-      @row-click="rowClick"
-    />
+    <div class="">
+      <list
+        :data="records.data"
+        :schema="schema"
+        :full-data="records"
+        @row-click="rowClick"
+      />
+    </div>
   </q-page>
 </template>
 
