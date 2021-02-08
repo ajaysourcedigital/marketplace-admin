@@ -188,8 +188,8 @@ export default {
         { name: 'type', required: true, label: 'type', align: 'left', sortable: true, field: row => row.type, format: val => `${val}` },
         { name: 'created_at', required: true, label: 'Created', align: 'left', sortable: true, field: row => row.created_at, format: val => `${val}` },
         { name: 'updated_at', required: true, label: 'Updated', align: 'left', sortable: true, field: row => row.updated_at, format: val => `${val}` },
-        { name: 'settings', required: true, label: 'Settings', align: 'left', sortable: true, field: row => row.settings, format: val => val },
-        { name: 'data', required: true, label: 'Data', align: 'left', sortable: true, field: row => row.data, format: val => val }
+        { name: 'settings', required: true, label: 'Settings', align: 'left', sortable: false, field: row => row.settings, format: val => val },
+        { name: 'data', required: true, label: 'Data', align: 'left', sortable: false, field: row => row.data, format: val => val }
       ]
     }
   },
