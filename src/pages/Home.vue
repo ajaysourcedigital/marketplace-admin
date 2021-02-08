@@ -4,7 +4,7 @@
     style="background-color: rgba(236, 240, 241, 1);"
   >
     <q-card
-      class="q-mx-md q-mt-lg"
+      class="q-mx-xs q-mt-xs"
       style="border-radius: 8px;"
     >
       <q-card-section

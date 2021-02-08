@@ -1,7 +1,8 @@
 <template>
   <q-layout
     view="hHh LpR fFf"
-    class="bg-grey-1"
+    class=""
+    style="background-color: rgba(236, 240, 241, 1);"
   >
     <!-- The header -->
     <q-header
@@ -85,13 +86,14 @@
       v-model="leftDrawerOpen"
       show-if-above
       bordered
+      persistent
       :mini="miniState"
       content-class="GNL__drawer hide-scrollbar"
       :width="280"
     >
       <q-list
         padding
-        class="text-grey-8 q-pt-md"
+        class="text-grey-8 q-pt-md transparent"
       >
         <!-- Menu items -->
         <div
@@ -101,7 +103,7 @@
           <q-separator
             v-if="link.type === 'separator'"
             inset
-            class="q-my-sm bg-white"
+            class="q-my-sm"
             style="height: 0.5px"
           />
           <q-item v-else-if="link.type === 'button'">
@@ -110,7 +112,7 @@
               :round="miniState"
               :icon="link.icon"
               color="link.color"
-              class="text-grey-8"
+              class=""
               :label="miniState?'':link.text"
             />
           </q-item>
@@ -121,9 +123,10 @@
             <q-btn-dropdown
               padding="0 5px"
               :color="link.color"
-              class="text-white icon-none "
+              class="text-white icon-none createButton"
               :class="miniState?'':'q-pr-md'"
-              style="background-color: #1a8cc1"
+              :content-style="{ backgroundColor: '#ffffff' }"
+              style="background-color: #1a8cc1; border-radius: 10px;"
               no-caps
             >
               <template v-slot:label>
@@ -140,19 +143,30 @@
                   </div>
                 </div>
               </template>
-              <q-list>
-                <q-item
+              <div
+                style="width:300px;border-radius: 10px;"
+                class="row no-wrap q-mb-sm justify-around"
+              >
+                <q-card
                   v-for="(item, i) in link.list"
                   :key="i"
                   clickable
                   v-close-popup
                   @click="processAction({ action: link.action, payload: item.value})"
+                  style="border-radius: 10px; min-width: 90px; background-color: rgba(255, 255, 255, 1);"
+                  class="column items-center q-pa-xs q-mt-sm cardhover"
                 >
-                  <q-item-section>
-                    <q-item-label>{{ item.text }}</q-item-label>
-                  </q-item-section>
-                </q-item>
-              </q-list>
+                  <img
+                    contain
+                    class=""
+                    style="width:70px; border-radius: 10px;"
+                    src="https://cdn.quasar.dev/img/boy-avatar.png"
+                  >
+                  <div class="text-subtitle1">
+                    {{ item.text }}
+                  </div>
+                </q-card>
+              </div>
             </q-btn-dropdown>
           </q-item>
           <q-item
@@ -165,11 +179,12 @@
             <q-item-section avatar>
               <q-icon
                 :name="link.icon"
+                color="grey-8"
                 :class="link.color"
               />
             </q-item-section>
             <q-item-section>
-              <q-item-label class="text-white">
+              <q-item-label class="text-grey-8">
                 {{ link.text }}
               </q-item-label>
             </q-item-section>
@@ -240,16 +255,35 @@ export default {
 </script>
 
 <style>
+
+.q-menu {
+  border-radius: 10px;
+  padding-left: 3px;
+  padding-right: 5px;
+}
+
+.cardhover:hover {
+  bottom: 3px;
+  right: 2px;
+  box-shadow: 1px 1px 3px 1px rgba(0,0,0,0.3);
+  }
+
 .GNL__toolbar {
   height: 64px;
 }
 
 .GNL__drawer-item {
   line-height: 24px;
+  color: rgba(255,255,255,0.4);
+  margin-right: 10px;
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
 }
 
 .GNL__drawer-item:hover {
-  background: #1a8cc1;
+  background: rgba(26, 140, 193, 0.3);
+  margin-right: 10px;
+  color: white;
 }
 
 .GNL__drawer-item .q-item__section--avatar .q-icon {
@@ -257,18 +291,26 @@ export default {
 }
 
 .GNL__drawer-item .q-item__label {
-  color: #3c4043;
+  color: #808080;
   letter-spacing: 0.01785714em;
   font-size: 0.875rem;
   font-weight: 500;
 }
+
+.GNL__drawer-button-dropdown {
+    background-color: rgba(255,255,255,0.1);
+}
+
 .GNL__drawer-button-dropdown .q-btn-dropdown--simple .q-btn-dropdown__arrow {
-  margin-left: 0px !important;
+  margin: 0px !important;
 }
 
 .GNL__drawer {
-  background-color: #011924;
-  border-radius: 4px;
+  background-color: rgba(255,255,255,1);
+  border-radius: 10px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  margin-left: 10px;
 }
 
 .icon-none .q-btn-dropdown__arrow-container {
@@ -276,7 +318,9 @@ export default {
 }
 
 .q-drawer {
-  background-color: #fafafa;
+  background-color: rgba(236, 240, 241, 1);
+  max-height: 100vh;
+  margin-bottom: 25px;
 }
 
 .q-drawer--left.q-drawer--bordered {

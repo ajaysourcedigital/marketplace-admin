@@ -5,7 +5,7 @@
   >
     <q-card-section
       style="background-color: rgba(236, 240, 241, 1);"
-      class="text-h6 q-pb-none row no-wrap items-baseline"
+      class="text-h6 row no-wrap items-baseline"
     >
       <q-item class="col-8">
         <q-item-section avatar>
@@ -42,12 +42,12 @@
     </q-card-section>
     <q-card-section
       style="border-radius: 8px;"
-      class="q-pa-sm q-mt-lg q-ma-none"
+      class="q-ma-xs"
     >
       <q-table
         table-style="max-height: 75vh;"
         style="border-radius: 8px;"
-        class="q-pa-md"
+        class="text-h6"
         :data="advData"
         :grid="card"
         :columns="columns"

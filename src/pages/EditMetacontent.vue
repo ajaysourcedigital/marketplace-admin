@@ -5,8 +5,8 @@
   >
     <div v-if="content">
       <!-- The header -->
-      <q-item class="q-pa-none q-px-md rounded-borders">
-        <q-item-section class="text-h5 text-weight-bold text-color">
+      <q-item class="q-mx-lg q-mt-sm rounded-borders">
+        <q-item-section class="text-h5 text-color">
           Editing "{{ content.name }}"
         </q-item-section>
         <q-item-section avatar>

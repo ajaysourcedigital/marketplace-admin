@@ -1,9 +1,9 @@
 <template>
   <div
     style="background-color: rgba(236, 240, 241, 1);"
-    class="row justify"
+    class="row flex"
   >
-    <div class="col-xs-11 col-sm-6 col-md-4 col-lg-3 q-ma-md transparent">
+    <div class="col-xs-11 col-sm-6 col-md-4 col-lg-3 q-ma-sm transparent">
       <q-card
         class="content-list__card hide-scrollbar q-pa-sm advertiser-card"
         style="overflow-y: auto; border-radius: 8px;"
@@ -12,7 +12,7 @@
           class="column no-wrap justify-between"
           style="height: 100%;"
         >
-          <q-card-section class="q-py-sm">
+          <q-card-section class="">
             <div class="col text-h5 ellipsis">
               {{ props.row.userName }}
               <q-separator class="q-mt-xs" />

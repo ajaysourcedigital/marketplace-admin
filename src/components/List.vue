@@ -5,7 +5,7 @@
   >
     <q-card-section
       style="background-color: rgba(236, 240, 241, 1);"
-      class="text-h6 q-pa-none row no-wrap items-baseline"
+      class="q-mx-sm q-px-sm text-h6 q-pb-md row no-wrap items-baseline"
     >
       <q-item class="col-8 q-py-none">
         <q-item-section
@@ -43,10 +43,11 @@
         </div>
       </div>
     </q-card-section>
-    <q-card-section class="q-pa-none q-ma-none q-mt-md">
+    <q-card-section class="q-pa-md q-ma-none">
       <q-table
         table-style="max-height: 75vh"
-        class="stickyTable"
+        class="stickyTable q-ml-sm text-h6"
+        style="border-radius: 8px;"
         :data="validation"
         :grid="card"
         hide-bottom
@@ -61,11 +62,13 @@
           v-if="!card"
         >
           <q-tr :props="props">
-            <q-th />
+            <q-th class="bg-grey-2" />
             <q-th
               v-for="col in props.cols"
               :key="col.name"
               :props="props"
+              auto-width
+              class="bg-grey-2"
             >
               {{ col.label }}
             </q-th>
@@ -80,6 +83,7 @@
           >
             <q-td>
               <q-avatar
+                style="border-radius: 10px;"
                 square
                 size="xl"
               >

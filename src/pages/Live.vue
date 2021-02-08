@@ -18,7 +18,7 @@
             class="text-white q-pa-sm rounded-borders"
           >
             <q-item-section class="text-h6 text-weight-bolder text-color">
-              Available
+              Design
             </q-item-section>
             <q-item-section avatar>
               <q-icon
@@ -179,7 +179,7 @@
             class="q-pa-none text-white q-pa-sm"
           >
             <q-item-section class="text-h6 text-weight-bolder text-color">
-              Scheduled
+              Publish
             </q-item-section>
             <q-item-section avatar>
               <q-icon

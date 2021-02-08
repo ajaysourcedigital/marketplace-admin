@@ -1,7 +1,6 @@
 <template>
   <q-page
-    style="background-color: rgba(236, 240, 241, 1);"
-    class="q-pa-sm column no-wrap"
+    class="column no-wrap"
   >
     <advertisers-list
       style="background-color: rgba(236, 240, 241, 1);"
