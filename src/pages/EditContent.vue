@@ -9,12 +9,13 @@
         greedy
       >
         <!-- Header -->
-        <div class="q-mb-lg row">
-          <div class="text-h6 col">
+        <div class="q-mx-lg q-my-sm row">
+          <div class="text-h5 col">
             {{ content.name }}
           </div>
           <div>
             <q-btn
+              style="border-radius: 10px;"
               label="Save"
               type="submit"
               color="primary"
@@ -25,7 +26,10 @@
         <div class="row q-col-gutter-lg">
           <!-- Form Card -->
           <div class="col-xs-12 col-md-8">
-            <q-card>
+            <q-card
+              class="q-ma-sm"
+              style="border-radius: 10px;"
+            >
               <q-card-section>
                 <div class="row q-col-gutter-md">
                   <q-input
@@ -137,7 +141,10 @@
           </div>
           <!-- Metadata -->
           <div class="col-md">
-            <q-card>
+            <q-card
+              style="border-radius: 10px;"
+              class="q-my-sm"
+            >
               <q-card-section class="text-subtitle2">
                 Information
               </q-card-section>

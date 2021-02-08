@@ -6,7 +6,7 @@
   >
     <q-card-section
       style="background-color: rgba(236, 240, 241, 1);"
-      class="text-h6 q-pb-md row no-wrap items-baseline"
+      class="q-ma-none q-pa-sm text-h6 q-pb-md row no-wrap items-baseline"
     >
       <q-item class="col-8">
         <q-item-section avatar>
@@ -48,7 +48,7 @@
       <q-table
         table-style="max-height: 75vh"
         style="border-radius: 8px;"
-        class="stickyTable shadow-3 q-py-md"
+        class="stickyTable text-h6"
         :data="validation"
         :columns="columns"
         hide-bottom
@@ -65,7 +65,7 @@
               :key="col.name"
               :props="props"
               auto-width
-              class=""
+              class="bg-grey-2"
             >
               {{ col.label }}
             </q-th>

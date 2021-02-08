@@ -8,7 +8,7 @@
       flat
       bordered
       :class="`bg-${settings.color} text-white`"
-      style="border-radius: 8px; padding: 2.8px;"
+      style="border-radius: 8px; padding: 1.5px;"
     >
       <!-- Rendering for preview does a lot of stuff -->
       <q-toolbar class="bg-white text-black">

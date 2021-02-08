@@ -1,6 +1,6 @@
 <template>
   <q-page
-    class="column no-wrap"
+    class="column no-wrap q-pl-sm"
     style="background-color: rgba(236, 240, 241, 1);"
   >
     <!-- <stats :settings="user.settings.admin.metacontent.stats" /> -->

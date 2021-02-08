@@ -2,19 +2,21 @@
   <div class="q-pa-sm col-xs-12 col-sm-6 col-md-6 col-lg-4">
     <q-card
       @click="$emit('row-click', props.row)"
-      class="q-pa-xs content-list__card cursor-pointer hide-scrollbar "
-      style="overflow-y: auto"
+      class="q-pa-xs content-list__card cursor-pointer hide-scrollbar cardhover"
+      style="overflow-y: auto; border-radius: 10px;"
     >
       <q-card-section horizontal>
         <q-card-section class="col-5 q-pa-xs flex flex-center">
           <q-img
-            class="rounded-borders"
+            class=""
+            style="border-radius: 10px;"
             v-if="props.row.media"
             :ratio="1"
             :src="`https://img.youtube.com/vi/${props.row.media}/0.jpg`"
           />
           <q-img
-            class="rounded-borders"
+            class=""
+            style="border-radius: 10px;"
             v-else
             :ratio="1"
             src="../../public/img/media/notAvailable.jpg"

@@ -1,11 +1,50 @@
 <template>
   <q-page
-    class="q-pa-md "
+    class="q-pa-md"
     style="background-color: rgba(236, 240, 241, 1);"
   >
     <q-card
+      flat
       style="border-radius: 8px;"
-      class="q-pa-md"
+      class="transparent"
+    >
+      <q-card-section
+        style="background-color: rgba(236, 240, 241, 1);"
+        class="text-h6 q-pa-none q-pb-md q-ma-none row no-wrap items-baseline"
+      >
+        <q-item class="col-8 q-py-none">
+          <q-item-section
+            avatar
+            class=""
+          >
+            <q-icon
+              color="blue"
+              name="date_range"
+              size="44px"
+            />
+          </q-item-section>
+          <q-item-section>
+            <q-item-label>
+              <div class="text-h6">
+                Campaign
+              </div>
+            </q-item-label>
+            <q-item-label
+              caption
+              class="text-black"
+            >
+              Find your SAM below
+            </q-item-label>
+          </q-item-section>
+        </q-item>
+        <div class="col-4 row justify-end">
+          <div />
+        </div>
+      </q-card-section>
+    </q-card>
+    <q-card
+      style="border-radius: 8px;"
+      class="q-ma-sm q-pa-sm"
     >
       <q-calendar
         v-model="selectedDate"

@@ -3,14 +3,24 @@
     v-model="value"
     persistent
   >
-    <q-card>
+    <q-card
+      style="border-radius: 10px;"
+      class="q-pa-md"
+    >
       <q-toolbar>
-        <q-avatar square>
+        <!-- <q-avatar square>
           <img
             v-if="settings.logo"
             :src="settings.logo.wide"
           >
-        </q-avatar>
+        </q-avatar> -->
+        <div class="">
+          <q-img
+            src="https://storage.googleapis.com/cdn.sourcesync.io/media/0a3ef908-0b1b-4bdc-bcf1-5debe4c750d3.png"
+            style="width: 80px;"
+            class="q-ml-sm q-mb-xs"
+          />
+        </div>
         <q-toolbar-title class="text-capitalize">
           <span class="text-weight-bold">Create</span> {{ name }}
         </q-toolbar-title>
@@ -22,8 +32,8 @@
           @click="$emit('close')"
         />
       </q-toolbar>
-      <q-card-section class="q-px-lg q-py-sm">
-        <span class="text-capitalize">{{ name }}</span> creation... Once finished, you will be redirected to the editor.
+      <q-card-section class="q-px-lg q-py-sm text-subtitle1 ">
+        <span class="text-capitalize text-weight-bolder">{{ name }}</span> creation... Once finished, you will be redirected to the editor.
       </q-card-section>
       <q-form
         @submit="onSubmit"
@@ -38,14 +48,14 @@
           >
             <q-input
               v-if="contents === 'name'"
-              filled
+              outlined
               :label="capitalize(contents)"
               v-model="content[contents]"
               :rules="[val => !!val || 'Field is required']"
             />
             <q-select
               v-else-if="contents === 'type'"
-              filled
+              outlined
               v-model="content[contents]"
               :options="options"
               :label="capitalize(contents)"
@@ -53,7 +63,7 @@
             <q-input
               class="q-pb-md"
               v-else
-              filled
+              outlined
               :label="capitalize(contents)"
               v-model="content[contents]"
             />
@@ -63,6 +73,7 @@
               label="Submit"
               type="submit"
               color="primary"
+              style="border-radius: 10px;"
             />
             <q-btn
               label="Reset"
