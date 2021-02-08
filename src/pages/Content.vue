@@ -4,7 +4,7 @@
     style="background-color: rgb(236, 240, 241, 1)"
   >
     <!-- <stats :settings='user.settings.admin.metacontent.stats' /> -->
-    <div class="">
+    <div>
       <list
         :data="records.data"
         :schema="schema"
@@ -37,7 +37,7 @@ export default {
       })
   },
   methods: {
-    rowClick (ev = {}) {
+    rowClick (ev) {
       const { id } = ev
       if (!id) throw new Error('`id` is required.')
       this.$router.push({ name: 'edit-content', params: { id } })

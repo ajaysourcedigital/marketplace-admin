@@ -30,16 +30,6 @@
           </q-item-label>
         </q-item-section>
       </q-item>
-      <!-- <div class="col-4 row justify-end">
-        <div>
-          <q-btn
-            round
-            flat
-            :icon="card ? 'list' : 'view_module'"
-            @click="card = !card"
-          />
-        </div>
-      </div> -->
     </q-card-section>
     <q-card-section
       style="border-radius: 8px;"
@@ -55,7 +45,6 @@
         virtual-scroll
         :rows-per-page-options="[0]"
         wrap-cells
-        @row-click="(evt, row, index) => $emit('row-click', evt, row, index)"
       >
         <!-- List view -->
         <template #header="props">
@@ -75,13 +64,15 @@
           <!-- Display -->
           <tr
             :props="props"
+            class="cursor-pointer"
             @click="$emit('row-click', props.row)"
           >
+            <!-- Img -->
             <q-td key="display">
               <q-avatar size="xl">
                 <q-img
                   :ratio="1"
-                  :src="props.row.image ? props.row.image : 'https://via.placeholder.com/150?text=N/A'"
+                  :src="props.row.image ? props.row.image : notAvailable"
                 />
               </q-avatar>
             </q-td>
@@ -165,9 +156,7 @@ export default {
         if (props.expand && find(this.rows, { id: props.row.id }).items.col === col) {
           props.expand = false
           this.rows = [...this.rows.filter(filt => filt.id !== props.row.id)]
-        } else {
-          find(this.rows, { id: props.row.id }).items = { col: col, val }
-        }
+        } else find(this.rows, { id: props.row.id }).items = { col: col, val }
       } else {
         this.rows.push({ id: props.row.id, items: { col: col, val } })
         props.expand = true
@@ -176,19 +165,14 @@ export default {
     // checks if prop value is timestamp
     colValue (props, col) {
       const obj = find(props.cols, { name: col })
-      let val
-      if (obj.name === 'created_at' || obj.name === 'updated_at') val = moment(obj.value).fromNow()
-      else val = obj.value
-      return val
+      if (moment(obj.value, moment.ISO_8601).isValid()) return moment(obj.value).fromNow()
+      else return obj.value
     },
     // sets active class for clicked spark
     isActive (props, spark) {
       const obj = find(this.rows, { id: props.row.id })
-      let active = false
-      if (obj) {
-        active = obj.items.col === spark.name
-      }
-      return active
+      if (obj) return obj.items.col === spark.name
+      else return false
     }
   },
   computed: {
@@ -208,7 +192,7 @@ export default {
   },
   data () {
     return {
-      card: true,
+      notAvailable: require('../assets/not-available-sm.png'),
       find: find,
       map: map,
       rows: [],
