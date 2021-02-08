@@ -1,6 +1,7 @@
 <template>
   <div
-    class="column no-wrap justify-start list-card hide-scrollbar"
+    class="column no-wrap justify-start hide-scrollbar"
+    :class="card ? ' list-card ' : ''"
     v-if="fullData"
   >
     <q-card-section
@@ -49,90 +50,94 @@
         class="stickyTable q-ml-sm text-h6"
         style="border-radius: 8px;"
         :data="validation"
+        :columns="columns"
         :grid="card"
         hide-bottom
         virtual-scroll
         :rows-per-page-options="[0]"
         wrap-cells
-        @row-click="(evt, row, index) => $emit('row-click', evt, row, index)"
       >
         <!-- List view -->
-        <template
-          v-slot:header="props"
-          v-if="!card"
-        >
+        <template #header="props">
           <q-tr :props="props">
-            <q-th class="bg-grey-2" />
             <q-th
               v-for="col in props.cols"
               :key="col.name"
               :props="props"
               auto-width
-              class="bg-grey-2"
+              class="bg-grey-2 ellipsis text-capitalize"
             >
               {{ col.label }}
             </q-th>
           </q-tr>
         </template>
-        <template v-slot:body="props">
+        <template #body="props">
           <q-tr
             :props="props"
             class="cursor-pointer"
-            auto-width
             @click="$emit('row-click', props.row)"
           >
-            <q-td>
-              <q-avatar
-                style="border-radius: 10px;"
-                square
-                size="xl"
-              >
-                <q-img
-                  :ratio="1"
-                  :src="props.row.image ? props.row.image : 'https://via.placeholder.com/150?text=N/A'"
-                />
-              </q-avatar>
-            </q-td>
             <q-td
               v-for="col in props.cols"
               :key="col.name"
               :props="props"
               style="max-width:200px;"
             >
-              <div
-                class="ellipsis"
-                v-if="typeItem(col.value)"
-              >
-                {{ col.value || 'N/A' }}
-                <q-popup-edit
-                  v-if="edit"
-                  auto-save
-                  v-model="props.row[col.name]"
-                  @save="$emit('saved', props.row[col.name], props.row, col.label)"
+              <div v-if="col.name !== 'display'">
+                <div
+                  class="ellipsis"
+                  v-if="!isObject(col.value)"
                 >
-                  <editInPlace
-                    :props="props"
-                    :col="col"
+                  {{ colValue(col.value) || 'N/A' }}
+                  <q-popup-edit
+                    v-if="edit"
+                    auto-save
+                    v-model="props.row[col.name]"
+                    @save="$emit('saved', props.row[col.name], props.row, col.label)"
+                  >
+                    <editInPlace
+                      :props="props"
+                      :col="col"
+                    />
+                  </q-popup-edit>
+                </div>
+                <div v-else>
+                  <!-- If object has more than 3 items -->
+                  <q-btn
+                    icon="add"
+                    round
+                    color="primary"
+                    @click.stop="expandRow(props, col)"
                   />
-                </q-popup-edit>
+                </div>
               </div>
+              <!-- Img -->
               <div v-else>
-                <!-- If object has more than 3 items -->
-                <q-btn
-                  icon="add"
-                  round
-                  color="primary"
-                  @click.stop="expandRow(props, col)"
-                />
+                <q-avatar
+                  square
+                  size="xl"
+                >
+                  <q-img
+                    :ratio="1"
+                    :src="props.row.cover ? props.row.cover : notAvailable"
+                  />
+                </q-avatar>
               </div>
             </q-td>
           </q-tr>
+          <!-- Expand -->
           <q-tr
             v-show="props.expand"
             :props="props"
           >
             <q-td colspan="100%">
-              <div>{{ row }}</div>
+              <v-jsoneditor
+                v-if="find(rows, { id: props.row.id })"
+                :value="props.row[find(rows, { id: props.row.id }).col]"
+                :options="{ mode: 'preview' }"
+                class="scroll"
+                style="max-height:400px;"
+              />
             </q-td>
           </q-tr>
         </template>
@@ -154,6 +159,9 @@
 <script>
 const Ajv = require('ajv')
 const ajv = new Ajv({ allErrors: true })
+const moment = require('moment')
+import { find } from 'lodash'
+import VJsoneditor from 'v-jsoneditor'
 import editInPlace from './EditInPlace'
 import contentCard from './contentCard'
 export default {
@@ -165,23 +173,50 @@ export default {
     sticky: { type: Boolean, default: true },
     fullData: { type: Object, default: null }
   },
-  components: { editInPlace, contentCard },
+  components: { editInPlace, contentCard, VJsoneditor },
   data () {
     return {
+      find: find,
+      notAvailable: require('../assets/not-available-sm.png'),
       card: true,
-      row: null
+      rows: [],
+      columns: [
+        { name: 'display', required: true, label: 'Display', align: 'left', sortable: false },
+        { name: 'name', required: true, label: 'Name', align: 'left', sortable: true, field: row => row.name, format: val => `${val}` },
+        { name: 'slug', required: true, label: 'Slug', align: 'left', sortable: true, field: row => row.slug, format: val => `${val}` },
+        { name: 'creator', required: true, label: 'Creator', align: 'left', sortable: true, field: row => row.creator, format: val => `${val}` },
+        { name: 'type', required: true, label: 'type', align: 'left', sortable: true, field: row => row.type, format: val => `${val}` },
+        { name: 'created_at', required: true, label: 'Created', align: 'left', sortable: true, field: row => row.created_at, format: val => `${val}` },
+        { name: 'updated_at', required: true, label: 'Updated', align: 'left', sortable: true, field: row => row.updated_at, format: val => `${val}` },
+        { name: 'settings', required: true, label: 'Settings', align: 'left', sortable: true, field: row => row.settings, format: val => val },
+        { name: 'data', required: true, label: 'Data', align: 'left', sortable: true, field: row => row.data, format: val => val }
+      ]
     }
   },
   methods: {
-    typeItem (e) {
-      if (typeof e === 'object' && e !== null && Object.keys(e).length < 3) return true
-      else if (typeof e !== 'object') return true
-      else if (e === null || e === '') return true
-      else return false
-    },
+    // expands row, sets id and column name to be searched
     expandRow (props, col) {
-      props.expand = !props.expand
-      this.row = col.value
+      if (find(this.rows, { id: props.row.id })) {
+        if (props.expand && find(this.rows, { id: props.row.id }).col === col.name) {
+          props.expand = false
+          this.rows = [...this.rows.filter(filt => filt.id !== props.row.id)]
+        } else find(this.rows, { id: props.row.id }).col = col.name
+      } else {
+        this.rows.push({ id: props.row.id, col: col.name })
+        props.expand = true
+      }
+    },
+    // checks if prop value is timestamp
+    colValue (val) {
+      if (moment(val, moment.ISO_8601).isValid()) return moment(val).fromNow()
+      // some values return null written as string...
+      else if (val === 'null') return 'N/A'
+      else return val
+    },
+    // checks if value contains object
+    isObject (e) {
+      if (typeof e === 'object' && e !== null) return true
+      else return false
     }
   },
   computed: {
