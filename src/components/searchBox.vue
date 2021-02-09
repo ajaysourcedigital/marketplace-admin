@@ -1,42 +1,43 @@
 <template>
-  <div
-    class="search-bar"
-    :class="{ 'open': search }"
-  >
-    <div
-      class="search-bar-form"
-      @click="getOpen()"
-    >
-      <q-input
-        class="GNL__toolbar-input search-bar-input cursor-pointer"
-        rounded
-        borderless
-        dense
-        v-model="searchInput"
-        color="bg-grey-7"
-        :placeholder="search ? $t('search.bar.text') : ''"
-      >
-        <template v-slot:append>
+  <div class="bg-grey-3 z-max absolute-full">
+    <div class="column no-wrap fit">
+      <div class="row no-wrap q-pb-lg">
+        <q-input
+          class="search-bar__input q-pt-xl"
+          rounded
+          borderless
+          dense
+          v-model="searchInput"
+          :placeholder="$t('search.bar.text')"
+        >
+          <template v-slot:append>
+            <q-icon
+              style="color: #011924"
+              v-if="searchInput === ''"
+              name="search"
+            />
+            <q-icon
+              v-else
+              name="clear"
+              class="cursor-pointer"
+              @click="searchInput = ''"
+            />
+          </template>
+        </q-input>
+        <div class="q-pr-md q-pt-md">
           <q-icon
-            style="color: #011924"
-            v-if="searchInput === ''"
-            name="search"
-          />
-          <q-icon
-            v-else
             name="clear"
-            class="cursor-pointer"
-            @click="searchInput = ''"
+            class="search-bar__close"
+            color="grey-8"
+            :size="$q.screen.gt.xs ? 'lg' : 'sm'"
+            @click="$emit('revert')"
           />
-        </template>
-      </q-input>
-    </div>
-
-    <transition name="fade">
+        </div>
+      </div>
       <div
-        class="q-mt-sm row justify-center q-gutter-lg relative-position"
-        style="height: 85vh;overflow-y: auto;"
-        v-if="search"
+        class="q-mt-sm fit row scroll justify-center relative-position"
+        :class="$q.screen.gt.xs ? 'q-gutter-lg' : ''"
+        style="overflow-x:hidden;margin:0 auto;"
       >
         <div
           class="col-lg-3 col-md-3 col-sm-5 col-xs-11"
@@ -67,12 +68,7 @@
           </q-card>
         </div>
       </div>
-    </transition>
-
-    <span
-      class="search-bar-close"
-      @click="closeForm()"
-    />
+    </div>
   </div>
 </template>
 
@@ -144,196 +140,48 @@ export default {
         }
       ]
     }
-  },
-  methods: {
-    getOpen: function () {
-      this.search = 'open'
-    },
-    closeForm: function () {
-      this.search = ''
-      this.searchInput = ''
-    }
   }
 }
 </script>
 
 <style lang="stylus" scoped>
-.fade-enter-active, .fade-leave-active {
-  transition: all 2s;
+/deep/.q-field--dense .q-field__control {
+  height: 100%;
 }
 
-.fade-enter, .fade-leave-to {
-  opacity: 0;
-  display: none;
+/deep/.q-field--dense .q-field__marginal {
+  height: 100%;
+  font-size: 1.2em;
 }
 
-.search-bar {
-  width: 25px;
-  min-height: 35px;
-  position: absolute;
-  z-index: 10000;
-  top: 0;
-  right: 102%;
-  // margin: 0;
-  transform-origin: 100% 0;
-  transition-property: min-height, width, top, right, background;
-  transition-duration: 0.5s;
-  transition-timing-function: cubic-bezier(0.7, 0, 0.3, 1);
+.search-bar__input {
+  width: 70% !important;
+  font-size: 5.5em;
+  margin: 0 auto;
 
-  &:before {
-    content: '';
-    position: absolute;
-    width: 35px;
-    height: 35px;
-    display: block;
-    background-color: #E8EAEB;
-    border-radius: 50%;
-    top: 0;
-    right: -4px;
-    opacity: 0;
-    transition: all 0.3s;
-  }
-
-  &:hover {
-    &:before {
-      opacity: 1;
-    }
-  }
-
-  .q-icon {
-    margin-left: -5px;
-    margin-bottom: 2px;
-    transition-property: font-size;
-    transition-duration: 0.5s;
-    transition-timing-function: cubic-bezier(0.7, 0, 0.3, 1);
-  }
-
-  /deep/.q-field--outlined .q-field__control:before {
-    border: none;
-  }
-
-  &.open {
-    width: 100vw;
-    background: #f1f1f1;
-    min-height: 101vh;
-    top: -10px;
-    right: -13px;
-    margin: 0;
-
-    .search-bar-form {
-      width: 80%;
-      height: auto;
-      margin-bottom: 40px;
-      transform: translate3d(0, 3em, 0);
-      color: #ec5a62;
-    }
-
-    .search-bar-input {
-      font-size: 6em;
-    }
-
-    /deep/.q-field__control {
-      height: auto;
-
-      &:before {
-        border: none;
-      }
-    }
-
-    /deep/.q-field__append {
-      height: auto;
-    }
-
-    .q-icon {
-      font-size: 4em;
-      cursor: default;
-      margin: 0;
-    }
-
-    .search-bar-close {
-      opacity: 1;
-      pointer-events: auto;
-      transform: scale3d(1, 1, 1);
-      transition: opacity 0.3s, transform 0.3s;
-      transition-delay: 0.5s;
-    }
-  }
-}
-
-.search-bar-input {
-  transition: font-size 0.5s cubic-bezier(0.7, 0, 0.3, 1);
-
-  /deep/.q-field__native {
+  /deep/.q-placeholder {
     color: #ec5a62;
 
     &::placeholder {
-      color: #c2c2c2;
+      color: $grey-8;
+      opacity: 0.5;
     }
   }
 }
 
-.search-bar-form {
-  width: 100%;
-  height: 35px;
-  margin: 0 auto;
-  position: relative;
-  border-radius: 50%;
-  transition-property: width, height, transform;
-  transition-duration: 0.5s;
-  transition-timing-function: cubic-bezier(0.7, 0, 0.3, 1);
-}
-
-.search-bar-close {
-  width: 27px;
-  height: 27px;
-  position: absolute;
-  right: 1em;
-  top: 1em;
-  overflow: hidden;
-  text-indent: 100%;
+.search-bar__close {
+  opacity: 0.6;
   cursor: pointer;
-  pointer-events: none;
-  opacity: 0;
-  transform: scale3d(0, 0, 1);
-
-  &::before, &::after {
-    content: '';
-    position: absolute;
-    width: 2px;
-    height: 100%;
-    top: 0;
-    left: 50%;
-    border-radius: 3px;
-    opacity: 0.2;
-    background: #000;
-  }
-
-  &::before {
-    transform: rotate(45deg);
-  }
-
-  &::after {
-    transform: rotate(-45deg);
-  }
+  transition: 0.25s all ease-in-out;
 
   &:hover {
-    &::before, &::after {
-      opacity: 1;
-    }
+    opacity: 1;
   }
 }
 
 @media only screen and (max-width: 720px) {
-  .search-bar {
-    &.open {
-      .search-bar-input {
-        font-size: 3em;
-      }
-
-      .q-icon {
-        font-size: 2em;
-      }
-    }
+  .search-bar__input {
+    font-size: 3em;
   }
 }
 </style>

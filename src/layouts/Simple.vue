@@ -44,9 +44,13 @@
           v-if="user.role"
           class="row items-center no-wrap relative-position"
         >
-          <!-- Search box -->
-          <search-box />
-
+          <q-btn
+            icon="search"
+            flat
+            round
+            v-morph:btn:search:500.resize="morphSearch"
+            @click="morphSearch = 'big'"
+          />
           <q-btn
             flat
             no-caps
@@ -192,7 +196,11 @@
         </div>
       </q-list>
     </q-drawer>
-
+    <!-- Search box -->
+    <search-box
+      v-morph:big:search:500.tween="morphSearch"
+      @revert="morphSearch = 'btn'"
+    />
     <!-- Route -->
     <q-page-container>
       <router-view />
@@ -229,7 +237,8 @@ export default {
       leftDrawerOpen: true,
       miniState: false,
       search: '',
-      user_details: {}
+      user_details: {},
+      morphSearch: 'btn'
     }
   },
   mounted () {
@@ -255,7 +264,6 @@ export default {
 </script>
 
 <style>
-
 .q-menu {
   border-radius: 10px;
   padding-left: 3px;
@@ -265,8 +273,8 @@ export default {
 .cardhover:hover {
   bottom: 3px;
   right: 2px;
-  box-shadow: 1px 1px 3px 1px rgba(0,0,0,0.3);
-  }
+  box-shadow: 1px 1px 3px 1px rgba(0, 0, 0, 0.3);
+}
 
 .GNL__toolbar {
   height: 64px;
@@ -274,7 +282,7 @@ export default {
 
 .GNL__drawer-item {
   line-height: 24px;
-  color: rgba(255,255,255,0.4);
+  color: rgba(255, 255, 255, 0.4);
   margin-right: 10px;
   border-top-right-radius: 8px;
   border-bottom-right-radius: 8px;
@@ -298,7 +306,7 @@ export default {
 }
 
 .GNL__drawer-button-dropdown {
-    background-color: rgba(255,255,255,0.1);
+  background-color: rgba(255, 255, 255, 0.1);
 }
 
 .GNL__drawer-button-dropdown .q-btn-dropdown--simple .q-btn-dropdown__arrow {
@@ -306,7 +314,7 @@ export default {
 }
 
 .GNL__drawer {
-  background-color: rgba(255,255,255,1);
+  background-color: rgba(255, 255, 255, 1);
   border-radius: 10px;
   margin-top: 15px;
   margin-bottom: 15px;
