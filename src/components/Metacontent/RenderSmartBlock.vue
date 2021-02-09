@@ -96,6 +96,7 @@ import SmartBlockThing from 'components/SmartBlocks/Thing'
 import SmartBlockProduct from 'components/SmartBlocks/Product'
 import SmartBlockMarkdown from 'components/SmartBlocks/Markdown'
 import SmartBlockIframe from 'components/SmartBlocks/Iframe'
+import SmartBlockBrand from 'components/SmartBlocks/Brand.vue'
 
 export default {
   name: 'RenderSmartBlock',
@@ -127,7 +128,8 @@ export default {
     SmartBlockAd,
     SmartBlockProduct,
     SmartBlockMarkdown,
-    SmartBlockIframe
+    SmartBlockIframe,
+    SmartBlockBrand
   },
   methods: {
     deleteMe () {
