@@ -46,10 +46,11 @@
         class="stickyTable"
         :data="validation"
         :grid="card"
-        hide-bottom
-        virtual-scroll
-        :rows-per-page-options="[0]"
-        wrap-cells
+        :pagination="initialPagination"
+        :visible-columns="visibleColumns"
+        row-key="name"
+        selection="multiple"
+        :selected.sync="selected"
         @row-click="(evt, row, index) => $emit('row-click', evt, row, index)"
       >
         <!-- List view -->
@@ -73,19 +74,81 @@
             :props="props"
             class="cursor-pointer"
             auto-width
+            :class="props.expand ? 'active-row' : ''"
             @click="$emit('row-click', props.row)"
           >
-            <q-td>
+            <q-td
+              class="relative-position"
+              @mouseover="props.expand = true"
+              @mouseleave="props.expand = false"
+            >
               <q-avatar
                 square
                 size="xl"
               >
                 <q-img
                   :ratio="1"
-                  :src="props.row.image ? props.row.image : 'https://via.placeholder.com/150?text=N/A'"
+                  :src="props.row.media ? `https://img.youtube.com/vi/${props.row.media}/0.jpg` : 'https://via.placeholder.com/150?text=N/A'"
                 />
               </q-avatar>
+              <span
+                v-show="props.expand"
+                :props="props"
+                class="extra-buttons q-pl-md row items-center"
+              >
+                <q-btn
+                  flat
+                  round
+                  color="grey"
+                  icon="edit"
+                />
+                <q-btn
+                  flat
+                  round
+                  color="grey"
+                  icon="analytics"
+                  class="q-mx-sm"
+                />
+                <q-btn
+                  round
+                  flat
+                  color="grey"
+                  icon="chat"
+                  class="q-mr-sm"
+                />
+                <q-btn-dropdown
+                  fab-mini
+                  flat
+                  color="grey"
+                  dropdown-icon="more_vert"
+                  @click.stop="props.expand = true"
+                  @mouseover="props.expand = true"
+                >
+                  <q-list @mouseover="props.expand = true">
+                    <q-item
+                      clickable
+                      v-close-popup
+                      v-for="(item, i) in dropdownMenu"
+                      :key="i"
+                    >
+                      <q-item-section
+                        avatar
+                        class="q-pr-none"
+                      >
+                        <q-icon
+                          :name="item.icon"
+                          color="grey"
+                        />
+                      </q-item-section>
+                      <q-item-section>
+                        <q-item-label>{{ item.label }}</q-item-label>
+                      </q-item-section>
+                    </q-item>
+                  </q-list>
+                </q-btn-dropdown>
+              </span>
             </q-td>
+
             <q-td
               v-for="col in props.cols"
               :key="col.name"
@@ -118,14 +181,6 @@
                   @click.stop="expandRow(props, col)"
                 />
               </div>
-            </q-td>
-          </q-tr>
-          <q-tr
-            v-show="props.expand"
-            :props="props"
-          >
-            <q-td colspan="100%">
-              <div>{{ row }}</div>
             </q-td>
           </q-tr>
         </template>
@@ -162,7 +217,38 @@ export default {
   data () {
     return {
       card: true,
-      row: null
+      row: null,
+      selected: [],
+      active: false,
+      visibleColumns: ['id', 'name', 'creator', 'created_at', 'updated_at', 'title', 'type', 'media', 'cover', 'slug', 'CREATED_BY', 'UPDATED_BY', 'mediatype', 'mediaid', 'mediafile'],
+      dropdownMenu: [
+        {
+          icon: 'edit',
+          label: 'Edit title and descriprion'
+        },
+        {
+          icon: 'share',
+          label: 'Get shareble link'
+        },
+        {
+          icon: 'campaign',
+          label: 'Promote'
+        },
+        {
+          icon: 'get_app',
+          label: 'Download'
+        },
+        {
+          icon: 'delete',
+          label: 'Delete forever'
+        }
+      ],
+      initialPagination: {
+        sortBy: 'name',
+        descending: false,
+        page: 1,
+        rowsPerPage: 8
+      }
     }
   },
   methods: {
@@ -175,6 +261,9 @@ export default {
     expandRow (props, col) {
       props.expand = !props.expand
       this.row = col.value
+    },
+    getSelectedString () {
+      return this.selected.length === 0 ? '' : `${this.selected.length} record${this.selected.length > 1 ? 's' : ''} selected of ${this.data.length}`
     }
   },
   computed: {
@@ -231,5 +320,29 @@ export default {
 
 /deep/.q-expansion-item .q-item {
   padding: 0px;
+}
+
+.active-row {
+  background: #F7F7F7;
+
+  /deep/td:before {
+    background: none;
+  }
+}
+
+.extra-buttons {
+  width: 260px;
+  position: absolute;
+  z-index: 99;
+  background-color: #F7F7F7;
+  top: 50%;
+  bottom: 0;
+  left: 100%;
+  transform: translateY(-50%);
+  height: 100%;
+
+  /deep/.q-btn-dropdown--simple .q-btn-dropdown__arrow {
+    margin-left: 0;
+  }
 }
 </style>

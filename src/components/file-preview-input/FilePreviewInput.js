@@ -1,4 +1,4 @@
-import { QFile, QImg, QCard, QCardSection, QBtn } from 'quasar'
+import { QFile, QImg, QCard, QCardSection, QBtn, QIcon } from 'quasar'
 import { QMediaPlayer } from '@quasar/quasar-ui-qmediaplayer'
 // Multiple files are not supported yet.
 export default {
@@ -18,7 +18,11 @@ export default {
           minHeight: this.height || '150px'
         }
       }, [
-        this.value ? this.$_renderFile(h, this.value.mime, this.value) : h('div', [this.text || 'Drag & drop a file here or click to choose a file.'])
+        this.value ? this.$_renderFile(h, this.value.mime, this.value) : h(QIcon, {
+          staticClass: 'q-ma-sm',
+          props: { name: 'add_photo_alternate', size: 'sm' }
+        }),
+        h('div', [this.text || 'Drag & drop a file here or click to choose a file.'])
       ])
     },
     $_renderImage (h, file) {

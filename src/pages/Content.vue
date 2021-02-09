@@ -49,9 +49,10 @@ export default {
           {
             name: 'name',
             label: 'Name',
-            field: 'name',
-            sortable: true,
-            align: 'left'
+            align: 'left',
+            field: row => row.name,
+            format: val => `${val}`,
+            sortable: true
           },
           {
             name: 'created',
