@@ -38,7 +38,7 @@ module.exports = function (ctx) {
       scopeHoisting: true,
       vueRouterMode: 'hash', // available values: 'hash', 'history'
       showProgress: true,
-      publicPath: 'ajay',
+      publicPath: 'slug',
       gzip: false,
       analyze: false,
       // Options below are automatically set depending on the env, set them if you want to override
